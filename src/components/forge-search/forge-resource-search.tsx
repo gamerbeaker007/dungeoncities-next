@@ -55,7 +55,6 @@ export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
             <Box
               key={`${recipe.recipeId}-${recipe.recipeName}`}
               sx={{
-                flex: "1 1 420px",
                 minWidth: { xs: "100%", sm: 360 },
               }}
             >

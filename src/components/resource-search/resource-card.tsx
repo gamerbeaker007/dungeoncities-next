@@ -7,9 +7,9 @@ type ResourceCardProps = {
 
 export function ResourceCard({ result }: ResourceCardProps) {
   return (
-    <Card variant="outlined">
-      <CardContent>
-        <Stack spacing={1.5}>
+    <Card variant="outlined" sx={{ maxWidth: 400, height: "100%", overflow: "hidden" }}>
+      <CardContent sx={{ minWidth: 0 }}>
+        <Stack spacing={1.5} sx={{ minWidth: 0 }}>
           <Typography variant="h6">
             {result.resourceName}
             {result.resourceId ? ` (#${result.resourceId})` : ""}
@@ -24,31 +24,48 @@ export function ResourceCard({ result }: ResourceCardProps) {
             </Typography>
           ) : null}
 
-          <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: { xs: "1fr", sm: "repeat(2, minmax(0, 1fr))" },
+              gap: 1.5,
+              minWidth: 0,
+            }}
+          >
             {result.itemImageUrl ? (
               <Box
-                component="img"
-                src={result.itemImageUrl}
-                alt={result.resourceName}
                 sx={{
                   width: "100%",
-                  maxWidth: { sm: 180 },
                   height: 140,
-                  objectFit: "cover",
                   borderRadius: 1,
+                  overflow: "hidden",
+                  minWidth: 0,
                 }}
-              />
+              >
+                <Box
+                  component="img"
+                  src={result.itemImageUrl}
+                  alt={result.resourceName}
+                  sx={{
+                    display: "block",
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+              </Box>
             ) : (
               <Box
                 sx={{
                   width: "100%",
-                  maxWidth: { sm: 180 },
                   height: 140,
                   borderRadius: 1,
                   bgcolor: "action.hover",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  overflow: "hidden",
+                  minWidth: 0,
                 }}
               >
                 <Typography variant="body2" color="text.secondary">
@@ -59,28 +76,38 @@ export function ResourceCard({ result }: ResourceCardProps) {
 
             {result.monsterImageUrl ? (
               <Box
-                component="img"
-                src={result.monsterImageUrl}
-                alt={result.monsterName}
                 sx={{
                   width: "100%",
-                  maxWidth: { sm: 180 },
                   height: 140,
-                  objectFit: "cover",
                   borderRadius: 1,
+                  overflow: "hidden",
+                  minWidth: 0,
                 }}
-              />
+              >
+                <Box
+                  component="img"
+                  src={result.monsterImageUrl}
+                  alt={result.monsterName}
+                  sx={{
+                    display: "block",
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+              </Box>
             ) : (
               <Box
                 sx={{
                   width: "100%",
-                  maxWidth: { sm: 180 },
                   height: 140,
                   borderRadius: 1,
                   bgcolor: "action.hover",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  overflow: "hidden",
+                  minWidth: 0,
                 }}
               >
                 <Typography variant="body2" color="text.secondary">
@@ -88,7 +115,7 @@ export function ResourceCard({ result }: ResourceCardProps) {
                 </Typography>
               </Box>
             )}
-          </Stack>
+          </Box>
 
           <Typography variant="body2" color="text.secondary">
             Monster: {result.monsterName}

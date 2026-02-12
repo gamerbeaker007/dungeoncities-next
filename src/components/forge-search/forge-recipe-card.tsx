@@ -78,9 +78,9 @@ export function ForgeRecipeCard({
   otherRequirements,
 }: ForgeRecipeCardProps) {
   return (
-    <Card variant="outlined">
+    <Card variant="outlined" sx={{  maxWidth: 400, height: "100%", overflow: "hidden" }}>
       <CardContent>
-        <Stack spacing={1.5}>
+        <Stack spacing={0.5}>
           <Typography variant="h6">{recipeName}</Typography>
           <Typography variant="caption" color="text.secondary">
             {description}
