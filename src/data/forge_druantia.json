@@ -1,0 +1,1862 @@
+{
+  "data": {
+    "recipes": [
+      {
+        "recipe": {
+          "id": 1878,
+          "name": "Hollowroot Gate Key of Druantia",
+          "description": "Key to unlock the second floor of Druantia Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835457/Dungeon/items/Keys/druantiaKeyOfHollowrootGate.jpg",
+          "baseCost": 100,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Intermediate",
+          "experience": 1,
+          "cityIds": [4],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 100,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "e3bbf54b-b3eb-4c48-b1a0-a2a4d11f3278",
+            "itemId": 1898,
+            "quantity": 1,
+            "item": {
+              "name": "Petrified Gaze Orb",
+              "description": "Essential material that is required to craft the second floor key of Druantia Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835072/Dungeon/items/Orb/petrifiedGazeOrb.jpg"
+            }
+          },
+          {
+            "id": "d5cfe720-453e-4d24-85d3-be54c384c083",
+            "itemId": 1536,
+            "quantity": 1,
+            "item": {
+              "name": "Wraith's Shadow Essence",
+              "description": "Dropped by Wraith",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258175/Dungeon/items/Monster%20Drop/wraithsShadowEssence.jpg"
+            }
+          },
+          {
+            "id": "0e980971-f865-44e4-ae49-8e4b97b2d876",
+            "itemId": 1525,
+            "quantity": 2,
+            "item": {
+              "name": "Owlbear Beak",
+              "description": "Dropped by Owlbear",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258171/Dungeon/items/Monster%20Drop/owlbearBeak.jpg"
+            }
+          },
+          {
+            "id": "486ec741-8ddd-41f3-bd19-e39c304c2efd",
+            "itemId": 1625,
+            "quantity": 3,
+            "item": {
+              "name": "Lich's Finger",
+              "description": "A pale, bony plant with finger-like projections.",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516425/Dungeon/items/Plants/lichsFinger.jpg"
+            }
+          },
+          {
+            "id": "4d24ec83-a9e2-4953-bc18-ee163dcb7581",
+            "itemId": 1725,
+            "quantity": 3,
+            "item": {
+              "name": "Glitterstone",
+              "description": "Stone that glitters with tiny embedded crystals.",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394449/Dungeon/items/Rocks/glitterstone.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1879,
+          "name": "Verdant Veil Key of Druantia",
+          "description": "Key to unlock the third floor of Druantia Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835460/Dungeon/items/Keys/druantiaKeyOfVerdantVeil.jpg",
+          "baseCost": 200,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Intermediate",
+          "experience": 1,
+          "cityIds": [4],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 200,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "9cacb7a1-d397-4dad-a0f7-e4c5bed4b1a9",
+            "itemId": 1899,
+            "quantity": 1,
+            "item": {
+              "name": "Labyrinth Core Orb",
+              "description": "Essential material that is required to craft the third floor key of Druantia Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835073/Dungeon/items/Orb/labyrinthCoreOrb.jpg"
+            }
+          },
+          {
+            "id": "33d54e91-240f-4a71-b84a-0b5af5c6a630",
+            "itemId": 1536,
+            "quantity": 1,
+            "item": {
+              "name": "Wraith's Shadow Essence",
+              "description": "Dropped by Wraith",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258175/Dungeon/items/Monster%20Drop/wraithsShadowEssence.jpg"
+            }
+          },
+          {
+            "id": "ef87a256-21c7-4089-bbcd-c2b9c2a94e07",
+            "itemId": 1525,
+            "quantity": 2,
+            "item": {
+              "name": "Owlbear Beak",
+              "description": "Dropped by Owlbear",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258171/Dungeon/items/Monster%20Drop/owlbearBeak.jpg"
+            }
+          },
+          {
+            "id": "ec7aac3b-d10b-4573-87b9-d5f71082d5fb",
+            "itemId": 1626,
+            "quantity": 3,
+            "item": {
+              "name": "Dire Lily",
+              "description": "A dark lily often found in cursed locations.",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516425/Dungeon/items/Plants/direLily.jpg"
+            }
+          },
+          {
+            "id": "8f11fde1-bd34-4450-a85a-e6feab61106f",
+            "itemId": 1726,
+            "quantity": 3,
+            "item": {
+              "name": "Ebonite",
+              "description": "A deep black ore with a reflective surface.",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394449/Dungeon/items/Rocks/ebonite.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1880,
+          "name": "Thornveil Hollow Key of Druantia",
+          "description": "Key to unlock the fourth floor of Druantia Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835461/Dungeon/items/Keys/druantiaKeyOfThornveilHollow.jpg",
+          "baseCost": 300,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Intermediate",
+          "experience": 1,
+          "cityIds": [4],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 300,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "a9779b35-e70f-43a8-b140-fa0876220671",
+            "itemId": 1900,
+            "quantity": 1,
+            "item": {
+              "name": "Hybrid Flame Orb",
+              "description": "Essential material that is required to craft the fourth floor key of Druantia Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835073/Dungeon/items/Orb/hybridFlameOrb.jpg"
+            }
+          },
+          {
+            "id": "29a1fff2-a1c7-4cae-b960-f44ad52827cb",
+            "itemId": 1536,
+            "quantity": 1,
+            "item": {
+              "name": "Wraith's Shadow Essence",
+              "description": "Dropped by Wraith",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258175/Dungeon/items/Monster%20Drop/wraithsShadowEssence.jpg"
+            }
+          },
+          {
+            "id": "cfe73f5d-d0a5-4971-925e-f16cb59a1871",
+            "itemId": 1526,
+            "quantity": 2,
+            "item": {
+              "name": "Stone Fragment",
+              "description": "Dropped by Gargoyle",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258172/Dungeon/items/Monster%20Drop/stoneFragment.jpg"
+            }
+          },
+          {
+            "id": "3ab84b22-db61-4ac4-9ff4-0ad7c6cc27a3",
+            "itemId": 1627,
+            "quantity": 3,
+            "item": {
+              "name": "Frostblossom",
+              "description": "A flower that blooms in icy conditions.",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516425/Dungeon/items/Plants/frostblossom.jpg"
+            }
+          },
+          {
+            "id": "a0b7bd95-12e7-4aaf-b243-cb99e24a4552",
+            "itemId": 1727,
+            "quantity": 3,
+            "item": {
+              "name": "Starshale",
+              "description": "Shale that glows with a starry light.",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394449/Dungeon/items/Rocks/starshale.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1881,
+          "name": "Mosswrought Sanctum Key of Druantia",
+          "description": "Key to unlock the fifth floor of Druantia Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835462/Dungeon/items/Keys/druantiaKeyOfMosswroughtSanctum.jpg",
+          "baseCost": 400,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Intermediate",
+          "experience": 1,
+          "cityIds": [4],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 400,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "cfff7c71-da07-437c-b3fe-2111633526d0",
+            "itemId": 1901,
+            "quantity": 1,
+            "item": {
+              "name": "Venomspike Orb",
+              "description": "Essential material that is required to craft the fifth floor key of Druantia Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835075/Dungeon/items/Orb/venomspikeOrb.jpg"
+            }
+          },
+          {
+            "id": "50b825d4-9128-44fc-9936-598671435fe3",
+            "itemId": 1536,
+            "quantity": 1,
+            "item": {
+              "name": "Wraith's Shadow Essence",
+              "description": "Dropped by Wraith",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258175/Dungeon/items/Monster%20Drop/wraithsShadowEssence.jpg"
+            }
+          },
+          {
+            "id": "2006c6b7-b58c-44bc-ad48-bd5fd42c301d",
+            "itemId": 1526,
+            "quantity": 2,
+            "item": {
+              "name": "Stone Fragment",
+              "description": "Dropped by Gargoyle",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258172/Dungeon/items/Monster%20Drop/stoneFragment.jpg"
+            }
+          },
+          {
+            "id": "9ce6816a-cfec-4288-aea1-9f4a82fbfce2",
+            "itemId": 1628,
+            "quantity": 3,
+            "item": {
+              "name": "Venomvine",
+              "description": "A vine that secretes a mild poison.",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516425/Dungeon/items/Plants/venomvine.jpg"
+            }
+          },
+          {
+            "id": "5c1f524a-daeb-4e73-ab70-0a35369e717a",
+            "itemId": 1728,
+            "quantity": 3,
+            "item": {
+              "name": "Lunite",
+              "description": "A silver ore that gleams under moonlight.",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394449/Dungeon/items/Rocks/lunite.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1882,
+          "name": "Sylvan Crown Key of Druantia",
+          "description": "Key to unlock the sixth floor of Druantia Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835464/Dungeon/items/Keys/druantiaKeyOfSylvanCrown.jpg",
+          "baseCost": 500,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Intermediate",
+          "experience": 1,
+          "cityIds": [4],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 500,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "1b88cf1d-b2ae-4551-a594-b1316ddefbfc",
+            "itemId": 1902,
+            "quantity": 1,
+            "item": {
+              "name": "Serpent’s Curse Orb",
+              "description": "Essential material that is required to craft the sixth floor key of Druantia Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835059/Dungeon/items/Orb/serpentsCurseOrb.jpg"
+            }
+          },
+          {
+            "id": "cf87a207-c312-4cf7-8865-e5286dfda80e",
+            "itemId": 1536,
+            "quantity": 1,
+            "item": {
+              "name": "Wraith's Shadow Essence",
+              "description": "Dropped by Wraith",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258175/Dungeon/items/Monster%20Drop/wraithsShadowEssence.jpg"
+            }
+          },
+          {
+            "id": "fd27eaad-22cf-46f3-97bd-af5ef017639e",
+            "itemId": 1527,
+            "quantity": 2,
+            "item": {
+              "name": "Scorpion Stinger",
+              "description": "Dropped by Giant Scorpion",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258171/Dungeon/items/Monster%20Drop/scorpionStinger.jpg"
+            }
+          },
+          {
+            "id": "5dffa196-9de7-4bb1-a1f5-56daeeea265f",
+            "itemId": 1629,
+            "quantity": 3,
+            "item": {
+              "name": "Blightberry",
+              "description": "Berries that cause blight in nearby plants.",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516425/Dungeon/items/Plants/blightberry.jpg"
+            }
+          },
+          {
+            "id": "36757ea8-0df1-44bc-9411-0799ff6c26a4",
+            "itemId": 1729,
+            "quantity": 3,
+            "item": {
+              "name": "Nightsilver",
+              "description": "Dark silver ore with a mysterious glow.",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394449/Dungeon/items/Rocks/nightsilver.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1883,
+          "name": "Brambleward Deep Key of Druantia",
+          "description": "Key to unlock the seventh floor of Druantia Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835467/Dungeon/items/Keys/druantiaKeyOfBramblewardDeep.jpg",
+          "baseCost": 600,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Intermediate",
+          "experience": 1,
+          "cityIds": [4],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 600,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "c8c0a9d9-1be7-4834-aba3-b498b8e30db4",
+            "itemId": 1903,
+            "quantity": 1,
+            "item": {
+              "name": "Veilshadow Orb",
+              "description": "Essential material that is required to craft the seventh floor key of Druantia Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835059/Dungeon/items/Orb/veilshadowOrb.jpg"
+            }
+          },
+          {
+            "id": "3fd74fed-d943-42a1-8037-a5db917d859b",
+            "itemId": 1537,
+            "quantity": 1,
+            "item": {
+              "name": "Flame Core",
+              "description": "Dropped by Fire Elemental",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258175/Dungeon/items/Monster%20Drop/flameCore.jpg"
+            }
+          },
+          {
+            "id": "a75be728-9f7d-4a66-a745-84fd5030eb3d",
+            "itemId": 1527,
+            "quantity": 2,
+            "item": {
+              "name": "Scorpion Stinger",
+              "description": "Dropped by Giant Scorpion",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258171/Dungeon/items/Monster%20Drop/scorpionStinger.jpg"
+            }
+          },
+          {
+            "id": "1eefa3dc-094f-443e-8a80-08d5f91aadad",
+            "itemId": 1630,
+            "quantity": 3,
+            "item": {
+              "name": "Moonshade Fern",
+              "description": "A fern that glows under moonlight.",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516425/Dungeon/items/Plants/moonshadeFern.jpg"
+            }
+          },
+          {
+            "id": "2fb2f9d1-c703-4536-a2f9-57ede48dfb5e",
+            "itemId": 1730,
+            "quantity": 3,
+            "item": {
+              "name": "Glimmerore",
+              "description": "Ore that glimmers with an ethereal light.",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394449/Dungeon/items/Rocks/glimmerore.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1884,
+          "name": "Twisting Grove Key of Druantia",
+          "description": "Key to unlock the eighth floor of Druantia Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835467/Dungeon/items/Keys/druantiaKeyOfTwistingGrove.jpg",
+          "baseCost": 700,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Intermediate",
+          "experience": 1,
+          "cityIds": [4],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 700,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "f96c11d6-3d35-41b3-9446-ef79d0219557",
+            "itemId": 1904,
+            "quantity": 1,
+            "item": {
+              "name": "Emberheart Orb",
+              "description": "Essential material that is required to craft the eighth floor key of Druantia Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835060/Dungeon/items/Orb/emberheartOrb.jpg"
+            }
+          },
+          {
+            "id": "17997d16-44ee-4dce-83d9-f2f7d98c7086",
+            "itemId": 1537,
+            "quantity": 1,
+            "item": {
+              "name": "Flame Core",
+              "description": "Dropped by Fire Elemental",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258175/Dungeon/items/Monster%20Drop/flameCore.jpg"
+            }
+          },
+          {
+            "id": "f1c8ba9c-6244-4169-9673-769e2d50962d",
+            "itemId": 1528,
+            "quantity": 2,
+            "item": {
+              "name": "Troglodyte's Scent Gland",
+              "description": "Dropped by Troglodyte",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258171/Dungeon/items/Monster%20Drop/troglodytesScentGland.jpg"
+            }
+          },
+          {
+            "id": "eb3d6e4e-6017-4e98-9469-0ebba2375985",
+            "itemId": 1631,
+            "quantity": 3,
+            "item": {
+              "name": "Spiderwort",
+              "description": "A plant with web-like leaves.",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516425/Dungeon/items/Plants/spiderwort.jpg"
+            }
+          },
+          {
+            "id": "9e393722-564e-46c2-9b77-09570d78ceb0",
+            "itemId": 1731,
+            "quantity": 3,
+            "item": {
+              "name": "Drakeshard",
+              "description": "Shards believed to have fallen from dragon scales.",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394449/Dungeon/items/Rocks/drakeshard.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1885,
+          "name": "Wildbloom Hollow Key of Druantia",
+          "description": "Key to unlock the ninth floor of Druantia Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835429/Dungeon/items/Keys/druantiaKeyOfWildbloomHollow.jpg",
+          "baseCost": 800,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Intermediate",
+          "experience": 1,
+          "cityIds": [4],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 800,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "89a12e0e-21bf-4544-8231-432232273d69",
+            "itemId": 1905,
+            "quantity": 1,
+            "item": {
+              "name": "Regrowth Husk Orb",
+              "description": "Essential material that is required to craft the ninth floor key of Druantia Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835060/Dungeon/items/Orb/regrowthHuskOrb.jpg"
+            }
+          },
+          {
+            "id": "4c69ab29-2d32-4c73-b0ef-f14a5d3df9fa",
+            "itemId": 1537,
+            "quantity": 1,
+            "item": {
+              "name": "Flame Core",
+              "description": "Dropped by Fire Elemental",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258175/Dungeon/items/Monster%20Drop/flameCore.jpg"
+            }
+          },
+          {
+            "id": "1cb94102-c082-4c60-8bb9-c65c47426d64",
+            "itemId": 1528,
+            "quantity": 2,
+            "item": {
+              "name": "Troglodyte's Scent Gland",
+              "description": "Dropped by Troglodyte",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258171/Dungeon/items/Monster%20Drop/troglodytesScentGland.jpg"
+            }
+          },
+          {
+            "id": "d1c869fc-14cd-4926-9b7d-577ed37736eb",
+            "itemId": 1632,
+            "quantity": 3,
+            "item": {
+              "name": "Corpse Flower",
+              "description": "A flower that emits a rotting smell.",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516425/Dungeon/items/Plants/corpseFlower.jpg"
+            }
+          },
+          {
+            "id": "6c6bf924-808d-4265-a51c-882010bdd2ea",
+            "itemId": 1732,
+            "quantity": 3,
+            "item": {
+              "name": "Fireshard",
+              "description": "Shards that contain a burning heat within.",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394448/Dungeon/items/Rocks/fireshard.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1886,
+          "name": "Thistleborne Cradle Key of Druantia",
+          "description": "Key to unlock the tenth floor of Druantia Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835430/Dungeon/items/Keys/druantiaKeyOfThistleborneCradle.jpg",
+          "baseCost": 900,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Intermediate",
+          "experience": 1,
+          "cityIds": [4],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 900,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "0bf5cfa3-111a-46f5-a850-e5aee86b8195",
+            "itemId": 1906,
+            "quantity": 1,
+            "item": {
+              "name": "Cragbone Orb",
+              "description": "Essential material that is required to craft the tenth floor key of Druantia Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835060/Dungeon/items/Orb/cragboneOrb.jpg"
+            }
+          },
+          {
+            "id": "21c76fe7-5161-40f9-ab51-7eecca2eb133",
+            "itemId": 1537,
+            "quantity": 1,
+            "item": {
+              "name": "Flame Core",
+              "description": "Dropped by Fire Elemental",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258175/Dungeon/items/Monster%20Drop/flameCore.jpg"
+            }
+          },
+          {
+            "id": "fbbc1760-eaa8-41a9-be28-320371c1e493",
+            "itemId": 1529,
+            "quantity": 2,
+            "item": {
+              "name": "Glowing Orb",
+              "description": "Dropped by Will-o'-Wisp",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258170/Dungeon/items/Monster%20Drop/glowingOrb.jpg"
+            }
+          },
+          {
+            "id": "aef48be9-e0b8-4ea0-a5fd-69f20de3b12f",
+            "itemId": 1633,
+            "quantity": 3,
+            "item": {
+              "name": "Ashen Thistle",
+              "description": "A thistle that grows in burnt areas.",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516424/Dungeon/items/Plants/ashenThistle.jpg"
+            }
+          },
+          {
+            "id": "f45b5617-b2d0-4972-b3ec-87127e18ae10",
+            "itemId": 1733,
+            "quantity": 3,
+            "item": {
+              "name": "Runestone",
+              "description": "Stone carved with ancient runes, glowing faintly.",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394448/Dungeon/items/Rocks/runestone.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1887,
+          "name": "Gloompetal Reach Key of Druantia",
+          "description": "Key to unlock the eleventh floor of Druantia Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835430/Dungeon/items/Keys/druantiaKeyOfGloompetalReach.jpg",
+          "baseCost": 1000,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Intermediate",
+          "experience": 1,
+          "cityIds": [4],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 1000,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "d9b35c52-c680-4366-ad1a-67b332cbc16e",
+            "itemId": 1907,
+            "quantity": 1,
+            "item": {
+              "name": "Multiscale Essence Orb",
+              "description": "Essential material that is required to craft the eleventh floor key of Druantia Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835061/Dungeon/items/Orb/multiscaleEssenceOrb.jpg"
+            }
+          },
+          {
+            "id": "0e5c688c-dd96-4192-b6a8-059d85ff1605",
+            "itemId": 1537,
+            "quantity": 1,
+            "item": {
+              "name": "Flame Core",
+              "description": "Dropped by Fire Elemental",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258175/Dungeon/items/Monster%20Drop/flameCore.jpg"
+            }
+          },
+          {
+            "id": "2edd7207-1876-4232-92f5-c1690a4a34c5",
+            "itemId": 1529,
+            "quantity": 2,
+            "item": {
+              "name": "Glowing Orb",
+              "description": "Dropped by Will-o'-Wisp",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258170/Dungeon/items/Monster%20Drop/glowingOrb.jpg"
+            }
+          },
+          {
+            "id": "7a729e06-d6ea-4165-b7fb-5e8cbaf47a85",
+            "itemId": 1634,
+            "quantity": 3,
+            "item": {
+              "name": "Hellfire Lily",
+              "description": "A fiery lily that thrives in volcanic soil.",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516422/Dungeon/items/Plants/hellfireLily.jpg"
+            }
+          },
+          {
+            "id": "e7535584-e965-4697-9364-7e9ab329114a",
+            "itemId": 1734,
+            "quantity": 3,
+            "item": {
+              "name": "Bloodore",
+              "description": "Ore with a deep red hue, reminiscent of blood.",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394448/Dungeon/items/Rocks/bloodore.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1888,
+          "name": "Elderglen Vault Key of Druantia",
+          "description": "Key to unlock the twelfth floor of Druantia Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835431/Dungeon/items/Keys/druantiaKeyOfElderglenVault.jpg",
+          "baseCost": 1100,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Intermediate",
+          "experience": 1,
+          "cityIds": [4],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 1100,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "de913991-a383-43db-8dcf-412a47fa76fc",
+            "itemId": 1908,
+            "quantity": 1,
+            "item": {
+              "name": "Stonecoil Orb",
+              "description": "Essential material that is required to craft the twelfth floor key of Druantia Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835063/Dungeon/items/Orb/stonecoilOrb.jpg"
+            }
+          },
+          {
+            "id": "80bcce6d-4fb1-4a71-a46b-acff72f053e4",
+            "itemId": 1538,
+            "quantity": 1,
+            "item": {
+              "name": "Troll Flesh",
+              "description": "Dropped by Troll",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258174/Dungeon/items/Monster%20Drop/trollFlesh.jpg"
+            }
+          },
+          {
+            "id": "41a21999-39a6-49ef-b818-4df5d448911c",
+            "itemId": 1530,
+            "quantity": 2,
+            "item": {
+              "name": "Wailing Essence",
+              "description": "Dropped by Banshee",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258170/Dungeon/items/Monster%20Drop/wailingEssence.jpg"
+            }
+          },
+          {
+            "id": "7aab8743-560b-4a50-9fcf-3d92e63e5347",
+            "itemId": 1635,
+            "quantity": 3,
+            "item": {
+              "name": "Nightshade",
+              "description": "A plant known for its toxic berries.",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516424/Dungeon/items/Plants/nightshade.jpg"
+            }
+          },
+          {
+            "id": "43d9d675-b282-44d3-8473-d8d47a019c09",
+            "itemId": 1735,
+            "quantity": 3,
+            "item": {
+              "name": "Skystone",
+              "description": "Stone believed to have fallen from the sky.",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394448/Dungeon/items/Rocks/skystone.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1889,
+          "name": "Whispercanopy Rise Key of Druantia",
+          "description": "Key to unlock the thirteenth floor of Druantia Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835433/Dungeon/items/Keys/druantiaKeyOfWhispercanopyRise.jpg",
+          "baseCost": 1200,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Intermediate",
+          "experience": 1,
+          "cityIds": [4],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 1200,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "48597068-169a-4e78-ab10-87650f48f3be",
+            "itemId": 1909,
+            "quantity": 1,
+            "item": {
+              "name": "Phylactery Shard Orb",
+              "description": "Essential material that is required to craft the thirteenth floor key of Druantia Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835062/Dungeon/items/Orb/phylacteryShardOrb.jpg"
+            }
+          },
+          {
+            "id": "2501c129-3e8c-43b7-8886-82898788ed06",
+            "itemId": 1538,
+            "quantity": 1,
+            "item": {
+              "name": "Troll Flesh",
+              "description": "Dropped by Troll",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258174/Dungeon/items/Monster%20Drop/trollFlesh.jpg"
+            }
+          },
+          {
+            "id": "703c27fe-73ad-472b-9c6f-020b0fb968b8",
+            "itemId": 1530,
+            "quantity": 2,
+            "item": {
+              "name": "Wailing Essence",
+              "description": "Dropped by Banshee",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258170/Dungeon/items/Monster%20Drop/wailingEssence.jpg"
+            }
+          },
+          {
+            "id": "a56f946f-02db-4f23-963a-b7890d501775",
+            "itemId": 1636,
+            "quantity": 3,
+            "item": {
+              "name": "Scorchroot",
+              "description": "A root that can ignite when disturbed.",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516423/Dungeon/items/Plants/scorchroot.jpg"
+            }
+          },
+          {
+            "id": "8bc822a2-96f2-4b7d-b008-c8b80961a3e8",
+            "itemId": 1736,
+            "quantity": 3,
+            "item": {
+              "name": "Tempestone",
+              "description": "Ore that rumbles with tempestuous energy.",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394447/Dungeon/items/Rocks/tempestone.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1890,
+          "name": "Fungalheart Depths Key of Druantia",
+          "description": "Key to unlock the fourteenth floor of Druantia Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835435/Dungeon/items/Keys/druantiaKeyOfFungalheartDepths.jpg",
+          "baseCost": 1300,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Intermediate",
+          "experience": 1,
+          "cityIds": [4],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 1300,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "3d6ae326-722a-4f93-97ac-e1a7a2b348d9",
+            "itemId": 1910,
+            "quantity": 1,
+            "item": {
+              "name": "Sanguine Moon Orb",
+              "description": "Essential material that is required to craft the fourteenth floor key of Druantia Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835065/Dungeon/items/Orb/sanguineMoonOrb.jpg"
+            }
+          },
+          {
+            "id": "489bafaa-8f0a-4d2a-a641-eeafc7463552",
+            "itemId": 1538,
+            "quantity": 1,
+            "item": {
+              "name": "Troll Flesh",
+              "description": "Dropped by Troll",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258174/Dungeon/items/Monster%20Drop/trollFlesh.jpg"
+            }
+          },
+          {
+            "id": "bd9252bb-212f-44d6-9b3b-f115112a4030",
+            "itemId": 1531,
+            "quantity": 2,
+            "item": {
+              "name": "Displacer's Tentacle",
+              "description": "Dropped by Displacer Beast",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258178/Dungeon/items/Monster%20Drop/displacersTentacle.jpg"
+            }
+          },
+          {
+            "id": "2971e45d-bb4a-4776-a087-c9c2c8b76e5d",
+            "itemId": 1637,
+            "quantity": 3,
+            "item": {
+              "name": "Spectral Bloom",
+              "description": "A ghostly flower that appears translucent.",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516423/Dungeon/items/Plants/spectralBloom.jpg"
+            }
+          },
+          {
+            "id": "3d3324db-9950-40c4-a921-9b0c88790463",
+            "itemId": 1737,
+            "quantity": 3,
+            "item": {
+              "name": "Stormore",
+              "description": "Ore that crackles with storm energy.",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394447/Dungeon/items/Rocks/stormore.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1891,
+          "name": "Rootspindle Labyrinth Key of Druantia",
+          "description": "Key to unlock the fifteenth floor of Druantia Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835437/Dungeon/items/Keys/druantiaKeyOfRootspindleLabyrinth.jpg",
+          "baseCost": 1400,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Intermediate",
+          "experience": 1,
+          "cityIds": [4],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 1400,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "e8786485-ba81-48d7-9768-a9f6bc599eb8",
+            "itemId": 1911,
+            "quantity": 1,
+            "item": {
+              "name": "Ocular Madness Orb",
+              "description": "Essential material that is required to craft the fifteenth floor key of Druantia Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835064/Dungeon/items/Orb/ocularMadnessOrb.jpg"
+            }
+          },
+          {
+            "id": "9b1a3081-3fbe-441f-9386-f0e34870c2eb",
+            "itemId": 1538,
+            "quantity": 1,
+            "item": {
+              "name": "Troll Flesh",
+              "description": "Dropped by Troll",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258174/Dungeon/items/Monster%20Drop/trollFlesh.jpg"
+            }
+          },
+          {
+            "id": "e2825bcc-e4d1-4904-bae5-4d6a84ef2fc2",
+            "itemId": 1531,
+            "quantity": 2,
+            "item": {
+              "name": "Displacer's Tentacle",
+              "description": "Dropped by Displacer Beast",
+              "class": "D",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258178/Dungeon/items/Monster%20Drop/displacersTentacle.jpg"
+            }
+          },
+          {
+            "id": "27c81b2e-38a7-49c5-b689-7a1bcff52c5f",
+            "itemId": 1638,
+            "quantity": 3,
+            "item": {
+              "name": "Wraithweed",
+              "description": "A weed that is said to drain life force.",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516422/Dungeon/items/Plants/wraithweed.jpg"
+            }
+          },
+          {
+            "id": "4ac36a33-2bd5-42ad-aec6-ca26cc4d73a5",
+            "itemId": 1738,
+            "quantity": 3,
+            "item": {
+              "name": "Sunstone",
+              "description": "Stone that shines with a warm, solar light.",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394446/Dungeon/items/Rocks/sunstone.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1892,
+          "name": "Shaded Gladehold Key of Druantia",
+          "description": "Key to unlock the sixteenth floor of Druantia Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835438/Dungeon/items/Keys/druantiaKeyOfShadedGladehold.jpg",
+          "baseCost": 1500,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Intermediate",
+          "experience": 1,
+          "cityIds": [4],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 1500,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "2177c372-4c66-4546-a3ba-fb848caccd77",
+            "itemId": 1912,
+            "quantity": 1,
+            "item": {
+              "name": "Abyssal Memory Orb",
+              "description": "Essential material that is required to craft the sixteenth floor key of Druantia Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835065/Dungeon/items/Orb/abyssalMemoryOrb.jpg"
+            }
+          },
+          {
+            "id": "03a927ba-c966-478d-acdc-b0ce2b664bff",
+            "itemId": 1538,
+            "quantity": 1,
+            "item": {
+              "name": "Troll Flesh",
+              "description": "Dropped by Troll",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258174/Dungeon/items/Monster%20Drop/trollFlesh.jpg"
+            }
+          },
+          {
+            "id": "1c347e04-763f-4858-ae00-7bad73001a84",
+            "itemId": 1532,
+            "quantity": 2,
+            "item": {
+              "name": "Minotaur Horns",
+              "description": "Dropped by Minotaur",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258177/Dungeon/items/Monster%20Drop/minotaurHorns.jpg"
+            }
+          },
+          {
+            "id": "13bb8fac-0e0e-43ff-8db1-438a39dd4ad0",
+            "itemId": 1639,
+            "quantity": 3,
+            "item": {
+              "name": "Dragon's Breath Herb",
+              "description": "An herb with a spicy, fiery flavor.",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516422/Dungeon/items/Plants/dragonsBreathHerb.jpg"
+            }
+          },
+          {
+            "id": "33be3a16-f5ef-41d8-8f4b-c79841bcf474",
+            "itemId": 1739,
+            "quantity": 3,
+            "item": {
+              "name": "Moonglass",
+              "description": "Glass-like stone with a moonlit glow.",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394448/Dungeon/items/Rocks/moonglass.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1893,
+          "name": "Bloomthorn Echo Key of Druantia",
+          "description": "Key to unlock the seventeenth floor of Druantia Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835440/Dungeon/items/Keys/druantiaKeyOfBloomthornEcho.jpg",
+          "baseCost": 1600,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Intermediate",
+          "experience": 1,
+          "cityIds": [4],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 1600,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "93f0a52b-a355-42a8-8419-9009f13b8069",
+            "itemId": 1913,
+            "quantity": 1,
+            "item": {
+              "name": "Silkfang Orb",
+              "description": "Essential material that is required to craft the seventeenth floor key of Druantia Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835067/Dungeon/items/Orb/silkfangOrb.jpg"
+            }
+          },
+          {
+            "id": "13605c0e-3718-49cf-a169-bb6200a4524b",
+            "itemId": 1539,
+            "quantity": 1,
+            "item": {
+              "name": "Ogre Club",
+              "description": "Dropped by Ogre",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258173/Dungeon/items/Monster%20Drop/ogreClub.jpg"
+            }
+          },
+          {
+            "id": "1e9ceb82-9c38-4943-9e0b-420a66fed6b7",
+            "itemId": 1532,
+            "quantity": 2,
+            "item": {
+              "name": "Minotaur Horns",
+              "description": "Dropped by Minotaur",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258177/Dungeon/items/Monster%20Drop/minotaurHorns.jpg"
+            }
+          },
+          {
+            "id": "82594f54-afee-411a-8e5d-054c80108cbc",
+            "itemId": 1640,
+            "quantity": 3,
+            "item": {
+              "name": "Ebonthorn",
+              "description": "A dark thorny plant often found in cursed places.",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516422/Dungeon/items/Plants/ebonthorn.jpg"
+            }
+          },
+          {
+            "id": "6b1d6dcf-9333-4bf6-ae11-b04b851323dd",
+            "itemId": 1740,
+            "quantity": 3,
+            "item": {
+              "name": "Wyrmshale",
+              "description": "Shale believed to have been touched by dragons.",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394450/Dungeon/items/Rocks/wyrmshale.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1894,
+          "name": "Dewlit Passage Key of Druantia",
+          "description": "Key to unlock the eighteenth floor of Druantia Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835441/Dungeon/items/Keys/druantiaKeyOfDewlitPassage.jpg",
+          "baseCost": 1700,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Intermediate",
+          "experience": 1,
+          "cityIds": [4],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 1700,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "307b89b4-6ea1-483b-bbf4-220e3320235e",
+            "itemId": 1914,
+            "quantity": 1,
+            "item": {
+              "name": "Tideserpent Orb",
+              "description": "Essential material that is required to craft the eighteenth floor key of Druantia Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835068/Dungeon/items/Orb/tideserpentOrb.jpg"
+            }
+          },
+          {
+            "id": "9ed8bc6b-2ed3-4e9b-869f-8ab894a3edbf",
+            "itemId": 1539,
+            "quantity": 1,
+            "item": {
+              "name": "Ogre Club",
+              "description": "Dropped by Ogre",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258173/Dungeon/items/Monster%20Drop/ogreClub.jpg"
+            }
+          },
+          {
+            "id": "59bf9c97-803d-4972-90b4-7000bbe622ee",
+            "itemId": 1533,
+            "quantity": 2,
+            "item": {
+              "name": "Chimera Head",
+              "description": "Dropped by Chimera",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258177/Dungeon/items/Monster%20Drop/chimeraHead.jpg"
+            }
+          },
+          {
+            "id": "a89550d5-5de0-447b-90cd-1c0f32aff626",
+            "itemId": 1641,
+            "quantity": 3,
+            "item": {
+              "name": "Starshard Blossom",
+              "description": "A flower with petals that sparkle like stars.",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516424/Dungeon/items/Plants/starshardBlossom.jpg"
+            }
+          },
+          {
+            "id": "f3f4b16b-0b68-489d-a46b-4ba38e729734",
+            "itemId": 1741,
+            "quantity": 3,
+            "item": {
+              "name": "Thundershard",
+              "description": "Shards that crackle with thunderous energy.",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394448/Dungeon/items/Rocks/thundershard.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1895,
+          "name": "Overgrown Reliquary Key of Druantia",
+          "description": "Key to unlock the nineteenth floor of Druantia Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835443/Dungeon/items/Keys/druantiaKeyOfOvergrownReliquary.jpg",
+          "baseCost": 1800,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Intermediate",
+          "experience": 1,
+          "cityIds": [4],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 1800,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "c9f2ef6f-0775-438e-9445-9ac3261fa389",
+            "itemId": 1915,
+            "quantity": 1,
+            "item": {
+              "name": "Illusory Claw Orb",
+              "description": "Essential material that is required to craft the nineteenth floor key of Druantia Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835069/Dungeon/items/Orb/illusoryClawOrb.jpg"
+            }
+          },
+          {
+            "id": "5e1fdfc6-76bd-4cbf-910b-fd59c53ba0f4",
+            "itemId": 1539,
+            "quantity": 1,
+            "item": {
+              "name": "Ogre Club",
+              "description": "Dropped by Ogre",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258173/Dungeon/items/Monster%20Drop/ogreClub.jpg"
+            }
+          },
+          {
+            "id": "68313890-0a5f-4254-b526-a3d66436de35",
+            "itemId": 1533,
+            "quantity": 2,
+            "item": {
+              "name": "Chimera Head",
+              "description": "Dropped by Chimera",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258177/Dungeon/items/Monster%20Drop/chimeraHead.jpg"
+            }
+          },
+          {
+            "id": "29d71314-b46e-4799-9516-0f561dc0eebe",
+            "itemId": 1642,
+            "quantity": 3,
+            "item": {
+              "name": "Poison Ivy",
+              "description": "A plant that causes severe itching upon contact.",
+              "class": "B",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516424/Dungeon/items/Plants/poisonIvy.jpg"
+            }
+          },
+          {
+            "id": "b40bffaf-8c90-4958-85a1-838749295859",
+            "itemId": 1742,
+            "quantity": 3,
+            "item": {
+              "name": "Earthore",
+              "description": "Ore that feels deeply rooted in the earth.",
+              "class": "B",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394448/Dungeon/items/Rocks/earthore.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1896,
+          "name": "Wyrmbark Refuge Key of Druantia",
+          "description": "Key to unlock the twentieth floor of Druantia Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835444/Dungeon/items/Keys/druantiaKeyOfWyrmbarkRefuge.jpg",
+          "baseCost": 1900,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Intermediate",
+          "experience": 1,
+          "cityIds": [4],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 1900,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "f02a175f-2115-4d76-b3ad-352dd069f501",
+            "itemId": 1916,
+            "quantity": 1,
+            "item": {
+              "name": "Deathcoil Orb",
+              "description": "Essential material that is required to craft the twentieth floor key of Druantia Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835070/Dungeon/items/Orb/deathcoilOrb.jpg"
+            }
+          },
+          {
+            "id": "350e5efa-2ba1-4355-b138-aca6b866ad0f",
+            "itemId": 1539,
+            "quantity": 1,
+            "item": {
+              "name": "Ogre Club",
+              "description": "Dropped by Ogre",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258173/Dungeon/items/Monster%20Drop/ogreClub.jpg"
+            }
+          },
+          {
+            "id": "74144e69-3e3d-46f4-af85-1df55394c589",
+            "itemId": 1534,
+            "quantity": 2,
+            "item": {
+              "name": "Manticore Tail Spikes",
+              "description": "Dropped by Manticore",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258176/Dungeon/items/Monster%20Drop/manticoreTailSpikes.jpg"
+            }
+          },
+          {
+            "id": "a0e4ef00-a89d-4114-99ae-0c5e780409f2",
+            "itemId": 1643,
+            "quantity": 3,
+            "item": {
+              "name": "Firebloom",
+              "description": "A flower that bursts into flame when touched.",
+              "class": "B",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516424/Dungeon/items/Plants/firebloom.jpg"
+            }
+          },
+          {
+            "id": "b322686e-80b9-4609-8f69-72134766c5f6",
+            "itemId": 1743,
+            "quantity": 3,
+            "item": {
+              "name": "Vortexstone",
+              "description": "Stone that seems to twist and swirl in patterns.",
+              "class": "B",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394447/Dungeon/items/Rocks/vortexstone.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1897,
+          "name": "Grovewarden’s Seal Key of Elaria",
+          "description": "Key to unlock the first floor of Lower and Upper Elaria Dungeons",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835446/Dungeon/items/Keys/elariaKeyOfGrovewardensSeal.jpg",
+          "baseCost": 2000,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Intermediate",
+          "experience": 1,
+          "cityIds": [4],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 2000,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "45eea720-513b-493b-9f91-5ccddc2834e3",
+            "itemId": 1917,
+            "quantity": 1,
+            "item": {
+              "name": "Cerebral Echo Orb",
+              "description": "Essential material that is required to craft the first floor key of Elaria Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754835071/Dungeon/items/Orb/cerebralEchoOrb.jpg"
+            }
+          },
+          {
+            "id": "b8f394dd-2979-435d-a370-4821c5730efc",
+            "itemId": 1539,
+            "quantity": 1,
+            "item": {
+              "name": "Ogre Club",
+              "description": "Dropped by Ogre",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258173/Dungeon/items/Monster%20Drop/ogreClub.jpg"
+            }
+          },
+          {
+            "id": "f5b1bb25-43d9-414a-ab41-f95833461bd8",
+            "itemId": 1534,
+            "quantity": 2,
+            "item": {
+              "name": "Manticore Tail Spikes",
+              "description": "Dropped by Manticore",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258176/Dungeon/items/Monster%20Drop/manticoreTailSpikes.jpg"
+            }
+          },
+          {
+            "id": "3453a9f9-545f-4a89-9c43-bd3ba9232532",
+            "itemId": 1644,
+            "quantity": 3,
+            "item": {
+              "name": "Shadowbell",
+              "description": "A bell-shaped flower that absorbs light.",
+              "class": "B",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516424/Dungeon/items/Plants/shadowbell.jpg"
+            }
+          },
+          {
+            "id": "d072c6a5-f8d2-475e-a231-04add4f4d140",
+            "itemId": 1744,
+            "quantity": 3,
+            "item": {
+              "name": "Crystalite",
+              "description": "Clear, crystalline stone found deep underground.",
+              "class": "B",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394447/Dungeon/items/Rocks/crystalite.jpg"
+            }
+          },
+          {
+            "id": "781a9948-c76e-47fe-a735-bbde2bec3dfe",
+            "itemId": 1535,
+            "quantity": 2,
+            "item": {
+              "name": "Medusa Snakes",
+              "description": "Dropped by Medusa",
+              "class": "C",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258175/Dungeon/items/Monster%20Drop/medusaSnakes.jpg"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "total": 20,
+  "totalPages": null,
+  "hasMore": false,
+  "success": true
+}
