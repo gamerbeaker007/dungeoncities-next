@@ -13,6 +13,7 @@ export type ForgeRequirement = {
 export type ForgeRecipe = {
   recipeId: number;
   recipeName: string;
+  description: string;
   recipeImageUrl: string | null;
   cost: number;
   costCurrency: string;

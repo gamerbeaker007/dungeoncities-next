@@ -1,7 +1,4 @@
-import {
-    Box,
-    Typography,
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const staminaCosts = [
   { action: "START_BATTLE", cost: 2 },
@@ -153,7 +150,7 @@ export default function FaqPage() {
                   {cityNames[row.toCity]})
                 </Typography>
                 <Typography variant="body2" fontWeight={600}>
-                  {row.cost}
+                  {row.cost} DR
                 </Typography>
               </Box>
             ))}

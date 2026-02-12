@@ -31,7 +31,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <AppRouterCacheProvider>
           <AppProviders>
-            <Container maxWidth={false} sx={{ py: 4 }}>
+            <Container maxWidth={false} sx={{ py: 1 }}>
               <TopNav />
               {children}
             </Container>

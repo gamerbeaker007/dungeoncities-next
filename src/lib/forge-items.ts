@@ -10,6 +10,7 @@ type ForgeRecipeRaw = {
   recipe?: {
     id?: number;
     name?: string | null;
+    description?: string | null;
     imageUrl?: string | null;
     discountedCost?: number | null;
     baseCost?: number | null;
@@ -60,6 +61,7 @@ function mapRecipe(raw: ForgeRecipeRaw): ForgeRecipe {
   return {
     recipeId,
     recipeName,
+    description: raw.recipe?.description?.trim() ?? "",
     recipeImageUrl: raw.recipe?.imageUrl ?? null,
     cost,
     costCurrency,

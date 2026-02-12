@@ -61,6 +61,7 @@ export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
             >
               <ForgeRecipeCard
                 recipeName={recipe.recipeName}
+                description={recipe.description}
                 recipeImageUrl={recipe.recipeImageUrl}
                 cost={recipe.cost}
                 costCurrency={recipe.costCurrency}

@@ -11,6 +11,7 @@ import Link from "next/link";
 
 type ForgeRecipeCardProps = {
   recipeName: string;
+  description: string;
   recipeImageUrl: string | null;
   cost: number;
   costCurrency: string;
@@ -69,6 +70,7 @@ function RequirementLinks({
 
 export function ForgeRecipeCard({
   recipeName,
+  description,
   recipeImageUrl,
   cost,
   costCurrency,
@@ -80,6 +82,9 @@ export function ForgeRecipeCard({
       <CardContent>
         <Stack spacing={1.5}>
           <Typography variant="h6">{recipeName}</Typography>
+          <Typography variant="caption" color="text.secondary">
+            {description}
+          </Typography>
 
           {recipeImageUrl ? (
             <Box
@@ -104,11 +109,11 @@ export function ForgeRecipeCard({
 
           <RequirementLinks
             requirements={matchedRequirements}
-            title="Item where it's needed"
+            title="Item needed (search term match)"
           />
           <RequirementLinks
             requirements={otherRequirements}
-            title="Other items needed"
+            title="Items needed"
           />
         </Stack>
       </CardContent>
