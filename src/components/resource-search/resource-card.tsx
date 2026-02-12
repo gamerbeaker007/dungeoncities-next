@@ -16,12 +16,16 @@ export function ResourceCard({ result }: ResourceCardProps) {
           </Typography>
 
           {result.nameWarning ? (
-            <Typography variant="body2" color="warning.main">
-              Warning: original Unknown &quot;???&quot;
-              {result.derivedItemName
-                ? " — using derived name instead"
-                : " — no derived name available"}
-            </Typography>
+            <Stack spacing={0}>
+              <Typography variant="body2" color="warning.main">
+                Warning: original Unknown &quot;???&quot;
+              </Typography>
+              <Typography variant="caption" color="warning.main">
+                {result.derivedItemName
+                  ? "Using derived name instead"
+                  : "No derived name available"}
+              </Typography>
+            </Stack>
           ) : null}
 
           <Box
@@ -124,7 +128,7 @@ export function ResourceCard({ result }: ResourceCardProps) {
             First discovered: {result.location}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Drop chance: {result.dropChance ?? "Unknown"}
+            Drop chance: {result.dropChance === "0" ? "??" : result.dropChance ?? "Unknown"}
           </Typography>
         </Stack>
       </CardContent>
