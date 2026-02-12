@@ -46,15 +46,15 @@ const cityNames: Record<number, string> = {
 };
 
 const travelCosts = [
-  { fromCity: 1, toCity: 2, cost: 1000 },
-  { fromCity: 1, toCity: 3, cost: 1000 },
+  { fromCity: 1, toCity: 2, cost: 2000 },
+  { fromCity: 1, toCity: 3, cost: 2000 },
   { fromCity: 1, toCity: 4, cost: 2000 },
   { fromCity: 1, toCity: 5, cost: 2000 },
-  { fromCity: 2, toCity: 3, cost: 1000 },
+  { fromCity: 2, toCity: 3, cost: 2000 },
   { fromCity: 2, toCity: 4, cost: 2000 },
   { fromCity: 2, toCity: 5, cost: 2000 },
-  { fromCity: 3, toCity: 4, cost: 500 },
-  { fromCity: 3, toCity: 5, cost: 500 },
+  { fromCity: 3, toCity: 4, cost: 2000 },
+  { fromCity: 3, toCity: 5, cost: 2000 },
   { fromCity: 4, toCity: 5, cost: 2000 },
 ];
 
@@ -130,6 +130,9 @@ export default function FaqPage() {
         <Box>
           <Typography variant="h5" component="h2" gutterBottom>
             Travel Cost
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+            Currently All travel costs are 2000 DR.
           </Typography>
           <Box>
             {travelCosts.map((row) => (
