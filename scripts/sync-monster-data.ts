@@ -30,7 +30,12 @@ if (!Number.isFinite(delayMs)) {
   throw new Error("REQUEST_DELAY_MS must be a valid number.");
 }
 
-const outputPath = path.join(process.cwd(), "src", "data", "monster-details.json");
+const outputPath = path.join(
+  process.cwd(),
+  "src",
+  "data",
+  "monster-details.json",
+);
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const dcApi = createDcApiClient({ token, apiUrl });
@@ -74,6 +79,12 @@ function mapMonster(detail: DCMonsterDetail) {
     monsterType: detail.monster?.type ?? "Unknown",
     monsterClass: detail.monster?.class ?? "Unknown",
     monsterImageUrl: detail.monster?.imageUrl ?? null,
+    totalEncounters: detail.totalEncounters ?? 0,
+    totalKills: detail.totalKills ?? 0,
+    totalDefeats: detail.totalDefeats ?? 0,
+    totalBossEncounters: detail.totalBossEncounters ?? 0,
+    totalBossKills: detail.totalBossKills ?? 0,
+    totalBossDefeats: detail.totalBossDefeats ?? 0,
     firstEncounter: {
       encounteredAt: detail.firstEncounteredAt ?? null,
       dungeonId: detail.firstEncounteredDungeonId ?? null,
@@ -85,7 +96,9 @@ function mapMonster(detail: DCMonsterDetail) {
     drops: drops.map((drop) => {
       const apiItemName = drop.item?.name ?? "Unknown";
       const hasPlaceholderName = apiItemName.trim() === "???";
-      const derivedItemName = deriveItemNameFromImageUrl(drop.item?.imageUrl ?? null);
+      const derivedItemName = deriveItemNameFromImageUrl(
+        drop.item?.imageUrl ?? null,
+      );
 
       return {
         itemId: drop.itemId ?? null,
@@ -104,7 +117,8 @@ function mapMonster(detail: DCMonsterDetail) {
 
 async function main() {
   console.log("Fetching monster dex list...");
-  const dexResponse = await dcApi.postAction<DCDexResponse>(getDexDataPayload());
+  const dexResponse =
+    await dcApi.postAction<DCDexResponse>(getDexDataPayload());
 
   if (!dexResponse?.success) {
     throw new Error("First call did not return success=true.");
@@ -162,7 +176,7 @@ async function main() {
     generatedAt: new Date().toISOString(),
     requestDelayMs: delayMs,
     totalDiscoveries: discoveries.length,
-    totalMonsters: monsters.length,
+    totalMonsters: dexResponse.data?.totalMonstersInGame ?? 0,
     failedMonsterIds,
     monsters,
   };

@@ -10,12 +10,20 @@ export type ResourceResult = {
   monsterImageUrl: string | null;
   monsterName: string;
   location: string;
+  totalKills: number;
+  totalEncounters: number;
 };
 
 export type MonsterRecord = {
   monsterId: number;
   monsterName: string;
   monsterImageUrl?: string | null;
+  totalEncounters?: number;
+  totalKills?: number;
+  totalDefeats?: number;
+  totalBossEncounters?: number;
+  totalBossKills?: number;
+  totalBossDefeats?: number;
   firstEncounter?: {
     dungeonName?: string | null;
     floorName?: string | null;

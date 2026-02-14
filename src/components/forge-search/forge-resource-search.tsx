@@ -64,8 +64,7 @@ export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
                 recipeImageUrl={recipe.recipeImageUrl}
                 cost={recipe.cost}
                 costCurrency={recipe.costCurrency}
-                matchedRequirements={recipe.matchedRequirements}
-                otherRequirements={recipe.otherRequirements}
+                requirements={recipe.requirements}
               />
             </Box>
           ))}

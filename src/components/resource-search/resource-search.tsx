@@ -11,6 +11,13 @@ import { useMemo } from "react";
 
 type ResourceSearchProps = {
   initialRows: ResourceResult[];
+  discoveryStats: {
+    totalMonsters: number;
+    totalDiscoveredCount: number;
+    totalPercentage: number;
+    fullyDiscoveredCount: number;
+    fullyPercentage: number;
+  };
 };
 
 function toPositiveInt(value: string | null | undefined, fallback: number) {
@@ -32,7 +39,10 @@ function buildSearchString(query: string, page: number) {
   return params.toString();
 }
 
-export function ResourceSearch({ initialRows }: ResourceSearchProps) {
+export function ResourceSearch({
+  initialRows,
+  discoveryStats,
+}: ResourceSearchProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -91,6 +101,15 @@ export function ResourceSearch({ initialRows }: ResourceSearchProps) {
         <Typography variant="body1" color="text.secondary">
           Search resources with case-insensitive match and see which monster
           drops them and where that monster was first discovered.
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+          Monsters discovered: {discoveryStats.totalDiscoveredCount} out of{" "}
+          {discoveryStats.totalMonsters} ({discoveryStats.totalPercentage}%)
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Monsters fully discovered: {discoveryStats.fullyDiscoveredCount} out
+          of {discoveryStats.totalDiscoveredCount} (
+          {discoveryStats.fullyPercentage}%)
         </Typography>
       </Box>
 

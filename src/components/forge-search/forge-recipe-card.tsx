@@ -7,7 +7,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import Link from "next/link";
+import { ForgeItem } from "./forge-item";
 
 type ForgeRecipeCardProps = {
   recipeName: string;
@@ -15,58 +15,8 @@ type ForgeRecipeCardProps = {
   recipeImageUrl: string | null;
   cost: number;
   costCurrency: string;
-  matchedRequirements: ForgeRequirement[];
-  otherRequirements: ForgeRequirement[];
-};
-
-function RequirementLinks({
-  requirements,
-  title,
-}: {
   requirements: ForgeRequirement[];
-  title: string;
-}) {
-  if (requirements.length === 0) {
-    return null;
-  }
-
-  return (
-    <Stack spacing={0.75}>
-      <Typography variant="body2" color="text.secondary">
-        {title}
-      </Typography>
-      {requirements.map((requirement) => (
-        <Stack
-          key={`${requirement.itemId ?? "na"}-${requirement.name}`}
-          direction="row"
-          spacing={1}
-          alignItems="center"
-        >
-          {requirement.imageUrl ? (
-            <Box
-              component="img"
-              src={requirement.imageUrl}
-              alt={requirement.name}
-              sx={{
-                width: 28,
-                height: 28,
-                objectFit: "cover",
-                borderRadius: 0.5,
-              }}
-            />
-          ) : null}
-
-          <Typography variant="body2">
-            {requirement.quantity}x{" "}
-            <Link suppressHydrationWarning href={requirement.searchHref}>
-              {requirement.name}
-            </Link>
-          </Typography>
-        </Stack>
-      ))}
-    </Stack>
-  );
-}
+};
 
 export function ForgeRecipeCard({
   recipeName,
@@ -74,11 +24,13 @@ export function ForgeRecipeCard({
   recipeImageUrl,
   cost,
   costCurrency,
-  matchedRequirements,
-  otherRequirements,
+  requirements,
 }: ForgeRecipeCardProps) {
   return (
-    <Card variant="outlined" sx={{  maxWidth: 400, height: "100%", overflow: "hidden" }}>
+    <Card
+      variant="outlined"
+      sx={{ maxWidth: 400, height: "100%", overflow: "hidden" }}
+    >
       <CardContent>
         <Stack spacing={0.5}>
           <Typography variant="h6">{recipeName}</Typography>
@@ -107,14 +59,18 @@ export function ForgeRecipeCard({
 
           <Divider />
 
-          <RequirementLinks
-            requirements={matchedRequirements}
-            title="Item needed (search term match)"
-          />
-          <RequirementLinks
-            requirements={otherRequirements}
-            title="Items needed"
-          />
+          <Stack spacing={0.75}>
+            <Typography variant="body2" color="text.secondary">
+              Required Items
+            </Typography>
+            {requirements.map((requirement) => (
+              <ForgeItem
+                key={`${requirement.itemId ?? "na"}-${requirement.name}`}
+                requirement={requirement}
+                isMatchedTerm={requirement.matched ?? false}
+              />
+            ))}
+          </Stack>
         </Stack>
       </CardContent>
     </Card>

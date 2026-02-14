@@ -8,6 +8,7 @@ export type ForgeRequirement = {
   quantity: number;
   imageUrl: string | null;
   searchHref: string;
+  matched?: boolean;
 };
 
 export type ForgeRecipe = {
@@ -20,7 +21,4 @@ export type ForgeRecipe = {
   requirements: ForgeRequirement[];
 };
 
-export type ForgeRecipeSearchResult = ForgeRecipe & {
-  matchedRequirements: ForgeRequirement[];
-  otherRequirements: ForgeRequirement[];
-};
+export type ForgeRecipeSearchResult = ForgeRecipe;

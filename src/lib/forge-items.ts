@@ -26,9 +26,14 @@ type ForgeRecipeRaw = {
   }>;
 };
 
-function buildResourceSearchHref(itemName: string) {
+function buildResourceSearchHref(itemId: number | null, itemName: string) {
   const params = new URLSearchParams();
-  params.set("q", itemName);
+  // Use itemId if available, otherwise fall back to name
+  if (itemId !== null && itemId > 0) {
+    params.set("q", String(itemId));
+  } else {
+    params.set("q", itemName);
+  }
   return `/?${params.toString()}`;
 }
 
@@ -47,13 +52,14 @@ function mapRecipe(raw: ForgeRecipeRaw): ForgeRecipe {
 
   const requirements: ForgeRequirement[] = (raw.requirements ?? []).map(
     (requirement) => {
+      const itemId = requirement.itemId ?? null;
       const name = normalizeRequirementName(requirement.item?.name);
       return {
-        itemId: requirement.itemId ?? null,
+        itemId,
         name,
         quantity: requirement.quantity ?? 0,
         imageUrl: requirement.item?.imageUrl ?? null,
-        searchHref: buildResourceSearchHref(name),
+        searchHref: buildResourceSearchHref(itemId, name),
       };
     },
   );
@@ -80,47 +86,78 @@ export function getForgeRecipes() {
   return allForgeRecipes;
 }
 
-export function searchForgeRecipes(query: string) {
+export function searchForgeRecipes(query: string): ForgeRecipeSearchResult[] {
   const normalized = query.trim().toLowerCase();
 
   if (!normalized) {
-    return allForgeRecipes.map((recipe) => ({
-      ...recipe,
-      matchedRequirements: recipe.requirements,
-      otherRequirements: [] as ForgeRequirement[],
-    }));
+    return allForgeRecipes;
   }
+
+  // Check if query is a number (for ID search)
+  const queryAsNumber = Number(normalized);
+  const isIdSearch = Number.isInteger(queryAsNumber) && queryAsNumber > 0;
 
   return allForgeRecipes
     .map((recipe) => {
-      const matchedRequirements = recipe.requirements.filter((requirement) =>
-        requirement.name.toLowerCase().includes(normalized),
-      );
+      // Check if any requirement matches
+      const hasMatchingRequirement = recipe.requirements.some((requirement) => {
+        if (isIdSearch) {
+          return requirement.itemId === queryAsNumber;
+        }
+        return requirement.name.toLowerCase().includes(normalized);
+      });
 
       const recipeMatches = recipe.recipeName
         .toLowerCase()
         .includes(normalized);
-      if (!recipeMatches && matchedRequirements.length === 0) {
+
+      if (!recipeMatches && !hasMatchingRequirement) {
         return null;
       }
 
-      const otherRequirements = recipe.requirements.filter(
-        (requirement) =>
-          !matchedRequirements.some(
-            (matchedRequirement) =>
-              matchedRequirement.itemId === requirement.itemId &&
-              matchedRequirement.name === requirement.name,
-          ),
-      );
+      // Add matched flag to each requirement
+      const requirementsWithMatch = recipe.requirements.map((requirement) => {
+        const matches = isIdSearch
+          ? requirement.itemId === queryAsNumber
+          : requirement.name.toLowerCase().includes(normalized);
+
+        return {
+          ...requirement,
+          matched: matches,
+        };
+      });
 
       return {
         ...recipe,
-        matchedRequirements:
-          matchedRequirements.length > 0
-            ? matchedRequirements
-            : recipe.requirements,
-        otherRequirements,
-      };
+        requirements: requirementsWithMatch,
+      } as ForgeRecipeSearchResult;
     })
     .filter((recipe): recipe is ForgeRecipeSearchResult => recipe !== null);
+}
+
+export function getForgeRecipeDiscoveryStats() {
+  const totalRecipes = allForgeRecipes.length;
+
+  // Count fully discovered recipes (no "Unknown" requirements)
+  const fullyDiscoveredCount = allForgeRecipes.filter((recipe) => {
+    if (recipe.requirements.length === 0) {
+      return false; // No requirements means not fully discovered
+    }
+
+    // Check if all requirements have known names
+    return recipe.requirements.every((requirement) => {
+      return requirement.name !== "Unknown";
+    });
+  }).length;
+
+  const percentage =
+    totalRecipes > 0
+      ? Math.round((fullyDiscoveredCount / totalRecipes) * 100)
+      : 0;
+
+  return {
+    totalRecipes,
+    fullyDiscoveredCount,
+    percentage,
+  };
 }

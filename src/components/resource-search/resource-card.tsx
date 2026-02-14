@@ -7,7 +7,10 @@ type ResourceCardProps = {
 
 export function ResourceCard({ result }: ResourceCardProps) {
   return (
-    <Card variant="outlined" sx={{ maxWidth: 400, height: "100%", overflow: "hidden" }}>
+    <Card
+      variant="outlined"
+      sx={{ maxWidth: 400, height: "100%", overflow: "hidden" }}
+    >
       <CardContent sx={{ minWidth: 0 }}>
         <Stack spacing={1.5} sx={{ minWidth: 0 }}>
           <Typography variant="h6">
@@ -31,7 +34,10 @@ export function ResourceCard({ result }: ResourceCardProps) {
           <Box
             sx={{
               display: "grid",
-              gridTemplateColumns: { xs: "1fr", sm: "repeat(2, minmax(0, 1fr))" },
+              gridTemplateColumns: {
+                xs: "1fr",
+                sm: "repeat(2, minmax(0, 1fr))",
+              },
               gap: 1.5,
               minWidth: 0,
             }}
@@ -128,7 +134,13 @@ export function ResourceCard({ result }: ResourceCardProps) {
             First discovered: {result.location}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Drop chance: {result.dropChance === "0" ? "??" : result.dropChance ?? "Unknown"}
+            Drop chance:{" "}
+            {result.dropChance === "0"
+              ? "??"
+              : (`${result.dropChance ?? "Unknown"}`) + "%"}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Kills: {result.totalKills} / Encounters: {result.totalEncounters}
           </Typography>
         </Stack>
       </CardContent>
