@@ -16,6 +16,20 @@ export type ResourceResult = {
   totalEncounters: number;
 };
 
+export type ItemDrop = {
+  itemId: number;
+  itemName: string;
+  derivedItemName: string | null;
+  itemNameWarning: boolean;
+  itemClass: string;
+  itemImageUrl: string;
+  dropChance: number;
+  minQuantity: number;
+  maxQuantity: number;
+  bossDrop: boolean;
+  unlocked: boolean;
+};
+
 export type MonsterRecord = {
   monsterId: number;
   monsterName: string;
@@ -35,17 +49,5 @@ export type MonsterRecord = {
     floorName: string;
     floorNumber: number;
   };
-  drops: Array<{
-    itemId: number;
-    itemName: string;
-    derivedItemName: string | null;
-    itemNameWarning: boolean;
-    itemClass: string;
-    itemImageUrl: string;
-    dropChance: number;
-    minQuantity: number;
-    maxQuantity: number;
-    bossDrop: boolean;
-    unlocked: boolean;
-  }>;
+  drops: ItemDrop[];
 };

@@ -1,3 +1,4 @@
+import { formatDropQty } from "@/lib/format-utils";
 import type { ResourceResult } from "@/types/resource";
 import { Box, Card, CardContent, Stack, Typography } from "@mui/material";
 
@@ -141,12 +142,7 @@ export function ResourceCard({ result }: ResourceCardProps) {
           </Typography>
           {result.dropChance !== 0 && (
             <Typography variant="body2" color="text.secondary">
-              Drop Qty:{" "}
-              {result.minQuantity !== null && result.maxQuantity !== null
-                ? result.minQuantity === result.maxQuantity
-                  ? result.minQuantity
-                  : `${result.minQuantity}-${result.maxQuantity}`
-                : "Unknown"}
+              Drop Qty: {formatDropQty(result.minQuantity, result.maxQuantity)}
             </Typography>
           )}
           <Typography variant="body2" color="text.secondary">

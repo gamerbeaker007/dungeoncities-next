@@ -1,11 +1,9 @@
 import monsterData from "@/data/monster-details.json";
-import type { MonsterRecord, ResourceResult } from "@/types/resource";
-import { toPositiveInt, toNumber } from "./number-utils";
+import type { ItemDrop, MonsterRecord, ResourceResult } from "@/types/resource";
+import { toNumber, toPositiveInt } from "./format-utils";
 
 const monsters = (monsterData.monsters ?? []) as MonsterRecord[];
 const totalMonstersInGame = monsterData.totalMonsters ?? 0;
-
-
 
 const allResourceRows = buildAllResourceRows();
 
@@ -76,8 +74,7 @@ function buildAllResourceRows(): ResourceResult[] {
   const rows: ResourceResult[] = [];
 
   for (const monster of monsters) {
-    const dungeonName =
-      monster.firstEncounter.dungeonName ?? "Unknown dungeon";
+    const dungeonName = monster.firstEncounter.dungeonName ?? "Unknown dungeon";
     const floorName = monster.firstEncounter.floorName;
     const floorNumber = monster.firstEncounter.floorNumber;
     const floorLabel =
@@ -122,29 +119,23 @@ function buildAllResourceRows(): ResourceResult[] {
 }
 
 export function getMonsterDiscoveryStats() {
-  // Count monsters that have been discovered (have at least one unlocked drop)
-  const totalDiscoveredCount = monsters.filter((monster) => {
-    const unlockedDrops = (monster.drops ?? []).filter((drop) => drop.unlocked);
-    return unlockedDrops.length > 0;
-  }).length;
+  const discoveryList = getMonsterDiscoveryList();
+  const totalCountEncountered = discoveryList.filter(
+    (monster) => monster.totalEncounters > 0,
+  ).length;
+  const totalDiscoveredCount = discoveryList.filter(
+    (monster) => monster.discovered,
+  ).length;
+  const fullyDiscoveredCount = discoveryList.filter(
+    (monster) => monster.fullyDiscovered,
+  ).length;
 
-  // Count fully discovered monsters (no ??? drops)
-  const fullyDiscoveredCount = monsters.filter((monster) => {
-    const unlockedDrops = (monster.drops ?? []).filter((drop) => drop.unlocked);
-    if (unlockedDrops.length === 0) {
-      return false; // No drops means not fully discovered
-    }
+  const totalEncounteredPercentage =
+    totalMonstersInGame > 0
+      ? Math.round((totalCountEncountered / totalMonstersInGame) * 100)
+      : 0;
 
-    // Check if all unlocked drops are identified (no ???)
-    return unlockedDrops.every((drop) => {
-      const itemName = (drop.itemName ?? "???").trim();
-      const hasPlaceholder =
-        Boolean(drop.itemNameWarning) || itemName === "???";
-      return !hasPlaceholder;
-    });
-  }).length;
-
-  const totalPercentage =
+  const totalDiscoveredPercentage =
     totalMonstersInGame > 0
       ? Math.round((totalDiscoveredCount / totalMonstersInGame) * 100)
       : 0;
@@ -155,65 +146,47 @@ export function getMonsterDiscoveryStats() {
       : 0;
 
   return {
-    totalMonsters: totalMonstersInGame,
+    totalMonstersInGame,
+    totalCountEncountered,
+    totalEncounteredPercentage,
     totalDiscoveredCount,
-    totalPercentage,
+    totalDiscoveredPercentage,
     fullyDiscoveredCount,
     fullyPercentage,
   };
 }
 
-export type UndiscoveredMonster = {
-  monsterId: number;
-  monsterName: string;
-  monsterImageUrl: string | null;
-  location: string;
+export type MonsterDiscoveryListItem = MonsterRecord & {
   unidentifiedDropCount: number;
-  totalKills: number;
-  totalEncounters: number;
+  discovered: boolean;
+  fullyDiscovered: boolean;
 };
 
-export function getUndiscoveredMonsters(): UndiscoveredMonster[] {
-  return monsters
-    .filter((monster) => {
-      const unlockedDrops = (monster.drops ?? []).filter(
-        (drop) => drop.unlocked,
-      );
-      if (unlockedDrops.length === 0) {
-        return false;
-      }
+function isDropIdentified(drop: ItemDrop): boolean {
+  return drop.unlocked && !Boolean(drop.itemNameWarning) && drop.dropChance > 0;
+}
 
-      // Has undiscovered items (??? items)
-      return unlockedDrops.some((drop) => {
-        const itemName = (drop.itemName ?? "???").trim();
-        const hasPlaceholder =
-          Boolean(drop.itemNameWarning) || itemName === "???";
-        return hasPlaceholder;
-      });
-    })
-    .map((monster) => {
-      const dungeonName =
-        monster.firstEncounter?.dungeonName ?? "Unknown dungeon";
-      const floorName = monster.firstEncounter?.floorName;
-      const floorNumber = monster.firstEncounter?.floorNumber;
-      const floorLabel =
-        floorName ?? (floorNumber ? `Floor ${floorNumber}` : "Unknown floor");
-      const location = `${dungeonName} / ${floorLabel}`;
+function mapMonsterToDiscoveryItem(
+  monster: MonsterRecord,
+): MonsterDiscoveryListItem {
+  const drops = monster.drops;
 
-      const unidentifiedDropCount = (monster.drops ?? []).filter((drop) => {
-        if (!drop.unlocked) return false;
-        const itemName = (drop.itemName ?? "???").trim();
-        return Boolean(drop.itemNameWarning) || itemName === "???";
-      }).length;
+  const identifiedDrops = drops.filter((d) => isDropIdentified(d));
+  const unidentifiedDropCount = drops.length - identifiedDrops.length;
+  if (unidentifiedDropCount === 0) {
+    console.log(`Monster ${monster.monsterName} has all drops identified.`);
+  }
+  const discovered = identifiedDrops.length > 0;
+  const fullyDiscovered = discovered && unidentifiedDropCount === 0;
 
-      return {
-        monsterId: monster.monsterId,
-        monsterName: monster.monsterName,
-        monsterImageUrl: monster.monsterImageUrl ?? null,
-        location,
-        unidentifiedDropCount,
-        totalKills: monster.totalKills ?? 0,
-        totalEncounters: monster.totalEncounters ?? 0,
-      };
-    });
+  return {
+    ...monster,
+    unidentifiedDropCount,
+    discovered,
+    fullyDiscovered,
+  };
+}
+
+export function getMonsterDiscoveryList(): MonsterDiscoveryListItem[] {
+  return monsters.map(mapMonsterToDiscoveryItem);
 }

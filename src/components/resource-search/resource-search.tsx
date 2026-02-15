@@ -12,9 +12,11 @@ import { useMemo } from "react";
 type ResourceSearchProps = {
   initialRows: ResourceResult[];
   discoveryStats: {
-    totalMonsters: number;
+    totalMonstersInGame: number;
+    totalCountEncountered: number;
+    totalEncounteredPercentage: number;
     totalDiscoveredCount: number;
-    totalPercentage: number;
+    totalDiscoveredPercentage: number;
     fullyDiscoveredCount: number;
     fullyPercentage: number;
   };
@@ -103,12 +105,18 @@ export function ResourceSearch({
           drops them and where that monster was first discovered.
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-          Monsters discovered: {discoveryStats.totalDiscoveredCount} out of{" "}
-          {discoveryStats.totalMonsters} ({discoveryStats.totalPercentage}%)
+          Monsters encountered: {discoveryStats.totalCountEncountered} out of{" "}
+          {discoveryStats.totalMonstersInGame} (
+          {discoveryStats.totalEncounteredPercentage}%)
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Monsters basics discovered: {discoveryStats.totalDiscoveredCount} out
+          of {discoveryStats.totalMonstersInGame} (
+          {discoveryStats.totalDiscoveredPercentage}%)
         </Typography>
         <Typography variant="body2" color="text.secondary">
           Monsters fully discovered: {discoveryStats.fullyDiscoveredCount} out
-          of {discoveryStats.totalDiscoveredCount} (
+          of {discoveryStats.totalMonstersInGame} (
           {discoveryStats.fullyPercentage}%)
         </Typography>
       </Box>

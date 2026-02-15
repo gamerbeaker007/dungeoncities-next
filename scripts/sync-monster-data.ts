@@ -3,7 +3,7 @@ import {
   getDexDataPayload,
   getMonsterDetailsPayload,
 } from "@/lib/dc-api";
-import { toNumber } from "@/lib/number-utils";
+import { toNumber } from "@/lib/format-utils";
 import {
   DCDexResponse,
   DCMonsterDetail,
@@ -90,15 +90,14 @@ function mapMonster(detail: DCMonsterDetail): MonsterRecord {
       encounteredAt: detail.firstEncounteredAt,
       dungeonId: detail.firstEncounteredDungeonId,
       dungeonName: detail.dungeonInfo?.name,
-      floorNumber: detail.floorInfo?.floorNumber ?? detail.firstEncounteredFloor,
+      floorNumber:
+        detail.floorInfo?.floorNumber ?? detail.firstEncounteredFloor,
       floorName: detail.floorInfo?.name,
     },
     drops: drops.map((drop) => {
       const apiItemName = drop.item?.name ?? "???";
       const hasPlaceholderName = apiItemName.trim() === "???";
-      const derivedItemName = deriveItemNameFromImageUrl(
-        drop.item?.imageUrl,
-      );
+      const derivedItemName = deriveItemNameFromImageUrl(drop.item?.imageUrl);
 
       return {
         itemId: drop.itemId,
