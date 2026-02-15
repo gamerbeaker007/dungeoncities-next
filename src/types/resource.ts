@@ -1,13 +1,15 @@
 export type ResourceResult = {
   key: string;
   resourceName: string;
-  originalItemName: string | null;
+  originalItemName: string;
   derivedItemName: string | null;
   nameWarning: boolean;
-  resourceId: number | null;
-  itemImageUrl: string | null;
-  dropChance: string | null;
-  monsterImageUrl: string | null;
+  resourceId: number;
+  itemImageUrl: string;
+  dropChance: number;
+  minQuantity: number;
+  maxQuantity: number;
+  monsterImageUrl: string;
   monsterName: string;
   location: string;
   totalKills: number;
@@ -17,25 +19,33 @@ export type ResourceResult = {
 export type MonsterRecord = {
   monsterId: number;
   monsterName: string;
-  monsterImageUrl?: string | null;
-  totalEncounters?: number;
-  totalKills?: number;
-  totalDefeats?: number;
-  totalBossEncounters?: number;
-  totalBossKills?: number;
-  totalBossDefeats?: number;
-  firstEncounter?: {
-    dungeonName?: string | null;
-    floorName?: string | null;
-    floorNumber?: number | null;
+  monsterType: string;
+  monsterClass: string;
+  monsterImageUrl: string;
+  totalEncounters: number;
+  totalKills: number;
+  totalDefeats: number;
+  totalBossEncounters: number;
+  totalBossKills: number;
+  totalBossDefeats: number;
+  firstEncounter: {
+    encounteredAt: string;
+    dungeonId: string;
+    dungeonName: string;
+    floorName: string;
+    floorNumber: number;
   };
-  drops?: Array<{
-    itemId?: number | null;
-    itemName?: string | null;
-    derivedItemName?: string | null;
-    itemNameWarning?: boolean;
-    itemImageUrl?: string | null;
-    dropChance?: string | number | null;
-    unlocked?: boolean;
+  drops: Array<{
+    itemId: number;
+    itemName: string;
+    derivedItemName: string | null;
+    itemNameWarning: boolean;
+    itemClass: string;
+    itemImageUrl: string;
+    dropChance: number;
+    minQuantity: number;
+    maxQuantity: number;
+    bossDrop: boolean;
+    unlocked: boolean;
   }>;
 };

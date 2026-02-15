@@ -135,10 +135,20 @@ export function ResourceCard({ result }: ResourceCardProps) {
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Drop chance:{" "}
-            {result.dropChance === "0"
+            {result.dropChance === 0
               ? "??"
-              : (`${result.dropChance ?? "Unknown"}`) + "%"}
+              : `${result.dropChance ?? "Unknown"}` + "%"}
           </Typography>
+          {result.dropChance !== 0 && (
+            <Typography variant="body2" color="text.secondary">
+              Drop Qty:{" "}
+              {result.minQuantity !== null && result.maxQuantity !== null
+                ? result.minQuantity === result.maxQuantity
+                  ? result.minQuantity
+                  : `${result.minQuantity}-${result.maxQuantity}`
+                : "Unknown"}
+            </Typography>
+          )}
           <Typography variant="body2" color="text.secondary">
             Kills: {result.totalKills} / Encounters: {result.totalEncounters}
           </Typography>

@@ -1,28 +1,13 @@
 import monsterData from "@/data/monster-details.json";
 import type { MonsterRecord, ResourceResult } from "@/types/resource";
+import { toPositiveInt, toNumber } from "./number-utils";
 
 const monsters = (monsterData.monsters ?? []) as MonsterRecord[];
 const totalMonstersInGame = monsterData.totalMonsters ?? 0;
 
-const allResourceRows = buildAllResourceRows();
-function toPositiveInt(value: string | undefined, fallback: number) {
-  const parsed = Number(value);
-  if (!Number.isFinite(parsed) || parsed < 1) {
-    return fallback;
-  }
-  return Math.floor(parsed);
-}
 
-function normalizeDropChance(dropChance: string | number | null | undefined) {
-  if (dropChance === null || dropChance === undefined) {
-    return null;
-  }
-  if (typeof dropChance === "number") {
-    return String(dropChance);
-  }
-  const value = dropChance.trim();
-  return value.length ? value : null;
-}
+
+const allResourceRows = buildAllResourceRows();
 
 export function getResourceSearchData(options: {
   queryParam?: string;
@@ -92,9 +77,9 @@ function buildAllResourceRows(): ResourceResult[] {
 
   for (const monster of monsters) {
     const dungeonName =
-      monster.firstEncounter?.dungeonName ?? "Unknown dungeon";
-    const floorName = monster.firstEncounter?.floorName;
-    const floorNumber = monster.firstEncounter?.floorNumber;
+      monster.firstEncounter.dungeonName ?? "Unknown dungeon";
+    const floorName = monster.firstEncounter.floorName;
+    const floorNumber = monster.firstEncounter.floorNumber;
     const floorLabel =
       floorName ?? (floorNumber ? `Floor ${floorNumber}` : "Unknown floor");
     const location = `${dungeonName} / ${floorLabel}`;
@@ -116,13 +101,15 @@ function buildAllResourceRows(): ResourceResult[] {
       rows.push({
         key: `${monster.monsterId}-${drop.itemId ?? "na"}-${resourceName}-${dropIndex}`,
         resourceName,
-        originalItemName: originalItemName || null,
+        originalItemName: originalItemName,
         derivedItemName: derivedItemName,
         nameWarning: hasPlaceholderName,
-        resourceId: drop.itemId ?? null,
-        itemImageUrl: drop.itemImageUrl ?? null,
-        dropChance: normalizeDropChance(drop.dropChance),
-        monsterImageUrl: monster.monsterImageUrl ?? null,
+        resourceId: drop.itemId,
+        itemImageUrl: drop.itemImageUrl,
+        dropChance: toNumber(drop.dropChance),
+        minQuantity: toNumber(drop.minQuantity),
+        maxQuantity: toNumber(drop.maxQuantity),
+        monsterImageUrl: monster.monsterImageUrl ?? "",
         monsterName: monster.monsterName,
         location,
         totalKills: monster.totalKills ?? 0,

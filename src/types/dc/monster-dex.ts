@@ -1,115 +1,115 @@
 export type DCDexDiscovery = {
-  monsterId?: number;
+  monsterId: number;
 };
 
 export type DCDexDiscoveryStats = {
-  totalDiscovered?: number;
-  regularDiscovered?: number | string;
-  bossDiscovered?: number | string;
-  completionPercentage?: number;
-  totalKills?: number | string;
-  totalBossKills?: number | string;
+  totalDiscovered: number;
+  regularDiscovered: number | string;
+  bossDiscovered: number | string;
+  completionPercentage: number;
+  totalKills: number | string;
+  totalBossKills: number | string;
 };
 
 export type DCDexResponse = {
-  success?: boolean;
-  data?: {
-    discoveries?: DCDexDiscovery[];
-    stats?: DCDexDiscoveryStats;
-    totalMonstersInGame?: number;
+  success: boolean;
+  data: {
+    discoveries: DCDexDiscovery[];
+    stats: DCDexDiscoveryStats;
+    totalMonstersInGame: number;
   };
 };
 
 export type DCItem = {
-  itemId?: number;
+  itemId: number;
   name?: string | null;
-  class?: string | null;
-  imageUrl?: string | null;
+  class: string;
+  imageUrl: string;
 };
 
 export type DCMonsterDrop = {
-  id?: string;
-  monsterDropId?: number;
-  monsterId?: number;
-  itemId?: number | null;
-  dropChance?: string | number | null;
-  minQuantity?: string | number | null;
-  maxQuantity?: string | number | null;
-  createdAt?: string | null;
-  updatedAt?: string | null;
-  bossDrop?: boolean;
+  id: string;
+  monsterDropId: number;
+  monsterId: number;
+  itemId: number;
+  dropChance: string;
+  minQuantity: string;
+  maxQuantity: string;
+  createdAt: string;
+  updatedAt: string;
+  bossDrop: boolean;
   item?: DCItem | null;
-  unlocked?: boolean;
+  unlocked: boolean;
 };
 
 export type DCDungeonInfo = {
-  dungeonId?: number;
-  name?: string | null;
-  totalFloors?: number;
+  dungeonId: number;
+  name: string;
+  totalFloors: number;
 };
 
 export type DCFloorInfo = {
-  floorId?: number;
-  name?: string | null;
-  floorNumber?: number | null;
-  class?: string | null;
+  floorId: number;
+  name: string;
+  floorNumber?: number;
+  class?: string;
 };
 
 export type DCMonster = {
-  monsterId?: number;
-  name?: string | null;
-  type?: string | null;
-  class?: string | null;
-  minHp?: number | null;
-  maxHp?: number | null;
-  minAttack?: number | null;
-  maxAttack?: number | null;
-  minDefense?: number | null;
-  maxDefense?: number | null;
-  stamina?: number | null;
-  experienceReward?: number | null;
-  imageUrl?: string | null;
+  monsterId: number;
+  name: string;
+  type: string;
+  class: string;
+  minHp: number;
+  maxHp: number;
+  minAttack: number;
+  maxAttack: number;
+  minDefense: number;
+  maxDefense: number;
+  stamina: number;
+  experienceReward: number;
+  imageUrl: string;
 };
 
 export type DCLore = {
-  id?: string;
-  loreId?: number;
-  monsterId?: number;
-  unlockCondition?: string | null;
-  killCountRequired?: number | null;
-  bossKillRequired?: boolean;
-  loreTitle?: string | null;
-  loreText?: string | null;
-  loreOrder?: number | null;
-  createdAt?: string | null;
+  id: string;
+  loreId: number;
+  monsterId: number;
+  unlockCondition: string;
+  killCountRequired: number;
+  bossKillRequired: boolean;
+  loreTitle: string;
+  loreText: string;
+  loreOrder: number;
+  createdAt: string;
 };
 
 export type DCMonsterDetail = {
-  id?: string;
-  discoveryId?: number;
-  characterId?: number;
-  monsterId?: number;
-  discoveredAsRegular?: boolean;
-  discoveredAsBoss?: boolean;
-  firstEncounteredAt?: string | null;
-  firstEncounteredFloor?: number | null;
-  firstEncounteredDungeonId?: string | null;
-  totalEncounters?: number;
-  totalKills?: number;
-  totalDefeats?: number;
-  totalBossEncounters?: number;
-  totalBossKills?: number;
-  totalBossDefeats?: number;
-  lastEncounteredAt?: string | null;
-  updatedAt?: string | null;
-  dungeonInfo?: DCDungeonInfo;
-  floorInfo?: DCFloorInfo;
-  monster?: DCMonster;
-  drops?: DCMonsterDrop[];
-  lore?: DCLore[];
+  id: string;
+  discoveryId: number;
+  characterId: number;
+  monsterId: number;
+  discoveredAsRegular: boolean;
+  discoveredAsBoss: boolean;
+  firstEncounteredAt: string;
+  firstEncounteredFloor: number;
+  firstEncounteredDungeonId: string;
+  totalEncounters: number;
+  totalKills: number;
+  totalDefeats: number;
+  totalBossEncounters: number;
+  totalBossKills: number;
+  totalBossDefeats: number;
+  lastEncounteredAt: string;
+  updatedAt: string;
+  dungeonInfo: DCDungeonInfo;
+  floorInfo: DCFloorInfo;
+  monster: DCMonster;
+  drops: DCMonsterDrop[];
+  lore: DCLore[];
 };
 
 export type DCMonsterDetailResponse = {
-  success?: boolean;
-  data?: DCMonsterDetail;
+  success: boolean;
+  data: DCMonsterDetail;
 };

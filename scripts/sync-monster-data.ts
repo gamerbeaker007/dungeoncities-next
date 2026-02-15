@@ -3,11 +3,13 @@ import {
   getDexDataPayload,
   getMonsterDetailsPayload,
 } from "@/lib/dc-api";
+import { toNumber } from "@/lib/number-utils";
 import {
   DCDexResponse,
   DCMonsterDetail,
   DCMonsterDetailResponse,
 } from "@/types/dc/monster-dex";
+import { MonsterRecord } from "@/types/resource";
 import dotenv from "dotenv";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -70,44 +72,44 @@ function deriveItemNameFromImageUrl(imageUrl: string | null | undefined) {
     .join(" ");
 }
 
-function mapMonster(detail: DCMonsterDetail) {
+function mapMonster(detail: DCMonsterDetail): MonsterRecord {
   const drops = Array.isArray(detail.drops) ? detail.drops : [];
-
   return {
-    monsterId: detail.monster?.monsterId ?? detail.monsterId,
-    monsterName: detail.monster?.name ?? "Unknown",
-    monsterType: detail.monster?.type ?? "Unknown",
-    monsterClass: detail.monster?.class ?? "Unknown",
-    monsterImageUrl: detail.monster?.imageUrl ?? null,
-    totalEncounters: detail.totalEncounters ?? 0,
-    totalKills: detail.totalKills ?? 0,
-    totalDefeats: detail.totalDefeats ?? 0,
-    totalBossEncounters: detail.totalBossEncounters ?? 0,
-    totalBossKills: detail.totalBossKills ?? 0,
-    totalBossDefeats: detail.totalBossDefeats ?? 0,
+    monsterId: detail.monster.monsterId,
+    monsterName: detail.monster.name,
+    monsterType: detail.monster.type,
+    monsterClass: detail.monster.class,
+    monsterImageUrl: detail.monster.imageUrl,
+    totalEncounters: detail.totalEncounters,
+    totalKills: detail.totalKills,
+    totalDefeats: detail.totalDefeats,
+    totalBossEncounters: detail.totalBossEncounters,
+    totalBossKills: detail.totalBossKills,
+    totalBossDefeats: detail.totalBossDefeats,
     firstEncounter: {
-      encounteredAt: detail.firstEncounteredAt ?? null,
-      dungeonId: detail.firstEncounteredDungeonId ?? null,
-      dungeonName: detail.dungeonInfo?.name ?? null,
-      floorNumber:
-        detail.floorInfo?.floorNumber ?? detail.firstEncounteredFloor ?? null,
-      floorName: detail.floorInfo?.name ?? null,
+      encounteredAt: detail.firstEncounteredAt,
+      dungeonId: detail.firstEncounteredDungeonId,
+      dungeonName: detail.dungeonInfo?.name,
+      floorNumber: detail.floorInfo?.floorNumber ?? detail.firstEncounteredFloor,
+      floorName: detail.floorInfo?.name,
     },
     drops: drops.map((drop) => {
-      const apiItemName = drop.item?.name ?? "Unknown";
+      const apiItemName = drop.item?.name ?? "???";
       const hasPlaceholderName = apiItemName.trim() === "???";
       const derivedItemName = deriveItemNameFromImageUrl(
-        drop.item?.imageUrl ?? null,
+        drop.item?.imageUrl,
       );
 
       return {
-        itemId: drop.itemId ?? null,
+        itemId: drop.itemId,
         itemName: apiItemName,
         derivedItemName,
         itemNameWarning: hasPlaceholderName,
-        itemClass: drop.item?.class ?? null,
-        itemImageUrl: drop.item?.imageUrl ?? null,
-        dropChance: drop.dropChance ?? null,
+        itemClass: drop.item?.class ?? "Unknown",
+        itemImageUrl: drop.item?.imageUrl ?? "",
+        dropChance: toNumber(drop.dropChance),
+        minQuantity: toNumber(drop.minQuantity),
+        maxQuantity: toNumber(drop.maxQuantity),
         bossDrop: Boolean(drop.bossDrop),
         unlocked: Boolean(drop.unlocked),
       };
