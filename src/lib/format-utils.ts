@@ -1,4 +1,4 @@
-import type { MonsterRecord } from "@/types/resource";
+import { MonsterRecord } from "@/types/monter";
 
 export function formatDropQty(
   minQuantity: number | null | undefined,

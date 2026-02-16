@@ -3,7 +3,7 @@
 import { PaginationLinks } from "@/components/resource-search/pagination-links";
 import { ResourceCard } from "@/components/resource-search/resource-card";
 import { SearchForm } from "@/components/resource-search/search-form";
-import { getResourceSearchDataFromRows } from "@/lib/monster-data";
+import { getResourceSearchDataFromRows } from "@/lib/resource-search-data";
 import type { ResourceResult } from "@/types/resource";
 import { Box, Stack, Typography } from "@mui/material";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";

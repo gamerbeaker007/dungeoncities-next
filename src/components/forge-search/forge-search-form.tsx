@@ -16,6 +16,17 @@ export function ForgeSearchForm({ query, onSubmit }: ForgeSearchFormProps) {
     setValue(query);
   }, [query]);
 
+  // Debounce the search submission (only when value differs from query)
+  useEffect(() => {
+    if (value === query) return; // Skip if value matches the external query
+
+    const timeoutId = setTimeout(() => {
+      onSubmit(value);
+    }, 300);
+
+    return () => clearTimeout(timeoutId);
+  }, [onSubmit, query, value]);
+
   return (
     <Box
       component="form"
@@ -29,7 +40,9 @@ export function ForgeSearchForm({ query, onSubmit }: ForgeSearchFormProps) {
         label="Search resource used in forge"
         placeholder="Example: Wraith, Essence, Ore"
         value={value}
-        onChange={(event) => setValue(event.target.value)}
+        onChange={(event) => {
+          setValue(event.target.value);
+        }}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

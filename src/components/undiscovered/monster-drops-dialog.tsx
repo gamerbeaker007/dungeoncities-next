@@ -1,7 +1,7 @@
 "use client";
 
 import { formatDropQty, formatMonsterLocation } from "@/lib/format-utils";
-import type { MonsterDiscoveryListItem } from "@/lib/monster-data";
+import type { MonsterDiscoveryListItem } from "@/lib/monster-discovery-data";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import {
   Box,

@@ -9,7 +9,7 @@ import {
   DCMonsterDetail,
   DCMonsterDetailResponse,
 } from "@/types/dc/monster-dex";
-import { MonsterRecord } from "@/types/resource";
+import { MonsterRecord } from "@/types/monter";
 import dotenv from "dotenv";
 import fs from "node:fs/promises";
 import path from "node:path";

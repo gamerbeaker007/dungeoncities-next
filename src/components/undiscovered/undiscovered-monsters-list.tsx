@@ -2,9 +2,10 @@
 
 import { MonsterDropsDialog } from "@/components/undiscovered/monster-drops-dialog";
 import { formatMonsterLocation } from "@/lib/format-utils";
-import type { MonsterDiscoveryListItem } from "@/lib/monster-data";
+import type { MonsterDiscoveryListItem } from "@/lib/monster-discovery-data";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import SearchIcon from "@mui/icons-material/Search";
 import {
   Accordion,
   AccordionDetails,
@@ -13,7 +14,9 @@ import {
   Card,
   CardContent,
   Chip,
+  InputAdornment,
   Stack,
+  TextField,
   Typography,
 } from "@mui/material";
 import Link from "next/link";
@@ -28,23 +31,34 @@ export function UndiscoveredMonstersList({
 }: UndiscoveredMonstersListProps) {
   const [selectedMonster, setSelectedMonster] =
     useState<MonsterDiscoveryListItem | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredMonsters = useMemo(() => {
+    if (!searchQuery.trim()) {
+      return monsters;
+    }
+    const normalized = searchQuery.toLowerCase();
+    return monsters.filter((monster) =>
+      monster.monsterName.toLowerCase().includes(normalized),
+    );
+  }, [monsters, searchQuery]);
 
   const lowKillNotDiscovered = useMemo(
-    () => monsters.filter((monster) => !monster.discovered),
-    [monsters],
+    () => filteredMonsters.filter((monster) => !monster.discovered),
+    [filteredMonsters],
   );
 
   const midKillNotFullyDiscovered = useMemo(
     () =>
-      monsters.filter(
+      filteredMonsters.filter(
         (monster) => monster.discovered && !monster.fullyDiscovered,
       ),
-    [monsters],
+    [filteredMonsters],
   );
 
   const fullyDiscovered = useMemo(
-    () => monsters.filter((monster) => monster.fullyDiscovered),
-    [monsters],
+    () => filteredMonsters.filter((monster) => monster.fullyDiscovered),
+    [filteredMonsters],
   );
 
   const renderMonsterGrid = (
@@ -169,8 +183,24 @@ export function UndiscoveredMonstersList({
         </Typography>
       </Box>
 
+      <TextField
+        fullWidth
+        label="Search monsters"
+        placeholder="Search by monster name..."
+        value={searchQuery}
+        onChange={(event) => setSearchQuery(event.target.value)}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon fontSize="small" />
+            </InputAdornment>
+          ),
+        }}
+      />
+
       <Typography variant="body2" color="text.secondary">
         Total monsters tracked: {monsters.length}
+        {searchQuery && ` • Showing: ${filteredMonsters.length}`}
       </Typography>
 
       <Stack spacing={1}>

@@ -1,7 +1,5 @@
-import {
-  getAllResourceRows,
-  getMonsterDiscoveryStats,
-} from "@/lib/monster-data";
+import { getMonsterDiscoveryStats } from "@/lib/monster-discovery-data";
+import { getAllResourceRows } from "@/lib/resource-search-data";
 import { ResourceSearch } from "../components/resource-search/resource-search";
 
 export const dynamic = "force-static";
