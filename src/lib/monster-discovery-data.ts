@@ -28,7 +28,7 @@ export function getMonsterDiscoveryStats() {
 
   const fullyPercentage =
     totalDiscoveredCount > 0
-      ? Math.round((fullyDiscoveredCount / totalDiscoveredCount) * 100)
+      ? Math.round((fullyDiscoveredCount / totalMonstersInGame) * 100)
       : 0;
 
   return {

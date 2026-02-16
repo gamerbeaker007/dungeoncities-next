@@ -207,7 +207,7 @@ export function UndiscoveredMonstersList({
         <Accordion defaultExpanded>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography variant="h6">
-              Basic Not Discovered ({lowKillNotDiscovered.length})
+              Basics Not Discovered ({lowKillNotDiscovered.length})
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
