@@ -1,6 +1,10 @@
 import { API_ENDPOINTS } from "@/lib/statics";
 import { DCDexResponse, DCMonsterDetailResponse } from "@/types/dc/monster-dex";
-import { DCGameStateResponse } from "@/types/dc/state";
+import {
+  DCGameStateResponse,
+  DCGetMyListingsParams,
+  DCGetMyListingsResponse,
+} from "@/types/dc/state";
 
 type DCApiPayload =
   | {
@@ -14,6 +18,10 @@ type DCApiPayload =
   | {
       action: "GET_STATE";
       params: Record<string, never>;
+    }
+  | {
+      action: "GET_MY_LISTINGS";
+      params: DCGetMyListingsParams;
     };
 
 export type DCApiRequestOptions = {
@@ -77,4 +85,75 @@ export function getStateData(options: DCApiRequestOptions) {
     action: "GET_STATE",
     params: {},
   });
+}
+
+export function getMarketInfoData(
+  options: DCApiRequestOptions,
+  params: DCGetMyListingsParams,
+) {
+  return postDcApiAction<DCGetMyListingsResponse>(options, {
+    action: "GET_MY_LISTINGS",
+    params,
+  });
+}
+
+type GetAllMarketListingsOptions = {
+  status?: DCGetMyListingsParams["status"];
+  limit?: number;
+  minPrice?: number;
+  maxPrice?: number;
+  sortBy?: DCGetMyListingsParams["sortBy"];
+};
+
+export async function getAllMarketListingsData(
+  options: DCApiRequestOptions,
+  requestOptions: GetAllMarketListingsOptions = {},
+): Promise<DCGetMyListingsResponse> {
+  const limit = requestOptions.limit ?? 50;
+  const minPrice = requestOptions.minPrice ?? 0;
+  const maxPrice = requestOptions.maxPrice ?? 999_999;
+  const sortBy = requestOptions.sortBy ?? "date_desc";
+
+  let offset = 0;
+  let total = 0;
+  let hasMore = true;
+  let slotUsage: DCGetMyListingsResponse["slotUsage"] = {
+    used: 0,
+    max: 0,
+    available: 0,
+    percentUsed: 0,
+    status: "ok",
+  };
+  const listings: DCGetMyListingsResponse["listings"] = [];
+
+  while (hasMore) {
+    const response = await getMarketInfoData(options, {
+      status: requestOptions.status,
+      limit,
+      offset,
+      minPrice,
+      maxPrice,
+      sortBy,
+    });
+
+    if (!response.success) {
+      throw new Error("Failed to load market listings");
+    }
+
+    listings.push(...response.listings);
+    total = response.total;
+    slotUsage = response.slotUsage;
+    hasMore = response.hasMore && response.listings.length > 0;
+    offset += limit;
+  }
+
+  return {
+    success: true,
+    listings,
+    total,
+    limit,
+    offset: 0,
+    hasMore: false,
+    slotUsage,
+  };
 }

@@ -2,7 +2,7 @@
 
 import { ForgeRecipeCard } from "@/components/forge-search/forge-recipe-card";
 import { ForgeSearchForm } from "@/components/forge-search/forge-search-form";
-import { useInventory } from "@/hooks/use-inventory";
+import { usePlayerItems } from "@/hooks/use-player-items";
 import { searchForgeRecipes } from "@/lib/forge-items";
 import type { ForgeRecipe } from "@/types/forge";
 import { Box, Stack, Typography } from "@mui/material";
@@ -15,27 +15,41 @@ type ForgeResourceSearchProps = {
 
 export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
   const [query, setQuery] = useState("");
-  const { inventoryByItemId } = useInventory();
+  const { itemQuantitiesByItemId } = usePlayerItems();
 
   const filteredRecipes = useMemo(() => searchForgeRecipes(query), [query]);
 
-  const enrichedRecipes = useMemo(() => {
+  const enrichedRecipes: ForgeRecipe[] = useMemo(() => {
     return filteredRecipes.map((recipe) => {
-      const isCrafted = (inventoryByItemId[recipe.recipeId] ?? 0) > 0;
+      const isCrafted =
+        (itemQuantitiesByItemId[recipe.recipeId]?.total ?? 0) > 0;
 
       return {
         ...recipe,
-        isCrafted,
-        requirements: recipe.requirements.map((requirement) => ({
-          ...requirement,
-          ownedQuantity:
-            requirement.itemId !== null
-              ? (inventoryByItemId[requirement.itemId] ?? 0)
-              : 0,
-        })),
+        playerInfo: {
+          isCrafted,
+          ownedData: recipe.requirements.map((requirement) => ({
+            total:
+              requirement.itemId !== null
+                ? (itemQuantitiesByItemId[requirement.itemId]?.total ?? 0)
+                : 0,
+            inventory:
+              requirement.itemId !== null
+                ? (itemQuantitiesByItemId[requirement.itemId]?.inventory ?? 0)
+                : 0,
+            listed:
+              requirement.itemId !== null
+                ? (itemQuantitiesByItemId[requirement.itemId]?.listed ?? 0)
+                : 0,
+            expired:
+              requirement.itemId !== null
+                ? (itemQuantitiesByItemId[requirement.itemId]?.expired ?? 0)
+                : 0,
+          })),
+        },
       };
     });
-  }, [filteredRecipes, inventoryByItemId]);
+  }, [filteredRecipes, itemQuantitiesByItemId]);
 
   return (
     <Stack spacing={3}>
@@ -84,8 +98,8 @@ export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
                 recipeImageUrl={recipe.recipeImageUrl}
                 cost={recipe.cost}
                 costCurrency={recipe.costCurrency}
-                isCrafted={recipe.isCrafted}
                 requirements={recipe.requirements}
+                playerInfo={recipe.playerInfo}
               />
             </Box>
           ))}

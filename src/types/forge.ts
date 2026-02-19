@@ -6,10 +6,21 @@ export type ForgeRequirement = {
   itemId: number | null;
   name: string;
   quantity: number;
-  ownedQuantity?: number;
   imageUrl: string | null;
   searchHref: string;
   matched?: boolean;
+};
+
+export type ForgeOwnedPlayerData = {
+  total: number;
+  inventory: number;
+  listed: number;
+  expired: number;
+};
+
+export type ForgeRecipePlayerInfo = {
+  isCrafted: boolean;
+  ownedData: ForgeOwnedPlayerData[];
 };
 
 export type ForgeRecipe = {
@@ -19,8 +30,8 @@ export type ForgeRecipe = {
   recipeImageUrl: string | null;
   cost: number;
   costCurrency: string;
-  isCrafted?: boolean;
   requirements: ForgeRequirement[];
+  playerInfo?: ForgeRecipePlayerInfo;
 };
 
 export type ForgeRecipeSearchResult = ForgeRecipe;

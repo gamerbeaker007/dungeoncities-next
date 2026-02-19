@@ -1,4 +1,4 @@
-import type { ForgeRequirement } from "@/types/forge";
+import type { ForgeRecipePlayerInfo, ForgeRequirement } from "@/types/forge";
 import {
   Box,
   Card,
@@ -15,8 +15,8 @@ type ForgeRecipeCardProps = {
   recipeImageUrl: string | null;
   cost: number;
   costCurrency: string;
-  isCrafted?: boolean;
   requirements: ForgeRequirement[];
+  playerInfo?: ForgeRecipePlayerInfo;
 };
 
 export function ForgeRecipeCard({
@@ -25,8 +25,8 @@ export function ForgeRecipeCard({
   recipeImageUrl,
   cost,
   costCurrency,
-  isCrafted = false,
   requirements,
+  playerInfo,
 }: ForgeRecipeCardProps) {
   return (
     <Card
@@ -38,7 +38,7 @@ export function ForgeRecipeCard({
         overflow: "hidden",
       }}
     >
-      {isCrafted ? (
+      {playerInfo?.isCrafted ? (
         <Box
           sx={{
             position: "absolute",
@@ -88,10 +88,11 @@ export function ForgeRecipeCard({
             <Typography variant="body2" color="text.secondary">
               Required Items
             </Typography>
-            {requirements.map((requirement) => (
+            {requirements.map((requirement, index) => (
               <ForgeItem
-                key={`${requirement.itemId ?? "na"}-${requirement.name}`}
+                key={`${requirement.itemId ?? "na"}-${requirement.name}-${index}`}
                 requirement={requirement}
+                ownedData={playerInfo?.ownedData[index]}
                 isMatchedTerm={requirement.matched ?? false}
               />
             ))}
