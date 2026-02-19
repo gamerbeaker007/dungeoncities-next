@@ -1,14 +1,6 @@
-import {
-  createDcApiClient,
-  getDexDataPayload,
-  getMonsterDetailsPayload,
-} from "@/lib/dc-api";
+import { getMonsterDetailsData, getMonsterDexData } from "@/lib/dc-api";
 import { toNumber } from "@/lib/format-utils";
-import {
-  DCDexResponse,
-  DCMonsterDetail,
-  DCMonsterDetailResponse,
-} from "@/types/dc/monster-dex";
+import { DCMonsterDetail } from "@/types/dc/monster-dex";
 import { MonsterRecord } from "@/types/monter";
 import dotenv from "dotenv";
 import fs from "node:fs/promises";
@@ -18,9 +10,6 @@ dotenv.config();
 
 const token = process.env.DUNGEONCITIES_TOKEN ?? process.env.TOKEN;
 const delayMs = Math.max(0, Number(process.env.REQUEST_DELAY_MS ?? 1200));
-const apiUrl =
-  process.env.DUNGEONCITIES_API_URL ??
-  "https://api.dungeoncities.com/api/game/action";
 
 if (!token) {
   throw new Error(
@@ -40,7 +29,7 @@ const outputPath = path.join(
 );
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const dcApi = createDcApiClient({ token, apiUrl });
+const dcApiOptions = { token };
 
 function deriveItemNameFromImageUrl(imageUrl: string | null | undefined) {
   if (!imageUrl) {
@@ -118,8 +107,7 @@ function mapMonster(detail: DCMonsterDetail): MonsterRecord {
 
 async function main() {
   console.log("Fetching monster dex list...");
-  const dexResponse =
-    await dcApi.postAction<DCDexResponse>(getDexDataPayload());
+  const dexResponse = await getMonsterDexData(dcApiOptions);
 
   if (!dexResponse?.success) {
     throw new Error("First call did not return success=true.");
@@ -152,8 +140,9 @@ async function main() {
     }
 
     try {
-      const detailResponse = await dcApi.postAction<DCMonsterDetailResponse>(
-        getMonsterDetailsPayload(monsterId),
+      const detailResponse = await getMonsterDetailsData(
+        dcApiOptions,
+        monsterId,
       );
 
       if (!detailResponse?.success || !detailResponse?.data) {

@@ -20,7 +20,7 @@ export type DCDexResponse = {
   };
 };
 
-export type DCItem = {
+export type DCMonsterDropItem = {
   itemId: number;
   name?: string | null;
   class: string;
@@ -38,7 +38,7 @@ export type DCMonsterDrop = {
   createdAt: string;
   updatedAt: string;
   bossDrop: boolean;
-  item?: DCItem | null;
+  item?: DCMonsterDropItem | null;
   unlocked: boolean;
 };
 

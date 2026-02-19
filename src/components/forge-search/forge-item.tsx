@@ -1,4 +1,5 @@
-import type { ForgeRequirement } from "@/types/forge";
+import { useAuth } from "@/providers/auth-provider";
+import type { ForgeOwnedPlayerData, ForgeRequirement } from "@/types/forge";
 import SearchIcon from "@mui/icons-material/Search";
 import StarIcon from "@mui/icons-material/Star";
 import { Box, IconButton, Stack, Tooltip, Typography } from "@mui/material";
@@ -6,14 +7,18 @@ import Link from "next/link";
 
 type ForgeItemProps = {
   requirement: ForgeRequirement;
+  ownedData?: ForgeOwnedPlayerData;
   isMatchedTerm?: boolean;
 };
 
 export function ForgeItem({
   requirement,
+  ownedData,
   isMatchedTerm = false,
 }: ForgeItemProps) {
+  const { isAuthenticated } = useAuth();
   const forgeSearchHref = `/?q=${requirement.itemId}`;
+  const ownedQuantity = ownedData?.total ?? 0;
 
   return (
     <Stack direction="row" spacing={1} alignItems="center">
@@ -46,9 +51,31 @@ export function ForgeItem({
         />
       </Tooltip>
 
-      <Typography variant="body2">
-        {requirement.quantity}x {requirement.name}
-      </Typography>
+      {isAuthenticated ? (
+        <Tooltip
+          title={
+            ownedData
+              ? `Inventory: ${ownedData.inventory} / Listed: ${ownedData.listed} / Expired: ${ownedData.expired}`
+              : ""
+          }
+        >
+          <Typography
+            variant="body2"
+            color={
+              ownedQuantity >= requirement.quantity
+                ? "success.main"
+                : "text.primary"
+            }
+            sx={{ cursor: ownedData ? "help" : "default" }}
+          >
+            {ownedQuantity} / {requirement.quantity} {requirement.name}
+          </Typography>
+        </Tooltip>
+      ) : (
+        <Typography variant="body2">
+          {requirement.quantity} {requirement.name}
+        </Typography>
+      )}
 
       <Tooltip title="Search for this item in forge recipes">
         <IconButton
