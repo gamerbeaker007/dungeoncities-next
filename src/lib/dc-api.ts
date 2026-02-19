@@ -36,6 +36,7 @@ export async function postDcApiAction<T>(
 
   const response = await fetch(apiUrl, {
     method: "POST",
+    cache: "no-store",
     headers: {
       accept: "*/*",
       "accept-encoding": "gzip, deflate, br, zstd",
@@ -137,7 +138,11 @@ export async function getAllMarketListingsData(
     });
 
     if (!response.success) {
-      throw new Error("Failed to load market listings");
+      if (offset === 0) {
+        throw new Error("Failed to load market listings");
+      }
+
+      break;
     }
 
     listings.push(...response.listings);

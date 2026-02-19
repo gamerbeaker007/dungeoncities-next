@@ -59,19 +59,32 @@ export function usePlayerItems(): UsePlayerItemsResult {
     setError(null);
 
     try {
-      const [state, listedResponse, expiredResponse] = await Promise.all([
-        getGameStateAction(token),
-        getAllMarketListingsAction(token, { status: "LISTED", limit: 50 }),
-        getAllMarketListingsAction(token, { status: "EXPIRED", limit: 50 }),
-      ]);
+      const state = await getGameStateAction(token);
+      if (!state) {
+        throw new Error("Failed to load game state");
+      }
+
+      const listedResponse = await getAllMarketListingsAction(token, {
+        status: "LISTED",
+        limit: 50,
+      });
+      if (!listedResponse) {
+        throw new Error("Failed to load listed market items");
+      }
+
+      const expiredResponse = await getAllMarketListingsAction(token, {
+        status: "EXPIRED",
+        limit: 50,
+      });
+      if (!expiredResponse) {
+        throw new Error("Failed to load expired market items");
+      }
 
       setInventory(state?.requiredData?.inventory ?? []);
-      setListed(listedResponse?.listings ?? []);
-      setExpired(expiredResponse?.listings ?? []);
-    } catch {
-      setInventory([]);
-      setListed([]);
-      setExpired([]);
+      setListed(listedResponse.listings);
+      setExpired(expiredResponse.listings);
+    } catch (error) {
+      console.error("usePlayerItems refresh failed", error);
       setError("Failed to load player items");
     } finally {
       setIsLoading(false);

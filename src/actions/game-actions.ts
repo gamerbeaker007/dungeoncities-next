@@ -20,7 +20,8 @@ export async function getGameStateAction(
 
   try {
     return await getStateData({ token });
-  } catch {
+  } catch (error) {
+    console.error("getGameStateAction failed", error);
     return null;
   }
 }
@@ -44,7 +45,8 @@ export async function getMarketInfoAction(
 
   try {
     return await getMarketInfoData({ token }, params);
-  } catch {
+  } catch (error) {
+    console.error("getMarketInfoAction failed", { params, error });
     return null;
   }
 }
@@ -67,7 +69,8 @@ export async function getAllMarketListingsAction(
 
   try {
     return await getAllMarketListingsData({ token }, options);
-  } catch {
+  } catch (error) {
+    console.error("getAllMarketListingsAction failed", { options, error });
     return null;
   }
 }
