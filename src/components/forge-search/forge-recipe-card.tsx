@@ -15,6 +15,7 @@ type ForgeRecipeCardProps = {
   recipeImageUrl: string | null;
   cost: number;
   costCurrency: string;
+  isCrafted?: boolean;
   requirements: ForgeRequirement[];
 };
 
@@ -24,13 +25,37 @@ export function ForgeRecipeCard({
   recipeImageUrl,
   cost,
   costCurrency,
+  isCrafted = false,
   requirements,
 }: ForgeRecipeCardProps) {
   return (
     <Card
       variant="outlined"
-      sx={{ maxWidth: 400, height: "100%", overflow: "hidden" }}
+      sx={{
+        position: "relative",
+        maxWidth: 400,
+        height: "100%",
+        overflow: "hidden",
+      }}
     >
+      {isCrafted ? (
+        <Box
+          sx={{
+            position: "absolute",
+            top: 8,
+            right: 8,
+            px: 0.75,
+            py: 0.25,
+            borderRadius: 1,
+            bgcolor: "success.main",
+            color: "success.contrastText",
+          }}
+        >
+          <Typography variant="caption" sx={{ fontWeight: 700 }}>
+            Crafted
+          </Typography>
+        </Box>
+      ) : null}
       <CardContent>
         <Stack spacing={0.5}>
           <Typography variant="h6">{recipeName}</Typography>

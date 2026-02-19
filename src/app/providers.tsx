@@ -1,5 +1,6 @@
 "use client";
 
+import { AuthProvider } from "@/providers/auth-provider";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import type { ReactNode } from "react";
@@ -13,7 +14,7 @@ export function AppProviders({ children }: AppProvidersProps) {
   return (
     <ThemeProvider theme={appTheme}>
       <CssBaseline />
-      {children}
+      <AuthProvider>{children}</AuthProvider>
     </ThemeProvider>
   );
 }

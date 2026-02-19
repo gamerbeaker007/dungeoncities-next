@@ -2,6 +2,7 @@
 
 import { ForgeRecipeCard } from "@/components/forge-search/forge-recipe-card";
 import { ForgeSearchForm } from "@/components/forge-search/forge-search-form";
+import { useInventory } from "@/hooks/use-inventory";
 import { searchForgeRecipes } from "@/lib/forge-items";
 import type { ForgeRecipe } from "@/types/forge";
 import { Box, Stack, Typography } from "@mui/material";
@@ -14,8 +15,27 @@ type ForgeResourceSearchProps = {
 
 export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
   const [query, setQuery] = useState("");
+  const { inventoryByItemId } = useInventory();
 
   const filteredRecipes = useMemo(() => searchForgeRecipes(query), [query]);
+
+  const enrichedRecipes = useMemo(() => {
+    return filteredRecipes.map((recipe) => {
+      const isCrafted = (inventoryByItemId[recipe.recipeId] ?? 0) > 0;
+
+      return {
+        ...recipe,
+        isCrafted,
+        requirements: recipe.requirements.map((requirement) => ({
+          ...requirement,
+          ownedQuantity:
+            requirement.itemId !== null
+              ? (inventoryByItemId[requirement.itemId] ?? 0)
+              : 0,
+        })),
+      };
+    });
+  }, [filteredRecipes, inventoryByItemId]);
 
   return (
     <Stack spacing={3}>
@@ -40,7 +60,7 @@ export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
         Showing {filteredRecipes.length} of {recipes.length} recipe(s)
       </Typography>
 
-      {filteredRecipes.length === 0 ? (
+      {enrichedRecipes.length === 0 ? (
         <Typography variant="body1">No recipes found.</Typography>
       ) : (
         <Box
@@ -51,7 +71,7 @@ export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
             alignItems: "stretch",
           }}
         >
-          {filteredRecipes.map((recipe) => (
+          {enrichedRecipes.map((recipe) => (
             <Box
               key={`${recipe.recipeId}-${recipe.recipeName}`}
               sx={{
@@ -64,6 +84,7 @@ export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
                 recipeImageUrl={recipe.recipeImageUrl}
                 cost={recipe.cost}
                 costCurrency={recipe.costCurrency}
+                isCrafted={recipe.isCrafted}
                 requirements={recipe.requirements}
               />
             </Box>

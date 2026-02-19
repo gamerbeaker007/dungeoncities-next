@@ -6,6 +6,7 @@ export type ForgeRequirement = {
   itemId: number | null;
   name: string;
   quantity: number;
+  ownedQuantity?: number;
   imageUrl: string | null;
   searchHref: string;
   matched?: boolean;
@@ -18,6 +19,7 @@ export type ForgeRecipe = {
   recipeImageUrl: string | null;
   cost: number;
   costCurrency: string;
+  isCrafted?: boolean;
   requirements: ForgeRequirement[];
 };
 

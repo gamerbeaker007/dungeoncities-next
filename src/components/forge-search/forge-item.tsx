@@ -1,3 +1,4 @@
+import { useAuth } from "@/providers/auth-provider";
 import type { ForgeRequirement } from "@/types/forge";
 import SearchIcon from "@mui/icons-material/Search";
 import StarIcon from "@mui/icons-material/Star";
@@ -13,7 +14,9 @@ export function ForgeItem({
   requirement,
   isMatchedTerm = false,
 }: ForgeItemProps) {
+  const { isAuthenticated } = useAuth();
   const forgeSearchHref = `/?q=${requirement.itemId}`;
+  const ownedQuantity = requirement.ownedQuantity ?? 0;
 
   return (
     <Stack direction="row" spacing={1} alignItems="center">
@@ -46,9 +49,22 @@ export function ForgeItem({
         />
       </Tooltip>
 
-      <Typography variant="body2">
-        {requirement.quantity}x {requirement.name}
-      </Typography>
+      {isAuthenticated ? (
+        <Typography
+          variant="body2"
+          color={
+            ownedQuantity > requirement.quantity
+              ? "success.main"
+              : "text.primary"
+          }
+        >
+          {ownedQuantity} / {requirement.quantity} {requirement.name}
+        </Typography>
+      ) : (
+        <Typography variant="body2">
+          {requirement.quantity} {requirement.name}
+        </Typography>
+      )}
 
       <Tooltip title="Search for this item in forge recipes">
         <IconButton
