@@ -3,6 +3,7 @@
 import {
   getAllMarketListingsAction,
   getGameStateAction,
+  updateLocationAction,
 } from "@/actions/game-actions";
 import { useAuth } from "@/providers/auth-provider";
 import { DCGameInventoryItem, DCMarketListing } from "@/types/dc/state";
@@ -22,6 +23,7 @@ type UsePlayerItemsResult = {
   itemQuantitiesByItemId: Record<number, PlayerItemQuantityBreakdown>;
   isLoading: boolean;
   error: string | null;
+  locationWarning: string | null;
   refresh: () => Promise<void>;
 };
 
@@ -45,6 +47,7 @@ export function usePlayerItems(): UsePlayerItemsResult {
   const [expired, setExpired] = useState<DCMarketListing[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [locationWarning, setLocationWarning] = useState<string | null>(null);
 
   const refresh = useCallback(async () => {
     if (!isAuthenticated || !token) {
@@ -52,16 +55,52 @@ export function usePlayerItems(): UsePlayerItemsResult {
       setListed([]);
       setExpired([]);
       setError(null);
+      setLocationWarning(null);
       return;
     }
 
     setIsLoading(true);
     setError(null);
+    setLocationWarning(null);
 
     try {
       const state = await getGameStateAction(token);
       if (!state) {
         throw new Error("Failed to load game state");
+      }
+
+      setInventory(state.requiredData?.inventory ?? []);
+
+      const currentLocation = state.state;
+
+      if (currentLocation === "IN_CITY") {
+        // Move to marketplace so GET_MY_LISTINGS is allowed
+        console.warn(
+          "[usePlayerItems] Player is IN_CITY, moving to IN_MARKETPLACE",
+        );
+        const locationResult = await updateLocationAction(
+          token,
+          "IN_MARKETPLACE",
+        );
+        if (!locationResult?.success) {
+          console.error(
+            "[usePlayerItems] Failed to move to IN_MARKETPLACE",
+            locationResult,
+          );
+          setLocationWarning(
+            `Unable to fetch players market data due to current location: ${currentLocation}`,
+          );
+          return;
+        }
+      } else if (currentLocation !== "IN_MARKETPLACE") {
+        console.warn(
+          "[usePlayerItems] Cannot fetch market data from location:",
+          currentLocation,
+        );
+        setLocationWarning(
+          `Unable to fetch players market data due to current location: ${currentLocation}`,
+        );
+        return;
       }
 
       const listedResponse = await getAllMarketListingsAction(token, {
@@ -80,7 +119,6 @@ export function usePlayerItems(): UsePlayerItemsResult {
         throw new Error("Failed to load expired market items");
       }
 
-      setInventory(state?.requiredData?.inventory ?? []);
       setListed(listedResponse.listings);
       setExpired(expiredResponse.listings);
     } catch (error) {
@@ -131,6 +169,7 @@ export function usePlayerItems(): UsePlayerItemsResult {
     itemQuantitiesByItemId,
     isLoading,
     error,
+    locationWarning,
     refresh,
   };
 }

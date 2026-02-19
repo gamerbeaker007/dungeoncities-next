@@ -76,10 +76,11 @@ export function LoginForm() {
             fullWidth
             label="Hive Username"
             value={inputUsername}
-            onChange={(e) => setInputUsername(e.target.value)}
+            onChange={(e) => setInputUsername(e.target.value.toLowerCase())}
             disabled={isLoading}
             required
             sx={{ mb: 2 }}
+            inputProps={{ style: { textTransform: "lowercase" } }}
           />
           {error && (
             <Alert severity="error" sx={{ mb: 2 }}>

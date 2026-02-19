@@ -3,12 +3,32 @@
 import { API_ENDPOINTS } from "@/lib/statics";
 
 export type AuthChallengeResponse = {
-  message: string;
+  success: boolean;
+  message?: string;
+  error?: string;
 };
 
 export type AuthTokenResponse = {
-  token: string;
+  success: boolean;
+  token?: string;
+  error?: string;
 };
+
+function extractApiErrorMessage(errorText: string): string {
+  if (!errorText) {
+    return "Unknown authentication error";
+  }
+
+  try {
+    const parsed = JSON.parse(errorText) as {
+      message?: string;
+      error?: string;
+    };
+    return parsed.message || parsed.error || errorText;
+  } catch {
+    return errorText;
+  }
+}
 
 /**
  * Server action: Request authentication challenge from DC API
@@ -26,16 +46,32 @@ export async function requestAuthChallenge(
 
   if (!response.ok) {
     const errorText = await response.text();
+    const errorMessage = extractApiErrorMessage(errorText);
     console.error(
       "[Server Action] Challenge failed:",
       response.status,
-      errorText,
+      errorMessage,
     );
-    throw new Error(`Challenge request failed: ${response.status}`);
+    return {
+      success: false,
+      error: errorMessage,
+    };
   }
 
-  const data = await response.json();
-  return data as AuthChallengeResponse;
+  const data = (await response.json()) as { message?: string };
+
+  if (!data.message) {
+    console.error("[Server Action] Challenge response missing message", data);
+    return {
+      success: false,
+      error: "Challenge response missing message",
+    };
+  }
+
+  return {
+    success: true,
+    message: data.message,
+  };
 }
 
 /**
@@ -55,14 +91,33 @@ export async function submitAuthSignature(
 
   if (!response.ok) {
     const errorText = await response.text();
+    const errorMessage = extractApiErrorMessage(errorText);
     console.error(
       "[Server Action] Authentication failed:",
       response.status,
-      errorText,
+      errorMessage,
     );
-    throw new Error(`Authentication failed: ${response.status}`);
+    return {
+      success: false,
+      error: errorMessage,
+    };
   }
 
-  const data = await response.json();
-  return data as AuthTokenResponse;
+  const data = (await response.json()) as { token?: string };
+
+  if (!data.token) {
+    console.error(
+      "[Server Action] Authentication response missing token",
+      data,
+    );
+    return {
+      success: false,
+      error: "Authentication response missing token",
+    };
+  }
+
+  return {
+    success: true,
+    token: data.token,
+  };
 }

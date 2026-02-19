@@ -4,11 +4,14 @@ import {
   getAllMarketListingsData,
   getMarketInfoData,
   getStateData,
+  updateLocationData,
 } from "@/lib/dc-api";
 import {
+  DCGameLocation,
   DCGameStateResponse,
   DCGetMyListingsParams,
   DCGetMyListingsResponse,
+  DCUpdateLocationResponse,
 } from "@/types/dc/state";
 
 export async function getGameStateAction(
@@ -33,6 +36,22 @@ export async function validateGameTokenAction(token: string): Promise<boolean> {
 
   const state = await getGameStateAction(token);
   return state !== null;
+}
+
+export async function updateLocationAction(
+  token: string,
+  targetLocation: DCGameLocation,
+): Promise<DCUpdateLocationResponse | null> {
+  if (!token) {
+    return null;
+  }
+
+  try {
+    return await updateLocationData({ token }, targetLocation);
+  } catch (error) {
+    console.error("updateLocationAction failed", { targetLocation, error });
+    return null;
+  }
 }
 
 export async function getMarketInfoAction(

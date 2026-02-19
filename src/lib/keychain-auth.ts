@@ -2,25 +2,7 @@ import {
   requestAuthChallenge,
   submitAuthSignature,
 } from "@/actions/auth-actions";
-import { KeychainKeyTypes } from "hive-keychain-commons";
-import * as KeychainSDKModule from "keychain-sdk";
-
-type KeychainSDKType = typeof KeychainSDKModule & {
-  KeychainSDK: new (window: Window) => {
-    decode: (params: {
-      username: string;
-      message: string;
-      method: KeychainKeyTypes;
-    }) => Promise<{
-      success: boolean;
-      result?: string | { result?: string };
-      error?: string;
-      message?: string;
-    }>;
-  };
-};
-
-const KeychainSDK = (KeychainSDKModule as KeychainSDKType).KeychainSDK;
+import { KeychainKeyTypes, KeychainSDK } from "keychain-sdk";
 
 // Extend Window interface for TypeScript
 declare global {
@@ -28,6 +10,22 @@ declare global {
     hive_keychain?: unknown;
   }
 }
+
+// keychain-sdk's TypeScript types don't expose decode() — cast to access it
+type KeychainDecodeResult = {
+  success: boolean;
+  result?: string | { result?: string };
+  error?: string;
+  message?: string;
+};
+
+type KeychainSDKWithDecode = InstanceType<typeof KeychainSDK> & {
+  decode: (params: {
+    username: string;
+    message: string;
+    method: KeychainKeyTypes;
+  }) => Promise<KeychainDecodeResult>;
+};
 
 export type KeychainLoginResult = {
   success: boolean;
@@ -56,10 +54,23 @@ export async function loginWithKeychain(
     }
 
     // Initialize Keychain SDK
-    const keychain = new KeychainSDK(window);
+    const keychain = new KeychainSDK(window) as KeychainSDKWithDecode;
 
     // Step 1: Request challenge message from server
     const challengeResponse = await requestAuthChallenge(username);
+    if (!challengeResponse.success || !challengeResponse.message) {
+      const challengeError =
+        challengeResponse.error || "Failed to request authentication challenge";
+      console.error("[Keychain Login] Challenge request failed:", {
+        username,
+        error: challengeError,
+      });
+      return {
+        success: false,
+        error: challengeError,
+      };
+    }
+
     const challengeMessage = challengeResponse.message;
 
     // Step 2: Request signature from Keychain using requestVerifyKey (via decode)
@@ -73,52 +84,57 @@ export async function loginWithKeychain(
 
     if (!signResult.success) {
       const errorMsg =
-        signResult.error || signResult.message || "Signature failed";
-      console.error("[Keychain Login] Signature failed:", errorMsg);
-      console.error("[Keychain Login] Full response:", signResult);
-      return {
-        success: false,
+        signResult.error ?? signResult.message ?? "Signature failed";
+      console.error("[Keychain Login] Signature failed", {
+        username,
         error: errorMsg,
-      };
+        response: signResult,
+      });
+      return { success: false, error: errorMsg };
     }
 
-    // The result from decode/requestVerifyKey should have the # prefix
-    // Handle different response formats from keychain-sdk
-    let signature: string;
-    if (typeof signResult.result === "string") {
-      signature = signResult.result;
-    } else if (
-      signResult.result &&
-      typeof signResult.result === "object" &&
-      "result" in signResult.result
-    ) {
-      signature = (signResult.result as { result?: string }).result || "";
-    } else {
-      console.error("[Keychain Login] Unexpected result format:", signResult);
-      return {
-        success: false,
-        error: "Unexpected signature format received from Keychain",
-      };
+    // Handle both string and nested-object result formats from keychain-sdk
+    const signature =
+      typeof signResult.result === "string"
+        ? signResult.result
+        : ((signResult.result as { result?: string } | undefined)?.result ??
+          "");
+
+    if (!signature) {
+      console.error("[Keychain Login] Empty signature received", {
+        username,
+        response: signResult,
+      });
+      return { success: false, error: "Keychain returned an empty signature" };
     }
 
     // Step 3: Submit signature to get token
     const tokenResponse = await submitAuthSignature(username, signature);
+    if (!tokenResponse.success || !tokenResponse.token) {
+      const tokenError = tokenResponse.error || "Authentication failed";
+      console.error("[Keychain Login] Token request failed:", {
+        username,
+        error: tokenError,
+      });
+      return {
+        success: false,
+        error: tokenError,
+      };
+    }
+
     return {
       success: true,
       token: tokenResponse.token,
       username,
     };
   } catch (error) {
-    console.error("[Keychain Login] Error during authentication:", error);
-    console.error("[Keychain Login] Error details:", {
-      name: error instanceof Error ? error.name : "Unknown",
-      message: error instanceof Error ? error.message : String(error),
-      stack: error instanceof Error ? error.stack : undefined,
+    const message =
+      error instanceof Error ? error.message : "Unknown error occurred";
+    console.error("[Keychain Login] Unexpected error during authentication", {
+      username,
+      error,
     });
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : "Unknown error occurred",
-    };
+    return { success: false, error: message };
   }
 }
 
@@ -147,9 +163,7 @@ export async function waitForKeychainAvailability(
   const startTime = Date.now();
 
   while (Date.now() - startTime < timeoutMs) {
-    await new Promise((resolve) => {
-      window.setTimeout(resolve, pollIntervalMs);
-    });
+    await new Promise((resolve) => setTimeout(resolve, pollIntervalMs));
 
     if (isKeychainAvailable()) {
       return true;

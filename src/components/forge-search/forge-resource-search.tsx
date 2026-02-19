@@ -5,7 +5,7 @@ import { ForgeSearchForm } from "@/components/forge-search/forge-search-form";
 import { usePlayerItems } from "@/hooks/use-player-items";
 import { searchForgeRecipes } from "@/lib/forge-items";
 import type { ForgeRecipe } from "@/types/forge";
-import { Box, Stack, Typography } from "@mui/material";
+import { Alert, Box, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
@@ -15,7 +15,7 @@ type ForgeResourceSearchProps = {
 
 export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
   const [query, setQuery] = useState("");
-  const { itemQuantitiesByItemId } = usePlayerItems();
+  const { itemQuantitiesByItemId, locationWarning } = usePlayerItems();
 
   const filteredRecipes = useMemo(() => searchForgeRecipes(query), [query]);
 
@@ -69,6 +69,8 @@ export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
       </Box>
 
       <ForgeSearchForm query={query} onSubmit={setQuery} />
+
+      {locationWarning && <Alert severity="warning">{locationWarning}</Alert>}
 
       <Typography variant="body2" color="text.secondary">
         Showing {filteredRecipes.length} of {recipes.length} recipe(s)

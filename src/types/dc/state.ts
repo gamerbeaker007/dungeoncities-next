@@ -79,6 +79,20 @@ export type DCSlotUsage = {
   status: string;
 };
 
+export type DCGameLocation =
+  | "IN_CITY"
+  | "IN_MARKETPLACE"
+  | "IN_DUNGEON"
+  | "IN_FORGE"
+  | string;
+
+export type DCUpdateLocationResponse = {
+  success: boolean;
+  state?: DCGameLocation;
+  error?: string;
+  message?: string;
+};
+
 export type DCGetMyListingsResponse = {
   success: boolean;
   listings: DCMarketListing[];
