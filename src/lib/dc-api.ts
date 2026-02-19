@@ -28,12 +28,17 @@ export type DCApiRequestOptions = {
   token: string;
 };
 
+type DCGetMyListingsRawResponse = Partial<DCGetMyListingsResponse> & {
+  success?: boolean;
+  error?: string;
+  message?: string;
+};
+
 export async function postDcApiAction<T>(
   options: DCApiRequestOptions,
   payload: DCApiPayload,
 ): Promise<T> {
   const apiUrl = API_ENDPOINTS.GAME_ACTION;
-
   const response = await fetch(apiUrl, {
     method: "POST",
     cache: "no-store",
@@ -55,6 +60,31 @@ export async function postDcApiAction<T>(
   }
 
   return response.json() as Promise<T>;
+}
+
+function normalizeMarketListingsResponse(
+  rawResponse: DCGetMyListingsRawResponse,
+  params: DCGetMyListingsParams,
+): DCGetMyListingsResponse {
+  return {
+    success: rawResponse.success ?? false,
+    listings: Array.isArray(rawResponse.listings) ? rawResponse.listings : [],
+    total: typeof rawResponse.total === "number" ? rawResponse.total : 0,
+    limit:
+      typeof rawResponse.limit === "number" ? rawResponse.limit : params.limit,
+    offset:
+      typeof rawResponse.offset === "number"
+        ? rawResponse.offset
+        : params.offset,
+    hasMore: Boolean(rawResponse.hasMore),
+    slotUsage: rawResponse.slotUsage ?? {
+      used: 0,
+      max: 0,
+      available: 0,
+      percentUsed: 0,
+      status: "unknown",
+    },
+  };
 }
 
 export function getMonsterDexData(options: DCApiRequestOptions) {
@@ -92,9 +122,16 @@ export function getMarketInfoData(
   options: DCApiRequestOptions,
   params: DCGetMyListingsParams,
 ) {
-  return postDcApiAction<DCGetMyListingsResponse>(options, {
+  return postDcApiAction<DCGetMyListingsRawResponse>(options, {
     action: "GET_MY_LISTINGS",
     params,
+  }).then((rawResponse) => {
+    const normalizedResponse = normalizeMarketListingsResponse(
+      rawResponse,
+      params,
+    );
+
+    return normalizedResponse;
   });
 }
 
@@ -127,19 +164,45 @@ export async function getAllMarketListingsData(
   };
   const listings: DCGetMyListingsResponse["listings"] = [];
 
-  while (hasMore) {
-    const response = await getMarketInfoData(options, {
+  const fetchPage = async (offsetValue: number) => {
+    const baseParams: DCGetMyListingsParams = {
       status: requestOptions.status,
       limit,
-      offset,
+      offset: offsetValue,
       minPrice,
       maxPrice,
       sortBy,
+    };
+
+    let response = await getMarketInfoData(options, baseParams);
+
+    if (response.success) {
+      return response;
+    }
+
+    await new Promise((resolve) => {
+      setTimeout(resolve, 250);
     });
+
+    response = await getMarketInfoData(options, baseParams);
+
+    return response;
+  };
+
+  while (hasMore) {
+    const response = await fetchPage(offset);
 
     if (!response.success) {
       if (offset === 0) {
-        throw new Error("Failed to load market listings");
+        return {
+          success: true,
+          listings: [],
+          total: 0,
+          limit,
+          offset: 0,
+          hasMore: false,
+          slotUsage,
+        };
       }
 
       break;

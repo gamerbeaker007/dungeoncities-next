@@ -68,7 +68,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const login = async (username: string): Promise<KeychainLoginResult> => {
     setIsLoading(true);
+    setIsKeychainInstalled(isKeychainAvailable());
     const result = await loginWithKeychain(username);
+
+    setIsKeychainInstalled(isKeychainAvailable());
 
     if (result.success && result.token && result.username) {
       setToken(result.token);

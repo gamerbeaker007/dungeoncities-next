@@ -46,6 +46,15 @@ export async function loginWithKeychain(
   username: string,
 ): Promise<KeychainLoginResult> {
   try {
+    const keychainAvailable = await waitForKeychainAvailability();
+    if (!keychainAvailable) {
+      return {
+        success: false,
+        error:
+          "Hive Keychain extension not detected. Please unlock/enable it and try again.",
+      };
+    }
+
     // Initialize Keychain SDK
     const keychain = new KeychainSDK(window);
 
@@ -121,4 +130,31 @@ export function isKeychainAvailable(): boolean {
   if (typeof window === "undefined") return false;
   // Check if the Hive Keychain extension has injected itself into the window
   return !!window.hive_keychain;
+}
+
+export async function waitForKeychainAvailability(
+  timeoutMs = 2500,
+  pollIntervalMs = 150,
+): Promise<boolean> {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  if (isKeychainAvailable()) {
+    return true;
+  }
+
+  const startTime = Date.now();
+
+  while (Date.now() - startTime < timeoutMs) {
+    await new Promise((resolve) => {
+      window.setTimeout(resolve, pollIntervalMs);
+    });
+
+    if (isKeychainAvailable()) {
+      return true;
+    }
+  }
+
+  return false;
 }
