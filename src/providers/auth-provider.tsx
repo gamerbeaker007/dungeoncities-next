@@ -1,10 +1,10 @@
 "use client";
 
-import { validateGameTokenAction } from "@/actions/game-actions";
 import {
   isKeychainAvailable,
   KeychainLoginResult,
   loginWithKeychain,
+  waitForKeychainAvailability,
 } from "@/lib/keychain-auth";
 import {
   createContext,
@@ -13,6 +13,20 @@ import {
   useEffect,
   useState,
 } from "react";
+
+function isJwtExpired(token: string): boolean {
+  try {
+    const payload = token.split(".")[1];
+    if (!payload) return true;
+    const decoded = JSON.parse(
+      atob(payload.replace(/-/g, "+").replace(/_/g, "/")),
+    ) as { exp?: number };
+    if (typeof decoded.exp !== "number") return false; // no exp claim — assume valid
+    return Date.now() >= decoded.exp * 1000;
+  } catch {
+    return false; // can't decode — assume valid, let API calls fail naturally
+  }
+}
 
 type AuthContextType = {
   isAuthenticated: boolean;
@@ -39,8 +53,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   useEffect(() => {
     const initAuth = async () => {
-      // Check if Keychain is available
-      const keychainAvailable = isKeychainAvailable();
+      // Wait for Keychain — Chrome injects extensions later than Brave/Firefox,
+      // so a synchronous check here will fail in Chrome even when the extension is installed.
+      const keychainAvailable = await waitForKeychainAvailability();
       setIsKeychainInstalled(keychainAvailable);
 
       // Load saved auth from localStorage
@@ -48,15 +63,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const savedUsername = localStorage.getItem("dc_username");
 
       if (savedToken && savedUsername) {
-        const isValid = await validateGameTokenAction(savedToken);
-
-        if (isValid) {
+        if (isJwtExpired(savedToken)) {
+          // Token has expired per its own exp claim — clear stored auth
+          localStorage.removeItem("dc_token");
+          localStorage.removeItem("dc_username");
+        } else {
+          // Token is still valid — restore session without a server round-trip.
+          // The DC API will reject the token on actual API calls if it has been revoked.
           setToken(savedToken);
           setUsername(savedUsername);
           setIsAuthenticated(true);
-        } else {
-          localStorage.removeItem("dc_token");
-          localStorage.removeItem("dc_username");
         }
       }
 

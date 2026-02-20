@@ -16,8 +16,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dungeon Cities Resource Finder",
-  description: "Search resource drops by monster and first discovery location",
+  title: {
+    template: "%s | Dungeon Cities",
+    default: "Dungeon Cities",
+  },
+  description: "Companion app for the Dungeon Cities blockchain game on Hive.",
 };
 
 export default function RootLayout({

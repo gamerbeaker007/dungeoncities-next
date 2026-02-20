@@ -1,62 +1,19 @@
+import {
+  CITY_NAMES,
+  COUNTER_ATTACK_RATES,
+  STAMINA_COSTS,
+  TRAVEL_COSTS,
+} from "@/lib/faq-data";
 import { Box, Typography } from "@mui/material";
+import type { Metadata } from "next";
 
-const staminaCosts = [
-  { action: "START_BATTLE", cost: 2 },
-  { action: "USE_SKILL", cost: 0 },
-  { action: "PERFORM_TURN", cost: 0 },
-  { action: "PERFORM_BATTLE_SEGMENT", cost: 0 },
-  { action: "RUN", cost: 5 },
-  { action: "MOVE_LEFT", cost: 1 },
-  { action: "MOVE_RIGHT", cost: 1 },
-  { action: "MOVE_STRAIGHT", cost: 1 },
-  { action: "ENTER_DUNGEON", cost: 1 },
-  { action: "EXIT_DUNGEON", cost: 2 },
-  { action: "ENTER_SHOP", cost: 0 },
-  { action: "EXIT_SHOP", cost: 0 },
-  { action: "ENTER_FORGE", cost: 0 },
-  { action: "EXIT_FORGE", cost: 0 },
-  { action: "ENTER_GUILD_HALL", cost: 0 },
-  { action: "EXIT_GUILD_HALL", cost: 0 },
-  { action: "ENTER_NEXT_FLOOR", cost: 1 },
-  { action: "COLLECT_ITEM", cost: 0 },
-  { action: "OPEN_CHEST", cost: 0 },
-  { action: "ENTER_ARENA", cost: 0 },
-  { action: "EXIT_ARENA", cost: 0 },
-];
+export const dynamic = "force-static";
 
-const counterAttackRates = [
-  { rank: "F", min: 5, max: 10 },
-  { rank: "E", min: 7, max: 14 },
-  { rank: "D", min: 10, max: 20 },
-  { rank: "C", min: 14, max: 28 },
-  { rank: "B", min: 19, max: 38 },
-  { rank: "A", min: 25, max: 50 },
-  { rank: "S", min: 30, max: 60 },
-  { rank: "SS", min: 35, max: 70 },
-  { rank: "SSS", min: 40, max: 80 },
-  { rank: "R", min: 50, max: 100 },
-];
-
-const cityNames: Record<number, string> = {
-  1: "Aldoria",
-  2: "Brighthollow",
-  3: "Caelum",
-  4: "Druantia",
-  5: "Eria",
+export const metadata: Metadata = {
+  title: "FAQ",
+  description:
+    "Stamina costs, counter attack rates, and travel costs for Dungeon Cities.",
 };
-
-const travelCosts = [
-  { fromCity: 1, toCity: 2, cost: 2000 },
-  { fromCity: 1, toCity: 3, cost: 2000 },
-  { fromCity: 1, toCity: 4, cost: 2000 },
-  { fromCity: 1, toCity: 5, cost: 2000 },
-  { fromCity: 2, toCity: 3, cost: 2000 },
-  { fromCity: 2, toCity: 4, cost: 2000 },
-  { fromCity: 2, toCity: 5, cost: 2000 },
-  { fromCity: 3, toCity: 4, cost: 2000 },
-  { fromCity: 3, toCity: 5, cost: 2000 },
-  { fromCity: 4, toCity: 5, cost: 2000 },
-];
 
 export default function FaqPage() {
   return (
@@ -71,7 +28,7 @@ export default function FaqPage() {
             Stamina Cost
           </Typography>
           <Box>
-            {staminaCosts.map((row) => (
+            {STAMINA_COSTS.map((row) => (
               <Box
                 key={row.action}
                 sx={{
@@ -101,7 +58,7 @@ export default function FaqPage() {
             All values below are percent (%).
           </Typography>
           <Box>
-            {counterAttackRates.map((row) => (
+            {COUNTER_ATTACK_RATES.map((row) => (
               <Box
                 key={row.rank}
                 sx={{
@@ -135,7 +92,7 @@ export default function FaqPage() {
             Currently All travel costs are 2000 DR.
           </Typography>
           <Box>
-            {travelCosts.map((row) => (
+            {TRAVEL_COSTS.map((row) => (
               <Box
                 key={`${row.fromCity}-${row.toCity}`}
                 sx={{
@@ -149,8 +106,8 @@ export default function FaqPage() {
                 }}
               >
                 <Typography variant="body2">
-                  {row.fromCity} ({cityNames[row.fromCity]}) → {row.toCity} (
-                  {cityNames[row.toCity]})
+                  {row.fromCity} ({CITY_NAMES[row.fromCity]}) → {row.toCity} (
+                  {CITY_NAMES[row.toCity]})
                 </Typography>
                 <Typography variant="body2" fontWeight={600}>
                   {row.cost} DR
