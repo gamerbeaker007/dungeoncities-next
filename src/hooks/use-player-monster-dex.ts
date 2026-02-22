@@ -12,7 +12,11 @@
  * - Does NOT merge with community data — the component handles that.
  */
 
-import { runFullSyncAction } from "@/actions/sync-actions";
+import {
+  commitSyncAction,
+  fetchMonsterDetailAction,
+  initSyncAction,
+} from "@/actions/sync-actions";
 import {
   buildDiscoveryListFromRecords,
   type MonsterDiscoveryListItem,
@@ -26,8 +30,11 @@ import {
   subscribeSyncTime,
 } from "@/lib/syncHelper";
 import { useAuth } from "@/providers/auth-provider";
-import type { MonsterDexData, SyncProgressEvent } from "@/types/monter";
+import type { MonsterDexData, MonsterRecord } from "@/types/monter";
 import { useCallback, useMemo, useState, useSyncExternalStore } from "react";
+
+const sleep = (ms: number) =>
+  new Promise<void>((resolve) => setTimeout(resolve, ms));
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -58,8 +65,10 @@ export type PlayerMonsterDex = {
   statusText: string;
   /** Error message from the last sync attempt, or null */
   error: string | null;
-  /** Success message after sync completes, or null */
+  /** Green success message: "Synced N monsters." */
   successText: string | null;
+  /** Yellow warning: partial fetch failures or community upload error */
+  communityWarning: string | null;
   /** True when the user is authenticated and no rate-limit is active */
   canSync: boolean;
   /** Minutes remaining until the next sync is allowed (0 = ready) */
@@ -83,6 +92,7 @@ export function usePlayerMonsterDex(): PlayerMonsterDex {
   const [statusText, setStatusText] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [successText, setSuccessText] = useState<string | null>(null);
+  const [communityWarning, setCommunityWarning] = useState<string | null>(null);
   // useSyncExternalStore: server snapshot = 0 (hydration-safe),
   // client snapshot reads localStorage; re-renders when recordSyncTime() fires.
   const minutesLeft = useSyncExternalStore(
@@ -107,80 +117,77 @@ export function usePlayerMonsterDex(): PlayerMonsterDex {
     setProgress(0);
     setError(null);
     setSuccessText(null);
+    setCommunityWarning(null);
     setStatusText("Fetching monster list...");
 
     try {
-      const stream = await runFullSyncAction(token, SYNC_DELAY_MS);
-      const reader = stream.getReader();
-      const decoder = new TextDecoder();
-      let buffer = "";
-      let total = 0;
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split("\n");
-        buffer = lines.pop() ?? "";
-
-        for (const line of lines) {
-          if (!line.trim()) continue;
-          const event: SyncProgressEvent = JSON.parse(line);
-
-          switch (event.type) {
-            case "init":
-              total = event.total;
-              setPhase("fetching");
-              setStatusText(`Fetching 0 of ${total} monsters...`);
-              break;
-
-            case "progress":
-              setStatusText(
-                `Fetching ${event.fetched} of ${event.total} monsters...`,
-              );
-              // 0→90 during fetching, 90→100 reserved for commit
-              setProgress(Math.round((event.fetched / event.total) * 90));
-              break;
-
-            case "committing":
-              setPhase("committing");
-              setProgress(92);
-              setStatusText("Uploading to community database...");
-              break;
-
-            case "done": {
-              const personal: MonsterDexData = {
-                lastUpdated: event.lastUpdated,
-                totalDiscoveries: event.totalDiscoveries,
-                totalMonsters: event.totalMonsters,
-                monsters: event.monsters,
-              };
-              savePersonalSyncData(personal);
-              recordSyncTime();
-              setPersonalData(personal);
-              setProgress(100);
-              setPhase("done");
-              const failedNote =
-                event.totalFailed > 0 ? ` (${event.totalFailed} failed)` : "";
-              const communityNote = event.communityError
-                ? ` Community upload failed: ${event.communityError}`
-                : event.communityUpdated
-                  ? " Community database updated!"
-                  : "";
-              setSuccessText(
-                `Synced ${event.monsters.length} monsters.${failedNote}${communityNote}`,
-              );
-              break;
-            }
-
-            case "error":
-              setError(event.error);
-              setPhase("idle");
-              break;
-          }
-        }
+      // ── Step 1: init ────────────────────────────────────────────────────
+      const initResult = await initSyncAction(token);
+      if (!initResult.success) {
+        setError(initResult.error);
+        setPhase("idle");
+        return;
       }
+
+      const { monsterIds, totalMonstersInGame, totalDiscoveries } = initResult;
+      const total = monsterIds.length;
+
+      setPhase("fetching");
+      setStatusText(`Fetching 0 of ${total} monsters...`);
+
+      // ── Step 2: client-side loop — one server action per monster ────────
+      // Each call is a single API request, well under Vercel's 10s timeout.
+      const personalRecords: MonsterRecord[] = [];
+      let totalFailed = 0;
+
+      for (let i = 0; i < monsterIds.length; i++) {
+        if (i > 0) await sleep(SYNC_DELAY_MS);
+
+        const result = await fetchMonsterDetailAction(token, monsterIds[i]);
+        if (result.success) {
+          personalRecords.push(result.record);
+        } else {
+          totalFailed++;
+        }
+
+        setStatusText(`Fetching ${i + 1} of ${total} monsters...`);
+        // 0→90 during fetching, 90→100 reserved for commit
+        setProgress(Math.round(((i + 1) / total) * 90));
+      }
+
+      // ── Step 3: commit community data to Supabase ────────────────────────
+      setPhase("committing");
+      setProgress(92);
+      setStatusText("Uploading to community database...");
+
+      const commitResult = await commitSyncAction(
+        personalRecords,
+        totalMonstersInGame,
+        totalDiscoveries,
+      );
+
+      const personal: MonsterDexData = {
+        lastUpdated: new Date().toISOString(),
+        totalDiscoveries,
+        totalMonsters: totalMonstersInGame,
+        monsters: personalRecords,
+      };
+      savePersonalSyncData(personal);
+      recordSyncTime();
+      setPersonalData(personal);
+      setProgress(100);
+      setPhase("done");
+
+      setSuccessText(`Synced ${personalRecords.length} monsters.`);
+
+      const warnings: string[] = [];
+      if (totalFailed > 0)
+        warnings.push(
+          `${totalFailed} monster${totalFailed !== 1 ? "s" : ""} failed to fetch.`,
+        );
+      if (!commitResult.success)
+        warnings.push(`Community upload failed: ${commitResult.error}`);
+      setCommunityWarning(warnings.length > 0 ? warnings.join(" ") : null);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Sync failed. Please try again.",
@@ -199,6 +206,7 @@ export function usePlayerMonsterDex(): PlayerMonsterDex {
     statusText,
     error,
     successText,
+    communityWarning,
     canSync: isAuthenticated && !syncing && minutesLeft === 0,
     minutesUntilSync: minutesLeft,
     sync,

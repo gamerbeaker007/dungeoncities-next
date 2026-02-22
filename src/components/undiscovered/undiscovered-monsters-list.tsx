@@ -199,6 +199,7 @@ function SyncButton({
   statusText,
   error,
   successText,
+  communityWarning,
   onSync,
 }: {
   syncing: boolean;
@@ -208,6 +209,7 @@ function SyncButton({
   statusText: string;
   error: string | null;
   successText: string | null;
+  communityWarning: string | null;
   onSync: () => void;
 }) {
   const rateLimited = minutesUntilSync > 0;
@@ -254,6 +256,11 @@ function SyncButton({
       {successText && (
         <Alert severity="success" sx={{ py: 0 }}>
           {successText}
+        </Alert>
+      )}
+      {communityWarning && (
+        <Alert severity="warning" sx={{ py: 0 }}>
+          {communityWarning}
         </Alert>
       )}
     </Stack>
@@ -372,6 +379,7 @@ export function UndiscoveredMonstersList() {
           statusText={player.statusText}
           error={player.error}
           successText={player.successText}
+          communityWarning={player.communityWarning}
           onSync={player.sync}
         />
       </Stack>
