@@ -93,7 +93,7 @@ export type DCMonsterDetail = {
   discoveredAsBoss: boolean;
   firstEncounteredAt: string;
   firstEncounteredFloor: number;
-  firstEncounteredDungeonId: string;
+  firstEncounteredDungeonId: number;
   totalEncounters: number;
   totalKills: number;
   totalDefeats: number;

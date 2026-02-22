@@ -132,7 +132,7 @@ export function ResourceCard({ result }: ResourceCardProps) {
             Monster: {result.monsterName}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            First discovered: {result.location}
+            Location: {result.location}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Drop chance:{" "}

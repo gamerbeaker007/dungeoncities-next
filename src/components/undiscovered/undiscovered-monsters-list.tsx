@@ -110,35 +110,25 @@ function MonsterCard({
                 label={
                   monster.fullyDiscovered
                     ? "Fully discovered"
-                    : monster.discovered
-                      ? "Discovered"
-                      : "Undiscovered"
+                    : `${monster.unidentifiedDropCount} unidentified ${
+                        monster.unidentifiedDropCount === 1 ? "item" : "items"
+                      }`
                 }
                 size="small"
-                color={
-                  monster.fullyDiscovered
-                    ? "success"
-                    : monster.discovered
-                      ? "warning"
-                      : "default"
-                }
+                color={monster.fullyDiscovered ? "success" : "warning"}
               />
             </Stack>
 
             <Typography variant="body2" color="text.secondary" align="center">
-              {formatMonsterLocationFromRecord(monster)}
+              {formatMonsterLocationFromRecord(
+                monster,
+                viewMode === "personal",
+              )}
             </Typography>
 
             {viewMode === "personal" && monster.encountered && (
               <Typography variant="body2" color="text.secondary" align="center">
                 Kills: {monster.totalKills}
-              </Typography>
-            )}
-
-            {monster.unidentifiedDropCount > 0 && (
-              <Typography variant="caption" color="warning.main" align="center">
-                {monster.unidentifiedDropCount} unidentified{" "}
-                {monster.unidentifiedDropCount === 1 ? "item" : "items"}
               </Typography>
             )}
           </Stack>

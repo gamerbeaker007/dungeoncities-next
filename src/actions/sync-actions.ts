@@ -59,7 +59,6 @@ function mapDropsFromDetail(detail: DCMonsterDetail): ItemDrop[] {
   });
 }
 
-
 function mapToMonsterRecord(detail: DCMonsterDetail): MonsterRecord {
   return {
     monsterId: detail.monster.monsterId,
@@ -73,6 +72,13 @@ function mapToMonsterRecord(detail: DCMonsterDetail): MonsterRecord {
           name: detail.floorInfo.name,
           floorNumber: detail.floorInfo.floorNumber,
           class: detail.floorInfo.class,
+        }
+      : undefined,
+    dungeonInfo: detail.dungeonInfo
+      ? {
+          dungeonId: detail.dungeonInfo.dungeonId,
+          name: detail.dungeonInfo.name,
+          totalFloors: detail.dungeonInfo.totalFloors,
         }
       : undefined,
     drops: mapDropsFromDetail(detail),
@@ -193,6 +199,11 @@ function mergeCombinedData(
 
     if (!existing.floor && record.floor) {
       updated = { ...updated, floor: record.floor };
+      changed = true;
+    }
+
+    if (!existing.dungeonInfo && record.dungeonInfo) {
+      updated = { ...updated, dungeonInfo: record.dungeonInfo };
       changed = true;
     }
 
