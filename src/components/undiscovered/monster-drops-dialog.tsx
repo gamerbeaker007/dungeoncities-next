@@ -1,6 +1,9 @@
 "use client";
 
-import { formatDropQty, formatMonsterLocation } from "@/lib/format-utils";
+import {
+  formatDropQty,
+  formatMonsterLocationFromRecord,
+} from "@/lib/format-utils";
 import type { MonsterDiscoveryListItem } from "@/lib/monster-discovery-data";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import {
@@ -225,7 +228,7 @@ export function MonsterDropsDialog({
                 Class: {monster.monsterClass || "Unknown"}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Location: {formatMonsterLocation(monster.firstEncounter)}
+                Location: {formatMonsterLocationFromRecord(monster)}
               </Typography>
               <Divider />
             </Stack>

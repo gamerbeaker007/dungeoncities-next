@@ -1,5 +1,4 @@
 import { UndiscoveredMonstersList } from "@/components/undiscovered/undiscovered-monsters-list";
-import { getMonsterDiscoveryList } from "@/lib/monster-discovery-data";
 import type { Metadata } from "next";
 
 export const dynamic = "force-static";
@@ -11,6 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function UndiscoveredPage() {
-  const monsters = getMonsterDiscoveryList();
-  return <UndiscoveredMonstersList monsters={monsters} />;
+  return <UndiscoveredMonstersList />;
 }
