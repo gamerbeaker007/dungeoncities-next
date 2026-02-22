@@ -1,13 +1,11 @@
-import monsterData from "@/data/monster-details.json";
-import type { MonsterRecord } from "@/types/monter";
-
-const monsters = (monsterData.monsters ?? []) as MonsterRecord[];
-const totalMonstersInGame = monsterData.totalMonsters ?? 0;
+// monster-details.json is no longer bundled — all monster data is loaded at
+// runtime from Supabase Storage. These functions return empty data so the
+// build succeeds; client components populate themselves from the live source.
 
 export function getMonsters() {
-  return monsters;
+  return [] as import("@/types/monter").MonsterRecord[];
 }
 
 export function getTotalMonstersInGame() {
-  return totalMonstersInGame;
+  return 0;
 }

@@ -1,4 +1,4 @@
-import { MonsterRecord } from "@/types/monter";
+import { FloorInfo, MonsterRecord } from "@/types/monter";
 
 export function formatDropQty(
   minQuantity: number | null | undefined,
@@ -45,4 +45,30 @@ export function formatMonsterLocation(
   const floorLabel =
     floorName ?? (floorNumber ? `Floor ${floorNumber}` : "Unknown floor");
   return `${dungeonName} / ${floorLabel}`;
+}
+
+/**
+ * Format location from a community floor record (used when firstEncounter is not available).
+ */
+export function formatFloorLocation(
+  floor: FloorInfo | null | undefined,
+): string {
+  if (!floor) return "Unknown location";
+  const floorLabel =
+    floor.name ??
+    (floor.floorNumber ? `Floor ${floor.floorNumber}` : "Unknown floor");
+  return floorLabel;
+}
+
+/**
+ * Format location from a MonsterRecord, preferring firstEncounter (personal)
+ * over floor (community).
+ */
+export function formatMonsterLocationFromRecord(
+  monster: MonsterRecord,
+): string {
+  if (monster.firstEncounter) {
+    return formatMonsterLocation(monster.firstEncounter);
+  }
+  return formatFloorLocation(monster.floor);
 }

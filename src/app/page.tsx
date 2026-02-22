@@ -1,5 +1,3 @@
-import { getMonsterDiscoveryStats } from "@/lib/monster-discovery-data";
-import { getAllResourceRows } from "@/lib/resource-search-data";
 import type { Metadata } from "next";
 import { ResourceSearch } from "../components/resource-search/resource-search";
 
@@ -12,7 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  const rows = getAllResourceRows();
-  const discoveryStats = getMonsterDiscoveryStats();
-  return <ResourceSearch initialRows={rows} discoveryStats={discoveryStats} />;
+  return <ResourceSearch />;
 }

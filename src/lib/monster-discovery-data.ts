@@ -1,50 +1,27 @@
 import type { ItemDrop, MonsterRecord } from "@/types/monter";
-import { getMonsters, getTotalMonstersInGame } from "./monster-data";
 
-const monsters = getMonsters();
-const totalMonstersInGame = getTotalMonstersInGame();
-
-export function getMonsterDiscoveryStats() {
-  const discoveryList = getMonsterDiscoveryList();
-  const totalCountEncountered = discoveryList.filter(
-    (monster) => monster.totalEncounters > 0,
-  ).length;
-  const totalDiscoveredCount = discoveryList.filter(
-    (monster) => monster.discovered,
-  ).length;
-  const fullyDiscoveredCount = discoveryList.filter(
-    (monster) => monster.fullyDiscovered,
-  ).length;
-
-  const totalEncounteredPercentage =
-    totalMonstersInGame > 0
-      ? Math.round((totalCountEncountered / totalMonstersInGame) * 100)
-      : 0;
-
-  const totalDiscoveredPercentage =
-    totalMonstersInGame > 0
-      ? Math.round((totalDiscoveredCount / totalMonstersInGame) * 100)
-      : 0;
-
-  const fullyPercentage =
-    totalDiscoveredCount > 0
-      ? Math.round((fullyDiscoveredCount / totalMonstersInGame) * 100)
-      : 0;
-
-  return {
-    totalMonstersInGame,
-    totalCountEncountered,
-    totalEncounteredPercentage,
-    totalDiscoveredCount,
-    totalDiscoveredPercentage,
-    fullyDiscoveredCount,
-    fullyPercentage,
-  };
-}
-
-export type MonsterDiscoveryListItem = MonsterRecord & {
+export type MonsterDiscoveryListItem = Omit<
+  MonsterRecord,
+  | "totalEncounters"
+  | "totalKills"
+  | "totalDefeats"
+  | "totalBossEncounters"
+  | "totalBossKills"
+  | "totalBossDefeats"
+> & {
+  // Personal stats are always present in list items (defaulting to 0 when no personal data)
+  totalEncounters: number;
+  totalKills: number;
+  totalDefeats: number;
+  totalBossEncounters: number;
+  totalBossKills: number;
+  totalBossDefeats: number;
   unidentifiedDropCount: number;
+  /** True when the player has encountered this monster at least once (totalEncounters > 0) */
+  encountered: boolean;
+  /** True when at least one drop has been identified */
   discovered: boolean;
+  /** True when all drops have been identified */
   fullyDiscovered: boolean;
 };
 
@@ -66,15 +43,33 @@ function mapMonsterToDiscoveryItem(
   const discovered = identifiedDrops.length > 0;
   const fullyDiscovered = discovered && unidentifiedDropCount === 0;
 
+  const totalEncounters = monster.totalEncounters ?? 0;
+
   return {
     ...monster,
     drops,
+    // Merge personal stats (defaults to 0 when no personal data)
+    totalEncounters,
+    totalKills: monster.totalKills ?? 0,
+    totalDefeats: monster.totalDefeats ?? 0,
+    totalBossEncounters: monster.totalBossEncounters ?? 0,
+    totalBossKills: monster.totalBossKills ?? 0,
+    totalBossDefeats: monster.totalBossDefeats ?? 0,
+    firstEncounter: monster.firstEncounter,
     unidentifiedDropCount,
+    encountered: totalEncounters > 0,
     discovered,
     fullyDiscovered,
   };
 }
 
-export function getMonsterDiscoveryList(): MonsterDiscoveryListItem[] {
-  return monsters.map(mapMonsterToDiscoveryItem);
+/**
+ * Build a discovery list from an explicit set of community monster records.
+ * Used by client components that have loaded fresh data from Supabase.
+ * When personal stats are provided, they are merged in.
+ */
+export function buildDiscoveryListFromRecords(
+  monsterRecords: MonsterRecord[],
+): MonsterDiscoveryListItem[] {
+  return monsterRecords.map((monster) => mapMonsterToDiscoveryItem(monster));
 }
