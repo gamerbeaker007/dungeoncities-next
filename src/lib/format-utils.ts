@@ -36,17 +36,6 @@ export function toNumber(value: string | number | null | undefined): number {
   return parsed;
 }
 
-export function formatMonsterLocation(
-  firstEncounter: MonsterRecord["firstEncounter"] | null | undefined,
-): string {
-  const dungeonName = firstEncounter?.dungeonName ?? "Unknown dungeon";
-  const floorName = firstEncounter?.floorName;
-  const floorNumber = firstEncounter?.floorNumber;
-  const floorLabel =
-    floorName ?? (floorNumber ? `Floor ${floorNumber}` : "Unknown floor");
-  return `${dungeonName} / ${floorLabel}`;
-}
-
 /**
  * Format location from a community floor record (used when firstEncounter is not available).
  */
@@ -66,9 +55,21 @@ export function formatFloorLocation(
  */
 export function formatMonsterLocationFromRecord(
   monster: MonsterRecord,
+  preferPersonal?: boolean,
 ): string {
-  if (monster.firstEncounter) {
-    return formatMonsterLocation(monster.firstEncounter);
+  if (preferPersonal && monster.firstEncounter) {
+    const dungeonName =
+      monster.firstEncounter?.dungeonName ?? "Unknown dungeon";
+    const floorName = monster.firstEncounter?.floorName;
+    const floorNumber = monster.firstEncounter?.floorNumber;
+    const floorLabel =
+      floorName ?? (floorNumber ? `Floor ${floorNumber}` : "Unknown floor");
+    return `${dungeonName} / ${floorLabel}`;
   }
-  return formatFloorLocation(monster.floor);
+  const dungeonName = monster.dungeonInfo?.name ?? "Unknown dungeon";
+  const floorName = monster.floor?.name;
+  const floorNumber = monster.floor?.floorNumber;
+  const floorLabel =
+    floorName ?? (floorNumber ? `Floor ${floorNumber}` : "Unknown floor");
+  return `${dungeonName} / ${floorLabel}`;
 }

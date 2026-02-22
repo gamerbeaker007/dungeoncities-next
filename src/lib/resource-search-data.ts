@@ -1,6 +1,10 @@
 ﻿import type { MonsterRecord } from "@/types/monter";
 import type { ResourceResult } from "@/types/resource";
-import { toNumber, toPositiveInt } from "./format-utils";
+import {
+  formatMonsterLocationFromRecord,
+  toNumber,
+  toPositiveInt,
+} from "./format-utils";
 
 // ---------------------------------------------------------------------------
 // Core builder  accepts any array of MonsterRecord
@@ -14,17 +18,7 @@ export function buildResourceRows(monsters: MonsterRecord[]): ResourceResult[] {
   const rows: ResourceResult[] = [];
 
   for (const monster of monsters) {
-    const dungeonName =
-      monster.firstEncounter?.dungeonName ??
-      monster.floor?.name ??
-      "Unknown dungeon";
-    const floorName =
-      monster.firstEncounter?.floorName ?? monster.floor?.name;
-    const floorNumber =
-      monster.firstEncounter?.floorNumber ?? monster.floor?.floorNumber;
-    const floorLabel =
-      floorName ?? (floorNumber ? `Floor ${floorNumber}` : "Unknown floor");
-    const location = `${dungeonName} / ${floorLabel}`;
+    const location = formatMonsterLocationFromRecord(monster, false);
 
     for (const [dropIndex, drop] of (monster.drops ?? []).entries()) {
       if (!drop.unlocked) continue;

@@ -20,6 +20,12 @@ export type FloorInfo = {
   class?: string;
 };
 
+export type DungeonInfo = {
+  dungeonId: number;
+  name: string;
+  totalFloors: number;
+};
+
 /**
  * Unified monster record supporting both community (combined) and personal views.
  * Personal stats are optional — only present when a player has synced their data.
@@ -30,8 +36,8 @@ export type MonsterRecord = {
   monsterType: string;
   monsterClass: string;
   monsterImageUrl: string;
-  /** Floor info from the community combined JSON */
   floor?: FloorInfo;
+  dungeonInfo?: DungeonInfo;
   drops: ItemDrop[];
   // ----- Personal stats (present only in player-synced data) -----
   totalEncounters?: number;
@@ -42,7 +48,7 @@ export type MonsterRecord = {
   totalBossDefeats?: number;
   firstEncounter?: {
     encounteredAt: string;
-    dungeonId: string;
+    dungeonId: number;
     dungeonName: string;
     floorName: string;
     floorNumber: number;
