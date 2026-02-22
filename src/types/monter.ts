@@ -59,24 +59,3 @@ export type MonsterDexData = {
   totalMonsters: number;
   monsters: MonsterRecord[];
 };
-
-/**
- * Progress events streamed from runFullSyncAction.
- * Each event is a JSON line written to the ReadableStream.
- */
-export type SyncProgressEvent =
-  | { type: "init"; total: number }
-  | { type: "progress"; fetched: number; total: number; failed: number }
-  | { type: "committing" }
-  | {
-      type: "done";
-      monsters: MonsterRecord[];
-      lastUpdated: string;
-      totalDiscoveries: number;
-      totalMonsters: number;
-      communityUpdated: boolean;
-      totalFailed: number;
-      /** Set when Supabase was unreachable — personal data is still saved locally. */
-      communityError?: string;
-    }
-  | { type: "error"; error: string };
