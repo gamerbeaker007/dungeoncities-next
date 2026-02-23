@@ -18,6 +18,10 @@ Copy `.env.example` to `.env` and fill in the values:
 |---|---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | Yes (community dex) | Supabase project URL (or `http://127.0.0.1:54321` for local) |
 | `SUPABASE_SECRET_KEY` | Yes (community dex) | Supabase secret key — bypasses RLS, **server-side only** |
+| `SUPABASE_STORAGE_BUCKET` | No | Bucket name override — useful in `.env.local` or Vercel preview env to avoid writing to production (default: `monster-data`) |
+| `SUPABASE_COMBINED_FILE` | No | File path override inside the bucket (default: `combined.json`) |
+| `SUPABASE_STORAGE_BUCKET` | No | Bucket name override — set in `.env.local` or Vercel preview env to avoid writing to the production bucket (default: `monster-data`) |
+| `SUPABASE_COMBINED_FILE` | No | File path override inside the bucket (default: `combined.json`) |
 
 ## Supabase Setup (Community Dex)
 

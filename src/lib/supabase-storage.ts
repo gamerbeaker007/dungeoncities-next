@@ -7,14 +7,20 @@
  * Required environment variables:
  *   NEXT_PUBLIC_SUPABASE_URL         — Supabase project URL
  *   NEXT_PUBLIC_SUPABASE_ANON_KEY    — public anon key (read + public upload via RLS)
- *   SUPABASE_SECRET_KEY        — service role key (server-side writes, bypasses RLS)
+ *   SUPABASE_SECRET_KEY              — service role key (server-side writes, bypasses RLS)
+ *
+ * Optional overrides (useful for local dev / Vercel preview environments):
+ *   SUPABASE_STORAGE_BUCKET          — bucket name (default: "monster-data")
+ *   SUPABASE_COMBINED_FILE           — file path inside bucket (default: "combined.json")
  */
 
 import type { MonsterDexData } from "@/types/monter";
 import { createClient } from "@supabase/supabase-js";
 
-const BUCKET = "monster-data";
-const FILE_PATH = "combined.json";
+// Override these in .env.local / Vercel preview env to target a different
+// bucket or file without touching production data.
+const BUCKET = process.env.SUPABASE_STORAGE_BUCKET ?? "monster-data";
+const FILE_PATH = process.env.SUPABASE_COMBINED_FILE ?? "combined.json";
 
 // ---------------------------------------------------------------------------
 // Server-side client (service role — used in Server Actions only)
