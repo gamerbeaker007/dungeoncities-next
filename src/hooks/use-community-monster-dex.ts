@@ -16,7 +16,7 @@ import {
   type MonsterDiscoveryListItem,
 } from "@/lib/monster-discovery-data";
 import type { MonsterDexData } from "@/types/monter";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 export type CommunityMonsterDex = {
   /** Enriched list with `encountered`, `discovered`, `fullyDiscovered` flags */
@@ -27,12 +27,20 @@ export type CommunityMonsterDex = {
   /** True when community data was successfully loaded from Supabase. */
   hasData: boolean;
   error: string | null;
+  /** Re-fetches community data from Supabase */
+  refresh: () => void;
 };
 
 export function useCommunityMonsterDex(): CommunityMonsterDex {
   const [data, setData] = useState<MonsterDexData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [fetchCount, setFetchCount] = useState(0);
+
+  const refresh = useCallback(() => {
+    setLoading(true);
+    setFetchCount((c) => c + 1);
+  }, []);
 
   useEffect(() => {
     getCommunityMonsterDataAction()
@@ -43,7 +51,7 @@ export function useCommunityMonsterDex(): CommunityMonsterDex {
         );
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [fetchCount]);
 
   const monsters = useMemo(
     () => buildDiscoveryListFromRecords(data?.monsters ?? []),
@@ -57,5 +65,6 @@ export function useCommunityMonsterDex(): CommunityMonsterDex {
     loading,
     hasData: data !== null,
     error,
+    refresh,
   };
 }

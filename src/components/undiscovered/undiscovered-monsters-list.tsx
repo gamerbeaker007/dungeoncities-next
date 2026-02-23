@@ -273,6 +273,13 @@ export function UndiscoveredMonstersList() {
   // Personal data from localStorage + sync flow
   const player = usePlayerMonsterDex();
 
+  // After a successful sync, re-fetch community data so the page reflects the
+  // newly committed Supabase data without requiring a full page reload.
+  const handleSync = async () => {
+    await player.sync();
+    community.refresh();
+  };
+
   // Fallback: when community data failed to load, use personal data on the community tab
   const communityUnavailable = !community.loading && !community.hasData;
   const communityMonstersResolved = communityUnavailable
@@ -370,7 +377,7 @@ export function UndiscoveredMonstersList() {
           error={player.error}
           successText={player.successText}
           communityWarning={player.communityWarning}
-          onSync={player.sync}
+          onSync={handleSync}
         />
       </Stack>
 
