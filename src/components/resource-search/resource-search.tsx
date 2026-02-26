@@ -3,24 +3,15 @@
 import { PaginationLinks } from "@/components/resource-search/pagination-links";
 import { ResourceCard } from "@/components/resource-search/resource-card";
 import { SearchForm } from "@/components/resource-search/search-form";
-import { getResourceSearchDataFromRows } from "@/lib/resource-search-data";
-import type { ResourceResult } from "@/types/resource";
-import { Box, Stack, Typography } from "@mui/material";
+import { useCommunityMonsterDex } from "@/hooks/use-community-monster-dex";
+import { usePlayerMonsterDex } from "@/hooks/use-player-monster-dex";
+import {
+  buildResourceRows,
+  getResourceSearchDataFromRows,
+} from "@/lib/resource-search-data";
+import { Alert, Box, Stack, Typography } from "@mui/material";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
-
-type ResourceSearchProps = {
-  initialRows: ResourceResult[];
-  discoveryStats: {
-    totalMonstersInGame: number;
-    totalCountEncountered: number;
-    totalEncounteredPercentage: number;
-    totalDiscoveredCount: number;
-    totalDiscoveredPercentage: number;
-    fullyDiscoveredCount: number;
-    fullyPercentage: number;
-  };
-};
 
 function toPositiveInt(value: string | null | undefined, fallback: number) {
   const parsed = Number(value);
@@ -41,16 +32,53 @@ function buildSearchString(query: string, page: number) {
   return params.toString();
 }
 
-export function ResourceSearch({
-  initialRows,
-  discoveryStats,
-}: ResourceSearchProps) {
+export function ResourceSearch() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const urlQuery = useMemo(() => searchParams.get("q") ?? "", [searchParams]);
+  // Community data loaded from Supabase via server action
+  const community = useCommunityMonsterDex();
+  const player = usePlayerMonsterDex();
 
+  // Determine active data source with fallback:
+  // 1. Community Supabase data (preferred)
+  // 2. Personal localStorage data (fallback when community unavailable)
+  // 3. Empty (show warning)
+  const communityUnavailable = !community.loading && !community.hasData;
+  const hasPersonalFallback =
+    communityUnavailable && player.monsters.length > 0;
+  const hasNoData = communityUnavailable && player.monsters.length === 0;
+
+  const activeMonsters = communityUnavailable
+    ? player.monsters
+    : community.monsters;
+  const totalMonsters = communityUnavailable
+    ? player.totalMonsters
+    : community.totalMonsters;
+
+  // Build resource drop rows from active monster list
+  const rows = useMemo(
+    () => buildResourceRows(activeMonsters),
+    [activeMonsters],
+  );
+
+  // Aggregate discovery stats from enriched monster list
+  const discoveryStats = useMemo(() => {
+    const total = totalMonsters || activeMonsters.length;
+    const discovered = activeMonsters.filter((m) => m.discovered).length;
+    const fully = activeMonsters.filter((m) => m.fullyDiscovered).length;
+    const pct = (n: number) => (total > 0 ? Math.round((n / total) * 100) : 0);
+    return {
+      totalMonstersInGame: total,
+      totalDiscoveredCount: discovered,
+      totalDiscoveredPercentage: pct(discovered),
+      fullyDiscoveredCount: fully,
+      fullyPercentage: pct(fully),
+    };
+  }, [activeMonsters, totalMonsters]);
+
+  const urlQuery = useMemo(() => searchParams.get("q") ?? "", [searchParams]);
   const urlPage = useMemo(
     () => toPositiveInt(searchParams.get("page"), 1),
     [searchParams],
@@ -62,27 +90,17 @@ export function ResourceSearch({
     router.replace(href, { scroll: false });
   };
 
-  const onSubmitSearch = (value: string) => {
-    updateUrl(value, 1);
-  };
-
-  const onPrevPage = () => {
-    const nextPage = Math.max(1, urlPage - 1);
-    updateUrl(urlQuery, nextPage);
-  };
-
-  const onNextPage = () => {
-    const nextPage = urlPage + 1;
-    updateUrl(urlQuery, nextPage);
-  };
+  const onSubmitSearch = (value: string) => updateUrl(value, 1);
+  const onPrevPage = () => updateUrl(urlQuery, Math.max(1, urlPage - 1));
+  const onNextPage = () => updateUrl(urlQuery, urlPage + 1);
 
   const searchData = useMemo(
     () =>
-      getResourceSearchDataFromRows(initialRows, {
+      getResourceSearchDataFromRows(rows, {
         queryParam: urlQuery,
         pageParam: String(urlPage),
       }),
-    [initialRows, urlPage, urlQuery],
+    [rows, urlPage, urlQuery],
   );
 
   const {
@@ -105,23 +123,30 @@ export function ResourceSearch({
           drops them and where that monster was first discovered.
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-          Monsters encountered: {discoveryStats.totalCountEncountered} out of{" "}
-          {discoveryStats.totalMonstersInGame} (
-          {discoveryStats.totalEncounteredPercentage}%)
+          {community.loading
+            ? "Loading monster data..."
+            : `Monsters basics discovered: ${discoveryStats.totalDiscoveredCount} out of ${discoveryStats.totalMonstersInGame} (${discoveryStats.totalDiscoveredPercentage}%)`}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Monsters basics discovered: {discoveryStats.totalDiscoveredCount} out
-          of {discoveryStats.totalMonstersInGame} (
-          {discoveryStats.totalDiscoveredPercentage}%)
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Monsters fully discovered: {discoveryStats.fullyDiscoveredCount} out
-          of {discoveryStats.totalMonstersInGame} (
-          {discoveryStats.fullyPercentage}%)
+          {!community.loading &&
+            `Monsters fully discovered: ${discoveryStats.fullyDiscoveredCount} out of ${discoveryStats.totalMonstersInGame} (${discoveryStats.fullyPercentage}%)`}
         </Typography>
       </Box>
 
       <SearchForm query={urlQuery} onSubmit={onSubmitSearch} />
+
+      {hasPersonalFallback && (
+        <Alert severity="warning">
+          Community data is unavailable — showing your personal sync data
+          instead.
+        </Alert>
+      )}
+      {hasNoData && (
+        <Alert severity="warning">
+          Community data is unavailable and no personal data found. Go to the{" "}
+          <strong>Undiscovered</strong> page and sync your data first.
+        </Alert>
+      )}
 
       <Typography variant="body2" color="text.secondary">
         Showing {pagedResults.length} of {totalResults} result(s)
