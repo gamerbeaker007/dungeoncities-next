@@ -24,6 +24,7 @@ type UsePlayerItemsResult = {
   isLoading: boolean;
   error: string | null;
   locationWarning: string | null;
+  druppleBalance: number | null;
   refresh: () => Promise<void>;
 };
 
@@ -48,6 +49,7 @@ export function usePlayerItems(): UsePlayerItemsResult {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [locationWarning, setLocationWarning] = useState<string | null>(null);
+  const [druppleBalance, setDruppleBalance] = useState<number | null>(null);
 
   const refresh = useCallback(async () => {
     if (!isAuthenticated || !token) {
@@ -62,6 +64,7 @@ export function usePlayerItems(): UsePlayerItemsResult {
     setIsLoading(true);
     setError(null);
     setLocationWarning(null);
+    setDruppleBalance(null);
 
     try {
       const state = await getGameStateAction(token);
@@ -70,6 +73,15 @@ export function usePlayerItems(): UsePlayerItemsResult {
       }
 
       setInventory(state.requiredData?.inventory ?? []);
+
+      // Extract Drupple (DR) balance from wallets
+      const drWallet = state.requiredData?.wallets?.find(
+        (w) => w.currencyType === "DRUBBLE",
+      );
+      const rawBalance = drWallet?.balance;
+      setDruppleBalance(
+        rawBalance !== undefined ? parseFloat(rawBalance) || null : null,
+      );
 
       const currentLocation = state.state;
 
@@ -170,6 +182,7 @@ export function usePlayerItems(): UsePlayerItemsResult {
     isLoading,
     error,
     locationWarning,
+    druppleBalance,
     refresh,
   };
 }

@@ -3,9 +3,16 @@
 import {
   getAllMarketListingsData,
   getMarketInfoData,
+  getMarketplaceListingsData,
   getStateData,
+  purchaseItemData,
   updateLocationData,
 } from "@/lib/dc-api";
+import {
+  DCGetMarketplaceListingsParams,
+  DCGetMarketplaceListingsResponse,
+  DCPurchaseItemResponse,
+} from "@/types/dc/marketplace";
 import {
   DCGameLocation,
   DCGameStateResponse,
@@ -90,6 +97,69 @@ export async function getAllMarketListingsAction(
     return await getAllMarketListingsData({ token }, options);
   } catch (error) {
     console.error("getAllMarketListingsAction failed", { options, error });
+    return null;
+  }
+}
+
+export async function getMarketplaceListingsAction(
+  token: string,
+  params: Omit<DCGetMarketplaceListingsParams, "limit" | "offset"> & {
+    limit?: number;
+    offset?: number;
+  } = {},
+): Promise<DCGetMarketplaceListingsResponse | null> {
+  if (!token) {
+    return null;
+  }
+
+  const fullParams: DCGetMarketplaceListingsParams = {
+    minPrice: params.minPrice ?? 0,
+    maxPrice: params.maxPrice ?? 999_999,
+    sortBy: params.sortBy ?? "date_desc",
+    search: params.search,
+    class: params.class,
+    subcategory: params.subcategory,
+    limit: params.limit ?? 50,
+    offset: params.offset ?? 0,
+  };
+
+  try {
+    return await getMarketplaceListingsData({ token }, fullParams);
+  } catch (error) {
+    console.error("getMarketplaceListingsAction failed", { params, error });
+    return null;
+  }
+}
+
+export async function purchaseItemAction(
+  token: string,
+  listingId: string,
+  quantity: number,
+): Promise<DCPurchaseItemResponse | null> {
+  if (!token) return null;
+  try {
+    return await purchaseItemData({ token }, { listingId, quantity });
+  } catch (error) {
+    console.error("purchaseItemAction failed", { listingId, quantity, error });
+    return null;
+  }
+}
+
+export async function getDruppleBalanceAction(
+  token: string,
+): Promise<number | null> {
+  if (!token) return null;
+  try {
+    const state = await getStateData({ token });
+    if (!state) return null;
+    const raw = state?.requiredData?.wallets.find(
+      (w) => w.currencyType === "DRUPPLE",
+    )?.balance;
+    if (raw === undefined || raw === null) return null;
+    const num = typeof raw === "string" ? parseFloat(raw) : raw;
+    return isNaN(num) ? null : num;
+  } catch (error) {
+    console.error("getDruppleBalanceAction failed", error);
     return null;
   }
 }

@@ -5,6 +5,7 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SearchIcon from "@mui/icons-material/Search";
+import StorefrontIcon from "@mui/icons-material/Storefront";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import {
   AppBar,
@@ -28,6 +29,7 @@ const navItems = [
   { href: "/", label: "Resource Search", icon: SearchIcon },
   { href: "/forge", label: "Forge Search", icon: BuildIcon },
   { href: "/undiscovered", label: "Undiscovered", icon: VisibilityOffIcon },
+  { href: "/market", label: "Marketplace", icon: StorefrontIcon },
   { href: "/faq", label: "FAQ", icon: HelpOutlineIcon },
 ];
 
