@@ -1,13 +1,19 @@
 "use client";
 
-import type { DCMarketplaceSortBy } from "@/types/dc/marketplace";
+import type {
+  DCGetMarketplaceListingsParams,
+  DCMarketplaceSortBy,
+} from "@/types/dc/marketplace";
 import ClearIcon from "@mui/icons-material/Clear";
+import FilterListIcon from "@mui/icons-material/FilterList";
 import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
   Button,
   CircularProgress,
   Divider,
+  Drawer,
+  Fab,
   FormControl,
   IconButton,
   InputAdornment,
@@ -19,6 +25,10 @@ import {
   ToggleButtonGroup,
   Typography,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -74,19 +84,16 @@ export const SUBCATEGORY_OPTIONS = [
 // Component
 // ---------------------------------------------------------------------------
 
+const LIMIT = 50;
+
 type FilterPaneProps = {
-  searchInput: string;
-  onSearchInputChange: (val: string) => void;
-  onSearch: () => void;
-  onClearSearch: () => void;
+  /** Wrapped fetchListings from market-browser (tracks params + resets offset). */
+  fetchListings: (
+    params: DCGetMarketplaceListingsParams,
+    append?: boolean,
+  ) => void;
   loading: boolean;
-  sortBy: DCMarketplaceSortBy;
-  onSortChange: (sort: DCMarketplaceSortBy) => void;
-  classFilter: string;
-  onClassChange: (cls: string) => void;
-  subCategoryFilter: string;
-  onSubCategoryChange: (e: React.MouseEvent, val: string | null) => void;
-  onKeyDown: (e: React.KeyboardEvent) => void;
+  initialSearch?: string;
 };
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
@@ -104,29 +111,83 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 }
 
 export function FilterPane({
-  searchInput,
-  onSearchInputChange,
-  onSearch,
-  onClearSearch,
+  fetchListings,
   loading,
-  sortBy,
-  onSortChange,
-  classFilter,
-  onClassChange,
-  subCategoryFilter,
-  onSubCategoryChange,
-  onKeyDown,
+  initialSearch = "",
 }: FilterPaneProps) {
-  return (
-    <Paper
-      variant="outlined"
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const router = useRouter();
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  // ── Filter state ────────────────────────────────────────────────────────
+  const [searchInput, setSearchInput] = useState(initialSearch);
+  const [sortBy, setSortBy] = useState<DCMarketplaceSortBy>("price_asc");
+  const [classFilter, setClassFilter] = useState("");
+  const [subCategoryFilter, setSubCategoryFilter] = useState("ALL");
+
+  // ── Helpers ─────────────────────────────────────────────────────────────
+  const buildParams = (
+    overrides: Partial<{
+      search: string;
+      sortBy: DCMarketplaceSortBy;
+      classFilter: string;
+      subCategoryFilter: string;
+    }> = {},
+  ): DCGetMarketplaceListingsParams => {
+    const s = overrides.search ?? searchInput;
+    const sort = overrides.sortBy ?? sortBy;
+    const cls = overrides.classFilter ?? classFilter;
+    const sub = overrides.subCategoryFilter ?? subCategoryFilter;
+    return {
+      search: s || undefined,
+      sortBy: sort,
+      class: cls || undefined,
+      subcategory: sub !== "ALL" ? sub : undefined,
+      limit: LIMIT,
+      offset: 0,
+    };
+  };
+
+  // ── Handlers ─────────────────────────────────────────────────────────────
+  const handleSearch = () => {
+    fetchListings(buildParams());
+    if (isMobile) setDrawerOpen(false);
+  };
+
+  const handleClearSearch = () => {
+    setSearchInput("");
+    router.replace("/market");
+    fetchListings(buildParams({ search: "" }));
+  };
+
+  const handleSortChange = (newSort: DCMarketplaceSortBy) => {
+    setSortBy(newSort);
+    fetchListings(buildParams({ sortBy: newSort }));
+  };
+
+  const handleClassChange = (newClass: string) => {
+    setClassFilter(newClass);
+    fetchListings(buildParams({ classFilter: newClass }));
+  };
+
+  const handleSubCategoryChange = (
+    _e: React.MouseEvent,
+    val: string | null,
+  ) => {
+    if (val === null) return;
+    setSubCategoryFilter(val);
+    fetchListings(buildParams({ subCategoryFilter: val }));
+  };
+
+  const filterContent = (
+    <Box
       sx={{
-        p: 2,
-        width: 220,
-        flexShrink: 0,
         display: "flex",
         flexDirection: "column",
         gap: 2,
+        p: isMobile ? 2 : 0,
+        width: isMobile ? 280 : "auto",
       }}
     >
       {/* Search */}
@@ -136,8 +197,8 @@ export function FilterPane({
           size="small"
           placeholder="Item name…"
           value={searchInput}
-          onChange={(e) => onSearchInputChange(e.target.value)}
-          onKeyDown={onKeyDown}
+          onChange={(e) => setSearchInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           fullWidth
           slotProps={{
             input: {
@@ -148,7 +209,7 @@ export function FilterPane({
               ),
               endAdornment: searchInput ? (
                 <InputAdornment position="end">
-                  <IconButton size="small" onClick={onClearSearch}>
+                  <IconButton size="small" onClick={handleClearSearch}>
                     <ClearIcon fontSize="small" />
                   </IconButton>
                 </InputAdornment>
@@ -159,7 +220,9 @@ export function FilterPane({
         <Button
           variant="contained"
           size="small"
-          onClick={onSearch}
+          onClick={() => {
+            handleSearch();
+          }}
           disabled={loading}
           startIcon={
             loading ? (
@@ -184,8 +247,7 @@ export function FilterPane({
             key={opt.value}
             size="small"
             variant={sortBy === opt.value ? "contained" : "outlined"}
-            onClick={() => onSortChange(opt.value)}
-            disabled={loading}
+            onClick={() => handleSortChange(opt.value)}
             fullWidth
           >
             {opt.label}
@@ -202,7 +264,7 @@ export function FilterPane({
           <Select
             displayEmpty
             value={classFilter}
-            onChange={(e) => onClassChange(e.target.value)}
+            onChange={(e) => handleClassChange(e.target.value)}
             disabled={loading}
           >
             {CLASS_OPTIONS.map((c) => (
@@ -222,7 +284,7 @@ export function FilterPane({
         <ToggleButtonGroup
           value={subCategoryFilter}
           exclusive
-          onChange={onSubCategoryChange}
+          onChange={handleSubCategoryChange}
           orientation="vertical"
           sx={{ width: "100%" }}
         >
@@ -244,6 +306,48 @@ export function FilterPane({
           ))}
         </ToggleButtonGroup>
       </Box>
+    </Box>
+  );
+
+  // ── Mobile: FAB + Drawer ────────────────────────────────────────────────
+  if (isMobile) {
+    return (
+      <>
+        <Fab
+          color="primary"
+          size="medium"
+          aria-label="Open filters"
+          onClick={() => setDrawerOpen(true)}
+          sx={{ position: "fixed", bottom: 24, right: 24, zIndex: 1200 }}
+        >
+          <FilterListIcon />
+        </Fab>
+        <Drawer
+          anchor="left"
+          open={drawerOpen}
+          onClose={() => setDrawerOpen(false)}
+          PaperProps={{ sx: { pt: 2 } }}
+        >
+          {filterContent}
+        </Drawer>
+      </>
+    );
+  }
+
+  // ── Desktop: sidebar Paper ──────────────────────────────────────────────
+  return (
+    <Paper
+      variant="outlined"
+      sx={{
+        p: 2,
+        width: 220,
+        flexShrink: 0,
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+      }}
+    >
+      {filterContent}
     </Paper>
   );
 }

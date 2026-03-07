@@ -2,6 +2,7 @@
 
 import type { DCMarketplaceListing } from "@/types/dc/marketplace";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+import BlockIcon from "@mui/icons-material/Block";
 import GridViewIcon from "@mui/icons-material/GridView";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import ListIcon from "@mui/icons-material/List";
@@ -25,6 +26,8 @@ import {
   Typography,
 } from "@mui/material";
 import Image from "next/image";
+import { useState } from "react";
+import { BuyDialog, type BuyFn } from "./buy-dialog";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -176,13 +179,14 @@ function ListingsTable({
             return (
               <TableRow
                 key={l.id}
-                hover
-                onClick={() => onSelect(l)}
+                hover={!isOwn}
+                onClick={() => !isOwn && onSelect(l)}
                 sx={{
-                  cursor: "pointer",
+                  cursor: isOwn ? "default" : "pointer",
                   ...(isOwn && {
                     borderLeft: 3,
                     borderColor: "primary.main",
+                    opacity: 0.75,
                   }),
                 }}
               >
@@ -239,13 +243,20 @@ function ListingsTable({
                     </Typography>
                   </Tooltip>
                 </TableCell>
-                {/* Buy hint column */}
                 <TableCell sx={{ p: 0.5 }}>
-                  <Tooltip title="Click row to buy">
-                    <ShoppingCartIcon
-                      sx={{ fontSize: 18, color: "action.active" }}
-                    />
-                  </Tooltip>
+                  {isOwn ? (
+                    <Tooltip title="This is your listing">
+                      <BlockIcon
+                        sx={{ fontSize: 18, color: "action.disabled" }}
+                      />
+                    </Tooltip>
+                  ) : (
+                    <Tooltip title="Click row to buy">
+                      <ShoppingCartIcon
+                        sx={{ fontSize: 18, color: "action.active" }}
+                      />
+                    </Tooltip>
+                  )}
                 </TableCell>
               </TableRow>
             );
@@ -357,13 +368,14 @@ function GroupedSection({
             return (
               <TableRow
                 key={l.id}
-                hover
-                onClick={() => onSelect(l)}
+                hover={!isOwn}
+                onClick={() => !isOwn && onSelect(l)}
                 sx={{
-                  cursor: "pointer",
+                  cursor: isOwn ? "default" : "pointer",
                   ...(isOwn && {
                     borderLeft: 3,
                     borderColor: "primary.main",
+                    opacity: 0.75,
                   }),
                 }}
               >
@@ -402,11 +414,19 @@ function GroupedSection({
                   </Tooltip>
                 </TableCell>
                 <TableCell sx={{ p: 0.5 }}>
-                  <Tooltip title="Click row to buy">
-                    <ShoppingCartIcon
-                      sx={{ fontSize: 18, color: "action.active" }}
-                    />
-                  </Tooltip>
+                  {isOwn ? (
+                    <Tooltip title="This is your listing">
+                      <BlockIcon
+                        sx={{ fontSize: 18, color: "action.disabled" }}
+                      />
+                    </Tooltip>
+                  ) : (
+                    <Tooltip title="Click row to buy">
+                      <ShoppingCartIcon
+                        sx={{ fontSize: 18, color: "action.active" }}
+                      />
+                    </Tooltip>
+                  )}
                 </TableCell>
               </TableRow>
             );
@@ -418,61 +438,72 @@ function GroupedSection({
 }
 
 // ---------------------------------------------------------------------------
-// ItemSection (right results area)
+// ItemSection — right results area
+// Props are intentionally slim: pass raw listings + callbacks; internal state
+// handles client-side filtering, view mode, and the buy dialog.
 // ---------------------------------------------------------------------------
 
 type ItemSectionProps = {
+  /** All listings returned by the last API call. */
   listings: DCMarketplaceListing[];
-  displayedListings: DCMarketplaceListing[];
-  uniqueCategories: string[];
-  uniqueEquipmentSlots: string[];
-  equipmentSlotFilter: string | null;
-  onEquipmentSlotFilterChange: (slot: string | null) => void;
-  groups: ReturnType<typeof groupByItem>;
+  /** Total count reported by the API (may be > listings.length when paging). */
   total: number;
   hasFetched: boolean;
   loading: boolean;
   error: string | null;
-  viewMode: ViewMode;
-  onViewModeChange: (mode: ViewMode) => void;
-  categoryFilter: string | null;
-  onCategoryFilterChange: (cat: string | null) => void;
-  activeSearch: string;
-  subCategoryFilter: string;
-  classFilter: string;
   hasMore: boolean;
   onLoadMore: () => void;
-  onSelect: (listing: DCMarketplaceListing) => void;
-  /** Player's Drupple (DR) balance to display in the results header. */
+  onBuy: BuyFn;
   druppleBalance: number | null;
   currentUsername?: string | null;
 };
 
 export function ItemSection({
   listings,
-  displayedListings,
-  uniqueCategories,
-  uniqueEquipmentSlots,
-  equipmentSlotFilter,
-  onEquipmentSlotFilterChange,
-  groups,
   total,
   hasFetched,
   loading,
   error,
-  viewMode,
-  onViewModeChange,
-  categoryFilter,
-  onCategoryFilterChange,
-  activeSearch,
-  subCategoryFilter,
-  classFilter,
   hasMore,
   onLoadMore,
-  onSelect,
+  onBuy,
   druppleBalance,
   currentUsername,
 }: ItemSectionProps) {
+  const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
+  const [equipmentSlotFilter, setEquipmentSlotFilter] = useState<string | null>(
+    null,
+  );
+  const [viewMode, setViewMode] = useState<ViewMode>("list");
+  const [selectedListing, setSelectedListing] =
+    useState<DCMarketplaceListing | null>(null);
+
+  // Derived — compute unique values first so we can validate the active filters
+  const uniqueCategories = getUniqueCategories(listings);
+  const uniqueEquipmentSlots = getUniqueEquipmentSlots(listings);
+
+  // A filter is only valid if the current listings still contain that value;
+  // this naturally resets the secondary filters when new search results arrive.
+  const activeCategoryFilter =
+    categoryFilter && uniqueCategories.includes(categoryFilter)
+      ? categoryFilter
+      : null;
+  const activeEquipmentSlotFilter =
+    equipmentSlotFilter && uniqueEquipmentSlots.includes(equipmentSlotFilter)
+      ? equipmentSlotFilter
+      : null;
+
+  const displayedListings = listings
+    .filter(
+      (l) => !activeCategoryFilter || l.item.category === activeCategoryFilter,
+    )
+    .filter(
+      (l) =>
+        !activeEquipmentSlotFilter ||
+        l.item.equipmentSlot === activeEquipmentSlotFilter,
+    );
+  const groups = groupByItem(displayedListings);
+
   return (
     <Box
       sx={{
@@ -500,14 +531,11 @@ export function ItemSection({
               sx={{ flexGrow: 1 }}
             >
               Showing <strong>{displayedListings.length}</strong>
-              {categoryFilter ? ` of ${listings.length}` : ""} listing
+              {activeCategoryFilter ? ` of ${listings.length}` : ""} listing
               {displayedListings.length !== 1 ? "s" : ""}
               {total > listings.length
                 ? ` (${listings.length} of ${total} loaded)`
                 : ""}
-              {activeSearch ? ` for "${activeSearch}"` : ""}
-              {subCategoryFilter !== "ALL" ? ` · ${subCategoryFilter}` : ""}
-              {classFilter ? ` · ${classFilter}-class` : ""}
             </Typography>
 
             {/* DR balance badge */}
@@ -528,7 +556,7 @@ export function ItemSection({
               <Tooltip title="List view">
                 <Button
                   variant={viewMode === "list" ? "contained" : "outlined"}
-                  onClick={() => onViewModeChange("list")}
+                  onClick={() => setViewMode("list")}
                 >
                   <ListIcon fontSize="small" />
                 </Button>
@@ -536,7 +564,7 @@ export function ItemSection({
               <Tooltip title="Grouped view">
                 <Button
                   variant={viewMode === "grouped" ? "contained" : "outlined"}
-                  onClick={() => onViewModeChange("grouped")}
+                  onClick={() => setViewMode("grouped")}
                 >
                   <GridViewIcon fontSize="small" />
                 </Button>
@@ -550,8 +578,8 @@ export function ItemSection({
               <Chip
                 label="All"
                 size="small"
-                color={categoryFilter === null ? "primary" : "default"}
-                onClick={() => onCategoryFilterChange(null)}
+                color={activeCategoryFilter === null ? "primary" : "default"}
+                onClick={() => setCategoryFilter(null)}
               />
               {uniqueCategories.map((cat) => (
                 <Chip
@@ -559,9 +587,9 @@ export function ItemSection({
                   icon={getCategoryIcon(cat)}
                   label={cat}
                   size="small"
-                  color={categoryFilter === cat ? "primary" : "default"}
+                  color={activeCategoryFilter === cat ? "primary" : "default"}
                   onClick={() =>
-                    onCategoryFilterChange(categoryFilter === cat ? null : cat)
+                    setCategoryFilter(activeCategoryFilter === cat ? null : cat)
                   }
                 />
               ))}
@@ -588,18 +616,22 @@ export function ItemSection({
               <Chip
                 label="All"
                 size="small"
-                color={equipmentSlotFilter === null ? "secondary" : "default"}
-                onClick={() => onEquipmentSlotFilterChange(null)}
+                color={
+                  activeEquipmentSlotFilter === null ? "secondary" : "default"
+                }
+                onClick={() => setEquipmentSlotFilter(null)}
               />
               {uniqueEquipmentSlots.map((slot) => (
                 <Chip
                   key={slot}
                   label={slot}
                   size="small"
-                  color={equipmentSlotFilter === slot ? "secondary" : "default"}
+                  color={
+                    activeEquipmentSlotFilter === slot ? "secondary" : "default"
+                  }
                   onClick={() =>
-                    onEquipmentSlotFilterChange(
-                      equipmentSlotFilter === slot ? null : slot,
+                    setEquipmentSlotFilter(
+                      activeEquipmentSlotFilter === slot ? null : slot,
                     )
                   }
                 />
@@ -623,7 +655,7 @@ export function ItemSection({
       {hasFetched && viewMode === "list" && (
         <ListingsTable
           listings={displayedListings}
-          onSelect={onSelect}
+          onSelect={setSelectedListing}
           currentUsername={currentUsername}
         />
       )}
@@ -644,7 +676,7 @@ export function ItemSection({
                 key={item.itemId}
                 item={item}
                 rows={rows}
-                onSelect={onSelect}
+                onSelect={setSelectedListing}
                 currentUsername={currentUsername}
               />
             ))
@@ -653,20 +685,33 @@ export function ItemSection({
       )}
 
       {/* Load more */}
-      {hasFetched && hasMore && !categoryFilter && !equipmentSlotFilter && (
-        <Box sx={{ display: "flex", justifyContent: "center", pt: 1 }}>
-          <Button
-            variant="outlined"
-            onClick={onLoadMore}
-            disabled={loading}
-            startIcon={loading ? <CircularProgress size={16} /> : undefined}
-          >
-            {loading
-              ? "Loading…"
-              : `Load more (${total - listings.length} remaining)`}
-          </Button>
-        </Box>
-      )}
+      {hasFetched &&
+        hasMore &&
+        !activeCategoryFilter &&
+        !activeEquipmentSlotFilter && (
+          <Box sx={{ display: "flex", justifyContent: "center", pt: 1 }}>
+            <Button
+              variant="outlined"
+              onClick={onLoadMore}
+              disabled={loading}
+              startIcon={loading ? <CircularProgress size={16} /> : undefined}
+            >
+              {loading
+                ? "Loading…"
+                : `Load more (${total - listings.length} remaining)`}
+            </Button>
+          </Box>
+        )}
+
+      {/* Buy dialog — opened by clicking any non-own listing row */}
+      <BuyDialog
+        key={selectedListing?.id ?? "none"}
+        listing={selectedListing}
+        open={selectedListing !== null}
+        onClose={() => setSelectedListing(null)}
+        onBuy={onBuy}
+        druppleBalance={druppleBalance}
+      />
     </Box>
   );
 }
