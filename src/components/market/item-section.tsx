@@ -437,12 +437,6 @@ function GroupedSection({
   );
 }
 
-// ---------------------------------------------------------------------------
-// ItemSection — right results area
-// Props are intentionally slim: pass raw listings + callbacks; internal state
-// handles client-side filtering, view mode, and the buy dialog.
-// ---------------------------------------------------------------------------
-
 type ItemSectionProps = {
   /** All listings returned by the last API call. null = not yet fetched. */
   listings: DCMarketplaceListing[] | null;
