@@ -31,7 +31,7 @@ type UseMarketResult = {
   listed: DCMarketListing[];
   expired: DCMarketListing[];
   itemQuantitiesByItemId: Record<number, PlayerItemQuantityBreakdown>;
-  druppleBalance: number | null;
+  drubbleBalance: number | null;
   locationWarning: string | null;
   playerLoading: boolean;
   playerError: string | null;
@@ -72,7 +72,7 @@ export function useMarket(): UseMarketResult {
   const [inventory, setInventory] = useState<DCGameInventoryItem[]>([]);
   const [listed, setListed] = useState<DCMarketListing[]>([]);
   const [expired, setExpired] = useState<DCMarketListing[]>([]);
-  const [druppleBalance, setDruppleBalance] = useState<number | null>(null);
+  const [drubbleBalance, setDrubbleBalance] = useState<number | null>(null);
   const [locationWarning, setLocationWarning] = useState<string | null>(null);
   const [playerLoading, setPlayerLoading] = useState(false);
   const [playerError, setPlayerError] = useState<string | null>(null);
@@ -109,7 +109,7 @@ export function useMarket(): UseMarketResult {
     setPlayerLoading(true);
     setPlayerError(null);
     setLocationWarning(null);
-    setDruppleBalance(null);
+    setDrubbleBalance(null);
 
     try {
       const state = await getGameStateAction(token);
@@ -121,7 +121,7 @@ export function useMarket(): UseMarketResult {
         (w) => w.currencyType === "DRUBBLE",
       );
       const rawBalance = drWallet?.balance;
-      setDruppleBalance(
+      setDrubbleBalance(
         rawBalance !== undefined ? parseFloat(rawBalance) || null : null,
       );
 
@@ -265,7 +265,7 @@ export function useMarket(): UseMarketResult {
     listed,
     expired,
     itemQuantitiesByItemId,
-    druppleBalance,
+    drubbleBalance,
     locationWarning,
     playerLoading,
     playerError,

@@ -144,22 +144,3 @@ export async function purchaseItemAction(
     return null;
   }
 }
-
-export async function getDruppleBalanceAction(
-  token: string,
-): Promise<number | null> {
-  if (!token) return null;
-  try {
-    const state = await getStateData({ token });
-    if (!state) return null;
-    const raw = state?.requiredData?.wallets.find(
-      (w) => w.currencyType === "DRUPPLE",
-    )?.balance;
-    if (raw === undefined || raw === null) return null;
-    const num = typeof raw === "string" ? parseFloat(raw) : raw;
-    return isNaN(num) ? null : num;
-  } catch (error) {
-    console.error("getDruppleBalanceAction failed", error);
-    return null;
-  }
-}

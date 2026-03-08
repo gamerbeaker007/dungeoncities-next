@@ -51,7 +51,7 @@ type BuyDialogProps = {
   onClose: () => void;
   onBuy: BuyFn;
   /** Player's current DR balance. null = unknown (loading or not fetched). */
-  druppleBalance: number | null;
+  drubbleBalance: number | null;
 };
 
 export function BuyDialog({
@@ -59,7 +59,7 @@ export function BuyDialog({
   open,
   onClose,
   onBuy,
-  druppleBalance,
+  drubbleBalance,
 }: BuyDialogProps) {
   const [qty, setQty] = useState(1);
   const [buying, setBuying] = useState(false);
@@ -74,7 +74,7 @@ export function BuyDialog({
   const pricePerUnit = parseFloat(listing.pricePerUnit);
   const total = isNaN(pricePerUnit) ? 0 : pricePerUnit * qty;
 
-  const insufficientFunds = druppleBalance !== null && total > druppleBalance;
+  const insufficientFunds = drubbleBalance !== null && total > drubbleBalance;
 
   const handleBuy = async () => {
     setBuying(true);
@@ -295,14 +295,14 @@ export function BuyDialog({
           <Typography variant="caption" color="text.secondary">
             Your DR balance:
           </Typography>
-          {druppleBalance !== null ? (
-            <Tooltip title="Drupple (DR) — in-game currency">
+          {drubbleBalance !== null ? (
+            <Tooltip title="Drubble (DR) — in-game currency">
               <Typography
                 variant="caption"
                 fontWeight={600}
                 color={insufficientFunds ? "error.main" : "success.main"}
               >
-                {formatPrice(druppleBalance)} DR
+                {formatPrice(drubbleBalance)} DR
               </Typography>
             </Tooltip>
           ) : (
@@ -317,7 +317,7 @@ export function BuyDialog({
           <Alert severity="warning" sx={{ mt: 1.5 }}>
             Insufficient DR balance. This purchase costs{" "}
             <strong>{formatPrice(total)} DR</strong> but you only have{" "}
-            <strong>{formatPrice(druppleBalance!)} DR</strong>.
+            <strong>{formatPrice(drubbleBalance!)} DR</strong>.
           </Alert>
         )}
 

@@ -445,7 +445,7 @@ type ItemSectionProps = {
   loading: boolean;
   error: string | null;
   onBuy: BuyFn;
-  druppleBalance: number | null;
+  drubbleBalance: number | null;
   currentUsername?: string | null;
   hasMore: boolean;
   onLoadMore: () => void;
@@ -457,7 +457,7 @@ export function ItemSection({
   loading,
   error,
   onBuy,
-  druppleBalance,
+  drubbleBalance,
   currentUsername,
   hasMore,
   onLoadMore,
@@ -549,11 +549,11 @@ export function ItemSection({
             </Typography>
 
             {/* DR balance badge */}
-            {druppleBalance !== null && (
-              <Tooltip title="Your Drupple (DR) balance">
+            {drubbleBalance !== null && (
+              <Tooltip title="Your Drubble (DR) balance">
                 <Chip
                   icon={<StorefrontIcon sx={{ fontSize: "14px !important" }} />}
-                  label={`${formatPrice(druppleBalance)} DR`}
+                  label={`${formatPrice(drubbleBalance)} DR`}
                   size="small"
                   color="primary"
                   variant="outlined"
@@ -711,7 +711,7 @@ export function ItemSection({
         open={selectedListing !== null}
         onClose={() => setSelectedListing(null)}
         onBuy={onBuy}
-        druppleBalance={druppleBalance}
+        drubbleBalance={drubbleBalance}
       />
     </Box>
   );

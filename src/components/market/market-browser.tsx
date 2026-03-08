@@ -19,7 +19,7 @@ function MarketBrowserContent() {
   const {
     locationWarning,
     playerLoading,
-    druppleBalance,
+    drubbleBalance,
     listings,
     total,
     hasMore,
@@ -86,7 +86,7 @@ function MarketBrowserContent() {
           loading={loading}
           error={error}
           onBuy={handleBuy}
-          druppleBalance={druppleBalance}
+          drubbleBalance={drubbleBalance}
           currentUsername={username}
           hasMore={hasMore}
           onLoadMore={loadMore}
