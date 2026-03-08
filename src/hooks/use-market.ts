@@ -12,7 +12,7 @@ import type {
   DCMarketplaceListing,
 } from "@/types/dc/marketplace";
 import type { DCGameInventoryItem, DCMarketListing } from "@/types/dc/state";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -38,15 +38,13 @@ type UseMarketResult = {
   fetchPlayerItems: () => Promise<void>;
 
   // ── Marketplace listings (fetchListings) ──────────────────────────────────
-  listings: DCMarketplaceListing[];
+  listings: DCMarketplaceListing[] | null;
   total: number;
-  hasFetched: boolean;
+  hasMore: boolean;
   listingsLoading: boolean;
   listingsError: string | null;
-  fetchListings: (
-    params: DCGetMarketplaceListingsParams,
-    append?: boolean,
-  ) => Promise<void>;
+  searchListings: (params: DCGetMarketplaceListingsParams) => Promise<void>;
+  loadMore: () => void;
 };
 
 // ---------------------------------------------------------------------------
@@ -80,11 +78,19 @@ export function useMarket(): UseMarketResult {
   const [playerError, setPlayerError] = useState<string | null>(null);
 
   // ── Listings state ────────────────────────────────────────────────────────
-  const [listings, setListings] = useState<DCMarketplaceListing[]>([]);
+  const LIMIT = 50;
+  const [listings, setListings] = useState<DCMarketplaceListing[] | null>(null);
   const [total, setTotal] = useState(0);
-  const [hasFetched, setHasFetched] = useState(false);
+  const [hasMore, setHasMore] = useState(false);
   const [listingsLoading, setListingsLoading] = useState(false);
   const [listingsError, setListingsError] = useState<string | null>(null);
+  const paramsRef = useRef<
+    Omit<DCGetMarketplaceListingsParams, "limit" | "offset">
+  >({
+    sortBy: "price_asc",
+  });
+  const offsetRef = useRef(0);
+  const isFetchingRef = useRef(false);
 
   // ── fetchPlayerItems ──────────────────────────────────────────────────────
   // Checks location, sets locationWarning if not at the marketplace,
@@ -166,9 +172,8 @@ export function useMarket(): UseMarketResult {
     }
   }, [isAuthenticated, token]);
 
-  // ── fetchListings ─────────────────────────────────────────────────────────
-  // Fetches marketplace search results. Pass append=true for load-more.
-  const fetchListings = useCallback(
+  // ── fetchPage (internal) ──────────────────────────────────────────────────
+  const fetchPage = useCallback(
     async (params: DCGetMarketplaceListingsParams, append = false) => {
       if (!token) return;
       setListingsLoading(true);
@@ -180,18 +185,49 @@ export function useMarket(): UseMarketResult {
           return;
         }
         setTotal(result.total);
-        setListings((prev) =>
-          append ? [...prev, ...result.listings] : result.listings,
-        );
-        setHasFetched(true);
+        setHasMore(result.listings.length === params.limit);
+        setListings((prev) => {
+          if (!append) return result.listings;
+          const seen = new Set((prev ?? []).map((l) => l.listingId));
+          const fresh = result.listings.filter((l) => !seen.has(l.listingId));
+          return [...(prev ?? []), ...fresh];
+        });
       } catch {
         setListingsError("An error occurred while loading listings.");
       } finally {
+        isFetchingRef.current = false;
         setListingsLoading(false);
       }
     },
     [token],
   );
+
+  // ── searchListings ────────────────────────────────────────────────────────
+  // Starts a new search: resets pagination state and fetches page 0.
+  const searchListings = useCallback(
+    async (params: DCGetMarketplaceListingsParams) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { limit: _l, offset: _o, ...rest } = params;
+      paramsRef.current = rest;
+      offsetRef.current = 0;
+      isFetchingRef.current = true;
+      await fetchPage({ ...rest, limit: LIMIT, offset: 0 });
+    },
+    [fetchPage],
+  );
+
+  // ── loadMore ──────────────────────────────────────────────────────────────
+  // Loads the next page. Re-entrancy-safe via isFetchingRef.
+  const loadMore = useCallback(() => {
+    if (isFetchingRef.current) return;
+    isFetchingRef.current = true;
+    const newOffset = offsetRef.current + LIMIT;
+    offsetRef.current = newOffset;
+    void fetchPage(
+      { ...paramsRef.current, limit: LIMIT, offset: newOffset },
+      true,
+    );
+  }, [fetchPage]);
 
   // Auto-load player items on mount / auth change
   useEffect(() => {
@@ -236,9 +272,10 @@ export function useMarket(): UseMarketResult {
     fetchPlayerItems,
     listings,
     total,
-    hasFetched,
+    hasMore,
     listingsLoading,
     listingsError,
-    fetchListings,
+    searchListings,
+    loadMore,
   };
 }

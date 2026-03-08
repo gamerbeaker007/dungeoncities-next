@@ -26,7 +26,7 @@ import {
   Typography,
 } from "@mui/material";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BuyDialog, type BuyFn } from "./buy-dialog";
 
 // ---------------------------------------------------------------------------
@@ -444,31 +444,29 @@ function GroupedSection({
 // ---------------------------------------------------------------------------
 
 type ItemSectionProps = {
-  /** All listings returned by the last API call. */
-  listings: DCMarketplaceListing[];
+  /** All listings returned by the last API call. null = not yet fetched. */
+  listings: DCMarketplaceListing[] | null;
   /** Total count reported by the API (may be > listings.length when paging). */
   total: number;
-  hasFetched: boolean;
   loading: boolean;
   error: string | null;
-  hasMore: boolean;
-  onLoadMore: () => void;
   onBuy: BuyFn;
   druppleBalance: number | null;
   currentUsername?: string | null;
+  hasMore: boolean;
+  onLoadMore: () => void;
 };
 
 export function ItemSection({
   listings,
   total,
-  hasFetched,
   loading,
   error,
-  hasMore,
-  onLoadMore,
   onBuy,
   druppleBalance,
   currentUsername,
+  hasMore,
+  onLoadMore,
 }: ItemSectionProps) {
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
   const [equipmentSlotFilter, setEquipmentSlotFilter] = useState<string | null>(
@@ -477,10 +475,28 @@ export function ItemSection({
   const [viewMode, setViewMode] = useState<ViewMode>("list");
   const [selectedListing, setSelectedListing] =
     useState<DCMarketplaceListing | null>(null);
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          onLoadMore();
+        }
+      },
+      { threshold: 0.1 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [hasMore, onLoadMore]);
+
+  const safeListings = listings ?? [];
 
   // Derived — compute unique values first so we can validate the active filters
-  const uniqueCategories = getUniqueCategories(listings);
-  const uniqueEquipmentSlots = getUniqueEquipmentSlots(listings);
+  const uniqueCategories = getUniqueCategories(safeListings);
+  const uniqueEquipmentSlots = getUniqueEquipmentSlots(safeListings);
 
   // A filter is only valid if the current listings still contain that value;
   // this naturally resets the secondary filters when new search results arrive.
@@ -493,7 +509,7 @@ export function ItemSection({
       ? equipmentSlotFilter
       : null;
 
-  const displayedListings = listings
+  const displayedListings = safeListings
     .filter(
       (l) => !activeCategoryFilter || l.item.category === activeCategoryFilter,
     )
@@ -515,7 +531,7 @@ export function ItemSection({
       }}
     >
       {/* Results header */}
-      {hasFetched && !loading && (
+      {listings !== null && !loading && (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
           <Box
             sx={{
@@ -531,10 +547,10 @@ export function ItemSection({
               sx={{ flexGrow: 1 }}
             >
               Showing <strong>{displayedListings.length}</strong>
-              {activeCategoryFilter ? ` of ${listings.length}` : ""} listing
+              {activeCategoryFilter ? ` of ${safeListings.length}` : ""} listing
               {displayedListings.length !== 1 ? "s" : ""}
-              {total > listings.length
-                ? ` (${listings.length} of ${total} loaded)`
+              {total > safeListings.length
+                ? ` (${safeListings.length} of ${total} loaded)`
                 : ""}
             </Typography>
 
@@ -645,14 +661,14 @@ export function ItemSection({
       {error && <Alert severity="error">{error}</Alert>}
 
       {/* Initial loading spinner */}
-      {loading && listings.length === 0 && (
+      {loading && safeListings.length === 0 && (
         <Box sx={{ display: "flex", justifyContent: "center", py: 6 }}>
           <CircularProgress />
         </Box>
       )}
 
       {/* List view */}
-      {hasFetched && viewMode === "list" && (
+      {listings !== null && viewMode === "list" && (
         <ListingsTable
           listings={displayedListings}
           onSelect={setSelectedListing}
@@ -661,7 +677,7 @@ export function ItemSection({
       )}
 
       {/* Grouped view */}
-      {hasFetched && viewMode === "grouped" && (
+      {listings !== null && viewMode === "grouped" && (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           {groups.length === 0 ? (
             <Typography
@@ -684,24 +700,15 @@ export function ItemSection({
         </Box>
       )}
 
-      {/* Load more */}
-      {hasFetched &&
-        hasMore &&
-        !activeCategoryFilter &&
-        !activeEquipmentSlotFilter && (
-          <Box sx={{ display: "flex", justifyContent: "center", pt: 1 }}>
-            <Button
-              variant="outlined"
-              onClick={onLoadMore}
-              disabled={loading}
-              startIcon={loading ? <CircularProgress size={16} /> : undefined}
-            >
-              {loading
-                ? "Loading…"
-                : `Load more (${total - listings.length} remaining)`}
-            </Button>
-          </Box>
-        )}
+      {/* Load more sentinel — triggers auto-load on scroll */}
+      {hasMore && !activeCategoryFilter && !activeEquipmentSlotFilter && (
+        <Box
+          ref={sentinelRef}
+          sx={{ display: "flex", justifyContent: "center", py: 3 }}
+        >
+          {loading && <CircularProgress size={24} />}
+        </Box>
+      )}
 
       {/* Buy dialog — opened by clicking any non-own listing row */}
       <BuyDialog

@@ -84,14 +84,8 @@ export const SUBCATEGORY_OPTIONS = [
 // Component
 // ---------------------------------------------------------------------------
 
-const LIMIT = 50;
-
 type FilterPaneProps = {
-  /** Wrapped fetchListings from market-browser (tracks params + resets offset). */
-  fetchListings: (
-    params: DCGetMarketplaceListingsParams,
-    append?: boolean,
-  ) => void;
+  onSearch: (params: DCGetMarketplaceListingsParams) => void;
   loading: boolean;
   initialSearch?: string;
 };
@@ -111,7 +105,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 }
 
 export function FilterPane({
-  fetchListings,
+  onSearch,
   loading,
   initialSearch = "",
 }: FilterPaneProps) {
@@ -144,31 +138,29 @@ export function FilterPane({
       sortBy: sort,
       class: cls || undefined,
       subcategory: sub !== "ALL" ? sub : undefined,
-      limit: LIMIT,
-      offset: 0,
     };
   };
 
   // ── Handlers ─────────────────────────────────────────────────────────────
   const handleSearch = () => {
-    fetchListings(buildParams());
+    onSearch(buildParams());
     if (isMobile) setDrawerOpen(false);
   };
 
   const handleClearSearch = () => {
     setSearchInput("");
     router.replace("/market");
-    fetchListings(buildParams({ search: "" }));
+    onSearch(buildParams({ search: "" }));
   };
 
   const handleSortChange = (newSort: DCMarketplaceSortBy) => {
     setSortBy(newSort);
-    fetchListings(buildParams({ sortBy: newSort }));
+    onSearch(buildParams({ sortBy: newSort }));
   };
 
   const handleClassChange = (newClass: string) => {
     setClassFilter(newClass);
-    fetchListings(buildParams({ classFilter: newClass }));
+    onSearch(buildParams({ classFilter: newClass }));
   };
 
   const handleSubCategoryChange = (
@@ -177,7 +169,7 @@ export function FilterPane({
   ) => {
     if (val === null) return;
     setSubCategoryFilter(val);
-    fetchListings(buildParams({ subCategoryFilter: val }));
+    onSearch(buildParams({ subCategoryFilter: val }));
   };
 
   const filterContent = (

@@ -15,8 +15,8 @@ export type DCGetMarketplaceListingsParams = {
   class?: string;
   /** Subcategory filter, e.g. "Plant", "Weapon". Omit or pass undefined for all. */
   subcategory?: string;
-  limit: number;
-  offset: number;
+  limit?: number;
+  offset?: number;
 };
 
 export type DCMarketplaceSeller = {
