@@ -2,6 +2,7 @@ import { useAuth } from "@/providers/auth-provider";
 import type { ForgeOwnedPlayerData, ForgeRequirement } from "@/types/forge";
 import SearchIcon from "@mui/icons-material/Search";
 import StarIcon from "@mui/icons-material/Star";
+import StorefrontIcon from "@mui/icons-material/Storefront";
 import { Box, IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import Link from "next/link";
 
@@ -18,6 +19,7 @@ export function ForgeItem({
 }: ForgeItemProps) {
   const { isAuthenticated } = useAuth();
   const forgeSearchHref = `/?q=${requirement.itemId}`;
+  const marketHref = `/market?search=${encodeURIComponent(requirement.name)}`;
   const ownedQuantity = ownedData?.total ?? 0;
 
   return (
@@ -86,6 +88,18 @@ export function ForgeItem({
           sx={{ p: 0.5 }}
         >
           <SearchIcon sx={{ fontSize: 16 }} />
+        </IconButton>
+      </Tooltip>
+
+      <Tooltip title="Find this item on the Marketplace">
+        <IconButton
+          suppressHydrationWarning
+          component={Link}
+          href={marketHref}
+          size="small"
+          sx={{ p: 0.5 }}
+        >
+          <StorefrontIcon sx={{ fontSize: 16 }} />
         </IconButton>
       </Tooltip>
 

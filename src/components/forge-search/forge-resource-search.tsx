@@ -2,7 +2,7 @@
 
 import { ForgeRecipeCard } from "@/components/forge-search/forge-recipe-card";
 import { ForgeSearchForm } from "@/components/forge-search/forge-search-form";
-import { usePlayerItems } from "@/hooks/use-player-items";
+import { useMarket } from "@/hooks/use-market";
 import { searchForgeRecipes } from "@/lib/forge-items";
 import type { ForgeRecipe } from "@/types/forge";
 import { Alert, Box, Stack, Typography } from "@mui/material";
@@ -15,7 +15,7 @@ type ForgeResourceSearchProps = {
 
 export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
   const [query, setQuery] = useState("");
-  const { itemQuantitiesByItemId, locationWarning } = usePlayerItems();
+  const { itemQuantitiesByItemId, locationWarning } = useMarket();
 
   const filteredRecipes = useMemo(() => searchForgeRecipes(query), [query]);
 

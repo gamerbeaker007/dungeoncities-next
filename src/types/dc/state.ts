@@ -12,6 +12,14 @@ export type DCGameStateRequiredData = {
     inventorySize?: number;
   };
   inventory: DCGameInventoryItem[];
+  wallets: DCWalletItem[];
+};
+
+export type DCWalletItem = {
+  id: string;
+  currencyType: string;
+  characterId: number;
+  balance: string;
 };
 
 export type DCGameStateResponse = {

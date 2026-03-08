@@ -1,4 +1,10 @@
 import { API_ENDPOINTS } from "@/lib/statics";
+import {
+  DCGetMarketplaceListingsParams,
+  DCGetMarketplaceListingsResponse,
+  DCPurchaseItemParams,
+  DCPurchaseItemResponse,
+} from "@/types/dc/marketplace";
 import { DCDexResponse, DCMonsterDetailResponse } from "@/types/dc/monster-dex";
 import {
   DCGameLocation,
@@ -75,6 +81,14 @@ type DCApiPayload =
         targetLocation: DCGameLocation;
         timestamp: number;
       };
+    }
+  | {
+      action: "GET_MARKETPLACE_LISTINGS";
+      params: DCGetMarketplaceListingsParams;
+    }
+  | {
+      action: "PURCHASE_ITEM";
+      params: DCPurchaseItemParams;
     };
 
 export type DCApiRequestOptions = {
@@ -107,6 +121,10 @@ export async function postDcApiAction<T>(
   payload: DCApiPayload,
 ): Promise<T> {
   try {
+    console.debug("[DC API] Sending request", {
+      action: payload.action,
+      params: payload.params,
+    });
     const response = await dcApiClient.post<T>("", payload, {
       headers: {
         authorization: `Bearer ${options.token}`,
@@ -204,6 +222,26 @@ export function getStateData(options: DCApiRequestOptions) {
   return postDcApiAction<DCGameStateResponse>(options, {
     action: "GET_STATE",
     params: {},
+  });
+}
+
+export function getMarketplaceListingsData(
+  options: DCApiRequestOptions,
+  params: DCGetMarketplaceListingsParams,
+): Promise<DCGetMarketplaceListingsResponse> {
+  return postDcApiAction<DCGetMarketplaceListingsResponse>(options, {
+    action: "GET_MARKETPLACE_LISTINGS",
+    params,
+  });
+}
+
+export function purchaseItemData(
+  options: DCApiRequestOptions,
+  params: DCPurchaseItemParams,
+): Promise<DCPurchaseItemResponse> {
+  return postDcApiAction<DCPurchaseItemResponse>(options, {
+    action: "PURCHASE_ITEM",
+    params,
   });
 }
 
