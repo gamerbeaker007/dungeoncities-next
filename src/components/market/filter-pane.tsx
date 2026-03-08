@@ -137,7 +137,12 @@ export function FilterPane({
       search: s || undefined,
       sortBy: sort,
       class: cls || undefined,
-      subcategory: sub !== "ALL" ? sub : undefined,
+      subcategory:
+        sub !== "ALL"
+          ? sub === "Special Items"
+            ? "SpecialItem"
+            : sub
+          : undefined,
     };
   };
 
