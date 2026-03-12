@@ -5,6 +5,7 @@ import {
   DCPurchaseItemParams,
   DCPurchaseItemResponse,
 } from "@/types/dc/marketplace";
+import { DCSellItemParams, DCSellItemResponse } from "@/types/dc/shop";
 import { DCDexResponse, DCMonsterDetailResponse } from "@/types/dc/monster-dex";
 import {
   DCGameLocation,
@@ -89,6 +90,10 @@ type DCApiPayload =
   | {
       action: "PURCHASE_ITEM";
       params: DCPurchaseItemParams;
+    }
+  | {
+      action: "SELL_ITEM";
+      params: DCSellItemParams;
     };
 
 export type DCApiRequestOptions = {
@@ -251,6 +256,16 @@ export function getMarketInfoData(
 ) {
   return postDcApiAction<DCGetMyListingsResponse>(options, {
     action: "GET_MY_LISTINGS",
+    params,
+  });
+}
+
+export function sellItemData(
+  options: DCApiRequestOptions,
+  params: DCSellItemParams,
+): Promise<DCSellItemResponse> {
+  return postDcApiAction<DCSellItemResponse>(options, {
+    action: "SELL_ITEM",
     params,
   });
 }

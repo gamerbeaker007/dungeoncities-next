@@ -4,8 +4,8 @@ import {
   getAllMarketListingsAction,
   getGameStateAction,
   getMarketplaceListingsAction,
-  updateLocationAction,
 } from "@/actions/game-actions";
+import { moveToMarketplace } from "@/lib/location";
 import { useAuth } from "@/providers/auth-provider";
 import type {
   DCGetMarketplaceListingsParams,
@@ -122,48 +122,36 @@ export function useMarket(): UseMarketResult {
       );
       const rawBalance = drWallet?.balance;
       setDrubbleBalance(
-        rawBalance !== undefined ? parseFloat(rawBalance) || null : null,
+        rawBalance === undefined ? null : Number.parseFloat(rawBalance) || null,
       );
 
       const currentLocation = state.state;
-
-      if (currentLocation === "IN_CITY") {
-        console.warn("[useMarket] Player is IN_CITY, moving to IN_MARKETPLACE");
-        const moveResult = await updateLocationAction(token, "IN_MARKETPLACE");
-        if (!moveResult?.success) {
-          console.error(
-            "[useMarket] Failed to move to IN_MARKETPLACE",
-            moveResult,
-          );
-          setLocationWarning(
-            `Unable to fetch market data due to current location: ${currentLocation}`,
-          );
-          return;
-        }
-      } else if (currentLocation !== "IN_MARKETPLACE") {
-        console.warn(
-          "[useMarket] Cannot fetch market data from location:",
-          currentLocation,
-        );
-        setLocationWarning(
-          `Unable to fetch market data due to current location: ${currentLocation}`,
-        );
+      const locationError = await moveToMarketplace(token, currentLocation);
+      if (locationError) {
+        setLocationWarning(locationError);
         return;
       }
 
-      // Fetch listed and expired in parallel since they're independent
-      const [listedResponse, expiredResponse] = await Promise.all([
-        getAllMarketListingsAction(token, { status: "LISTED", limit: 50 }),
-        getAllMarketListingsAction(token, { status: "EXPIRED", limit: 50 }),
-      ]);
+      // Fetch listed and expired in parallel since they're independent.
+      // After a location change the API may need a moment, so retry up
+      // to 2 times with a short delay between attempts.
+      const fetchListings = async () => {
+        const [listed, expired] = await Promise.all([
+          getAllMarketListingsAction(token, { status: "LISTED", limit: 50 }),
+          getAllMarketListingsAction(token, { status: "EXPIRED", limit: 50 }),
+        ]);
+        return { listed, expired };
+      };
 
-      if (!listedResponse)
-        throw new Error("Failed to load listed market items");
-      if (!expiredResponse)
-        throw new Error("Failed to load expired market items");
+      let result = await fetchListings();
+      for (let attempt = 0; attempt < 2; attempt++) {
+        if (result.listed && result.expired) break;
+        await new Promise((r) => setTimeout(r, 1000));
+        result = await fetchListings();
+      }
 
-      setListed(listedResponse.listings);
-      setExpired(expiredResponse.listings);
+      setListed(result.listed?.listings ?? []);
+      setExpired(result.expired?.listings ?? []);
     } catch (error) {
       console.error("[useMarket] fetchPlayerItems failed", error);
       setPlayerError("Failed to load player market data");

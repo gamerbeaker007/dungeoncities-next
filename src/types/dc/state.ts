@@ -92,6 +92,7 @@ export type DCGameLocation =
   | "IN_MARKETPLACE"
   | "IN_DUNGEON"
   | "IN_FORGE"
+  | "IN_SHOP"
   | string;
 
 export type DCUpdateLocationResponse = {

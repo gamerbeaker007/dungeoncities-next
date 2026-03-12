@@ -6,6 +6,7 @@ import {
   getMarketplaceListingsData,
   getStateData,
   purchaseItemData,
+  sellItemData,
   updateLocationData,
 } from "@/lib/dc-api";
 import {
@@ -13,6 +14,7 @@ import {
   DCGetMarketplaceListingsResponse,
   DCPurchaseItemResponse,
 } from "@/types/dc/marketplace";
+import { DCSellItemParams, DCSellItemResponse } from "@/types/dc/shop";
 import {
   DCGameLocation,
   DCGameStateResponse,
@@ -141,6 +143,19 @@ export async function purchaseItemAction(
     return await purchaseItemData({ token }, { listingId, quantity });
   } catch (error) {
     console.error("purchaseItemAction failed", { listingId, quantity, error });
+    return null;
+  }
+}
+
+export async function sellItemAction(
+  token: string,
+  params: DCSellItemParams,
+): Promise<DCSellItemResponse | null> {
+  if (!token) return null;
+  try {
+    return await sellItemData({ token }, params);
+  } catch (error) {
+    console.error("sellItemAction failed", { params, error });
     return null;
   }
 }

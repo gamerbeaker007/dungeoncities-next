@@ -6,6 +6,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
+import StoreIcon from "@mui/icons-material/Store";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import {
@@ -26,7 +27,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { useAuth } from "../providers/auth-provider";
+import { useAuth } from "@/providers/auth-provider";
 import { LoginDialog } from "./login/login-dialog";
 
 const navItems = [
@@ -34,6 +35,7 @@ const navItems = [
   { href: "/forge", label: "Forge Search", icon: BuildIcon },
   { href: "/undiscovered", label: "Undiscovered", icon: VisibilityOffIcon },
   { href: "/market", label: "Marketplace", icon: StorefrontIcon },
+  { href: "/shop", label: "Shop", icon: StoreIcon },
   { href: "/faq", label: "FAQ", icon: HelpOutlineIcon },
 ];
 
