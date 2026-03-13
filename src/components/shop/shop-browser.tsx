@@ -1,12 +1,17 @@
 "use client";
 
-import { useShop, type SellResult } from "@/hooks/use-shop";
+import {
+  useShop,
+  type LockedItemData,
+  type SellResult,
+} from "@/hooks/use-shop";
 import { useAuth } from "@/providers/auth-provider";
 import type { DCGameInventoryItem } from "@/types/dc/state";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import LockIcon from "@mui/icons-material/Lock";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
+import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SellIcon from "@mui/icons-material/Sell";
 import SelectAllIcon from "@mui/icons-material/SelectAll";
 import StoreIcon from "@mui/icons-material/Store";
@@ -17,7 +22,15 @@ import {
   Chip,
   CircularProgress,
   Collapse,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   IconButton,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
   Paper,
   Snackbar,
   Stack,
@@ -113,6 +126,77 @@ function SellResultsSummary({
   );
 }
 
+function ManageLockedItemsDialog({
+  open,
+  lockedItems,
+  onUnlock,
+  onClearAll,
+  onClose,
+}: Readonly<{
+  open: boolean;
+  lockedItems: LockedItemData[];
+  onUnlock: (itemId: number) => void;
+  onClearAll: () => void;
+  onClose: () => void;
+}>) {
+  return (
+    <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
+      <DialogTitle>Locked Items</DialogTitle>
+      <DialogContent sx={{ p: 0 }}>
+        {lockedItems.length === 0 ? (
+          <Typography color="text.secondary" sx={{ p: 3, textAlign: "center" }}>
+            No items are locked.
+          </Typography>
+        ) : (
+          <List dense disablePadding>
+            {lockedItems.map((item) => (
+              <ListItem
+                key={item.itemId}
+                secondaryAction={
+                  <Tooltip title="Unlock this item">
+                    <IconButton
+                      edge="end"
+                      size="small"
+                      onClick={() => onUnlock(item.itemId)}
+                    >
+                      <LockOpenIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                }
+              >
+                <ListItemAvatar sx={{ minWidth: 44 }}>
+                  <ItemImage imageUrl={item.imageUrl} name={item.name} />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={item.name}
+                  secondary={item.category || undefined}
+                  primaryTypographyProps={{ variant: "body2" }}
+                  secondaryTypographyProps={{ variant: "caption" }}
+                />
+              </ListItem>
+            ))}
+          </List>
+        )}
+      </DialogContent>
+      <DialogActions>
+        {lockedItems.length > 0 && (
+          <Button
+            size="small"
+            color="warning"
+            startIcon={<LockOpenOutlinedIcon />}
+            onClick={onClearAll}
+          >
+            Unlock All
+          </Button>
+        )}
+        <Button size="small" onClick={onClose}>
+          Close
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
+
 function InventoryTable({
   inventory,
   lockedItemIds,
@@ -125,7 +209,7 @@ function InventoryTable({
   lockedItemIds: Set<number>;
   selectedItemIds: Set<string>;
   selling: boolean;
-  onToggleLock: (itemId: number) => void;
+  onToggleLock: (itemId: number, itemData: LockedItemData) => void;
   onToggleSelect: (id: string) => void;
 }>) {
   if (inventory.length === 0) {
@@ -243,7 +327,12 @@ function InventoryTable({
                       disabled={selling}
                       onClick={(e) => {
                         e.stopPropagation();
-                        onToggleLock(invItem.itemId);
+                        onToggleLock(invItem.itemId, {
+                          itemId: invItem.itemId,
+                          name: invItem.item.name,
+                          imageUrl: invItem.item.imageUrl,
+                          category: invItem.item.category,
+                        });
                       }}
                       color={isLocked ? "warning" : "default"}
                     >
@@ -275,6 +364,7 @@ function ShopBrowserContent() {
     selling,
     sellResults,
     lockedItemIds,
+    lockedItems,
     selectedItemIds,
     toggleLock,
     toggleSelect,
@@ -283,11 +373,13 @@ function ShopBrowserContent() {
     sellSelected,
     sellAll,
     clearSellResults,
+    clearAllLocks,
   } = useShop();
 
   const [sellDialogMode, setSellDialogMode] = useState<
     "selected" | "all" | null
   >(null);
+  const [manageLocksOpen, setManageLocksOpen] = useState(false);
 
   if (!isAuthenticated) {
     return (
@@ -407,6 +499,16 @@ function ShopBrowserContent() {
 
               <Button
                 size="small"
+                variant="outlined"
+                startIcon={<LockIcon />}
+                onClick={() => setManageLocksOpen(true)}
+                color={lockedItems.length > 0 ? "warning" : "inherit"}
+              >
+                Locked ({lockedItems.length})
+              </Button>
+
+              <Button
+                size="small"
                 variant="contained"
                 color="warning"
                 startIcon={<SellIcon />}
@@ -467,6 +569,17 @@ function ShopBrowserContent() {
           setSellDialogMode(null);
         }}
         onClose={() => setSellDialogMode(null)}
+      />
+
+      <ManageLockedItemsDialog
+        open={manageLocksOpen}
+        lockedItems={lockedItems}
+        onUnlock={(itemId) => toggleLock(itemId)}
+        onClearAll={() => {
+          clearAllLocks();
+          setManageLocksOpen(false);
+        }}
+        onClose={() => setManageLocksOpen(false)}
       />
 
       <SellResultsSummary results={sellResults} onClose={clearSellResults} />

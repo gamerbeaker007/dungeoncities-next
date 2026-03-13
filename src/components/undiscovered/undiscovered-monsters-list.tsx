@@ -446,7 +446,7 @@ export function UndiscoveredMonstersList() {
         <Accordion defaultExpanded>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography variant="h6">
-              Not Discovered ({notDiscovered.length})
+              Basics Not Discovered ({notDiscovered.length})
             </Typography>
           </AccordionSummary>
           <AccordionDetails>

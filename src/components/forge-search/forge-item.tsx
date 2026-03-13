@@ -1,5 +1,8 @@
+import type { LockedItemData } from "@/hooks/use-lock-items";
 import { useAuth } from "@/providers/auth-provider";
 import type { ForgeOwnedPlayerData, ForgeRequirement } from "@/types/forge";
+import LockIcon from "@mui/icons-material/Lock";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
 import SearchIcon from "@mui/icons-material/Search";
 import StarIcon from "@mui/icons-material/Star";
 import StorefrontIcon from "@mui/icons-material/Storefront";
@@ -10,17 +13,23 @@ type ForgeItemProps = {
   requirement: ForgeRequirement;
   ownedData?: ForgeOwnedPlayerData;
   isMatchedTerm?: boolean;
+  lockedItemIds: Set<number>;
+  onToggleLock: (itemId: number, itemData: LockedItemData) => void;
 };
 
 export function ForgeItem({
   requirement,
   ownedData,
   isMatchedTerm = false,
+  lockedItemIds,
+  onToggleLock,
 }: ForgeItemProps) {
   const { isAuthenticated } = useAuth();
   const forgeSearchHref = `/?q=${requirement.itemId}`;
   const marketHref = `/market?search=${encodeURIComponent(requirement.name)}`;
   const ownedQuantity = ownedData?.total ?? 0;
+  const isLocked =
+    requirement.itemId !== null && lockedItemIds.has(requirement.itemId);
 
   return (
     <Stack direction="row" spacing={1} alignItems="center">
@@ -30,11 +39,7 @@ export function ForgeItem({
             component="img"
             src={requirement.imageUrl ?? ""}
             alt={requirement.name}
-            sx={{
-              width: 120,
-              height: 120,
-              objectFit: "cover",
-            }}
+            sx={{ width: 120, height: 120, objectFit: "cover" }}
           />
         }
         placement="right"
@@ -53,33 +58,36 @@ export function ForgeItem({
         />
       </Tooltip>
 
-      {isAuthenticated ? (
-        <Tooltip
-          title={
-            ownedData
-              ? `Inventory: ${ownedData.inventory} / Listed: ${ownedData.listed} / Expired: ${ownedData.expired}`
-              : ""
-          }
-        >
-          <Typography
-            variant="body2"
-            color={
-              ownedQuantity >= requirement.quantity
-                ? "success.main"
-                : "text.primary"
+      <Box sx={{ flexGrow: 1 }}>
+        {isAuthenticated ? (
+          <Tooltip
+            title={
+              ownedData
+                ? `Inventory: ${ownedData.inventory} / Listed: ${ownedData.listed} / Expired: ${ownedData.expired}`
+                : ""
             }
-            sx={{ cursor: ownedData ? "help" : "default" }}
+            placement="top"
           >
-            {ownedQuantity} / {requirement.quantity} {requirement.name}
+            <Typography
+              variant="body2"
+              color={
+                ownedQuantity >= requirement.quantity
+                  ? "success.main"
+                  : "text.primary"
+              }
+              sx={{ cursor: ownedData ? "help" : "default" }}
+            >
+              {ownedQuantity} / {requirement.quantity} {requirement.name}
+            </Typography>
+          </Tooltip>
+        ) : (
+          <Typography variant="body2">
+            {requirement.quantity} {requirement.name}
           </Typography>
-        </Tooltip>
-      ) : (
-        <Typography variant="body2">
-          {requirement.quantity} {requirement.name}
-        </Typography>
-      )}
+        )}
+      </Box>
 
-      <Tooltip title="Search for this item in forge recipes">
+      <Tooltip title="Search for this item in forge recipes" placement="top">
         <IconButton
           suppressHydrationWarning
           component={Link}
@@ -91,7 +99,7 @@ export function ForgeItem({
         </IconButton>
       </Tooltip>
 
-      <Tooltip title="Find this item on the Marketplace">
+      <Tooltip title="Find this item on the Marketplace" placement="top">
         <IconButton
           suppressHydrationWarning
           component={Link}
@@ -102,6 +110,33 @@ export function ForgeItem({
           <StorefrontIcon sx={{ fontSize: 16 }} />
         </IconButton>
       </Tooltip>
+
+      {requirement.itemId !== null && (
+        <Tooltip
+          title={isLocked ? "Unlock from shop" : "Lock in shop"}
+          placement="top"
+        >
+          <IconButton
+            size="small"
+            sx={{ p: 0.5 }}
+            color={isLocked ? "warning" : "default"}
+            onClick={() =>
+              onToggleLock(requirement.itemId as number, {
+                itemId: requirement.itemId as number,
+                name: requirement.name,
+                imageUrl: requirement.imageUrl ?? "",
+                category: "",
+              })
+            }
+          >
+            {isLocked ? (
+              <LockIcon sx={{ fontSize: 16 }} />
+            ) : (
+              <LockOpenIcon sx={{ fontSize: 16 }} />
+            )}
+          </IconButton>
+        </Tooltip>
+      )}
 
       {isMatchedTerm && (
         <Tooltip title="This item matches your search term">

@@ -14,9 +14,10 @@ async function moveToLocation(
   if (currentLocation === target) return null;
   if (
     currentLocation === "IN_DUNGEON" ||
-    currentLocation === "ENTERING_DUNGEON"
+    currentLocation === "ENTERING_DUNGEON" ||
+    currentLocation === "IN_COMBAT"
   ) {
-    return `You are currently in a dungeon. Please exit the dungeon manually first — leaving will cost stamina (EXIT_DUNGEON costs 2% stamina).`;
+    return `You are currently in a dungeon or combat. Please exit manually first — leaving a dungeon costs stamina (EXIT_DUNGEON costs 2% stamina).`;
   }
   if (currentLocation !== "IN_CITY") {
     const toCityResult = await updateLocationAction(token, "IN_CITY");

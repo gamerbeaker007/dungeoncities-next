@@ -93,9 +93,10 @@ export function useMarket(): UseMarketResult {
   const isFetchingRef = useRef(false);
 
   // ── fetchPlayerItems ──────────────────────────────────────────────────────
-  // Checks location, sets locationWarning if not at the marketplace,
-  // loads inventory + player's own listings, and extracts DR balance —
-  // all from a single getGameStateAction call.
+  // Always loads inventory + DR balance from game state.
+  // Then attempts to move to the marketplace to fetch listed/expired listings.
+  // If the location change fails for any reason (dungeon, combat, etc.) a
+  // warning is shown but inventory data is still available.
   const fetchPlayerItems = useCallback(async () => {
     if (!isAuthenticated || !token) {
       setInventory([]);
@@ -115,6 +116,7 @@ export function useMarket(): UseMarketResult {
       const state = await getGameStateAction(token);
       if (!state) throw new Error("Failed to load game state");
 
+      // Inventory is always available regardless of location.
       setInventory(state.requiredData?.inventory ?? []);
 
       const drWallet = state.requiredData?.wallets?.find(
@@ -128,7 +130,10 @@ export function useMarket(): UseMarketResult {
       const currentLocation = state.state;
       const locationError = await moveToMarketplace(token, currentLocation);
       if (locationError) {
-        setLocationWarning(locationError);
+        // Inventory is already set above — only listed/expired are unavailable.
+        setLocationWarning(
+          "Your listed and expired items are not shown because you cannot move to the marketplace from your current location.",
+        );
         return;
       }
 
@@ -136,11 +141,11 @@ export function useMarket(): UseMarketResult {
       // After a location change the API may need a moment, so retry up
       // to 2 times with a short delay between attempts.
       const fetchListings = async () => {
-        const [listed, expired] = await Promise.all([
+        const [listedResult, expiredResult] = await Promise.all([
           getAllMarketListingsAction(token, { status: "LISTED", limit: 50 }),
           getAllMarketListingsAction(token, { status: "EXPIRED", limit: 50 }),
         ]);
-        return { listed, expired };
+        return { listed: listedResult, expired: expiredResult };
       };
 
       let result = await fetchListings();

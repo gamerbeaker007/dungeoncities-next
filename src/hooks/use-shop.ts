@@ -1,29 +1,14 @@
 "use client";
 
 import { getGameStateAction, sellItemAction } from "@/actions/game-actions";
+import { useLockItems, type LockedItemData } from "@/hooks/use-lock-items";
 import { moveToShop } from "@/lib/location";
 import { useAuth } from "@/providers/auth-provider";
 import type { DCGameInventoryItem } from "@/types/dc/state";
 import type { DCSellItemResponse } from "@/types/dc/shop";
 import { useCallback, useEffect, useState } from "react";
 
-const LOCKED_ITEMS_KEY = "dc_shop_locked_items";
-
-function getLockedItemIds(): Set<number> {
-  if (typeof window === "undefined") return new Set();
-  try {
-    const raw = localStorage.getItem(LOCKED_ITEMS_KEY);
-    if (!raw) return new Set();
-    const parsed: number[] = JSON.parse(raw);
-    return new Set(parsed);
-  } catch {
-    return new Set();
-  }
-}
-
-function saveLockedItemIds(ids: Set<number>) {
-  localStorage.setItem(LOCKED_ITEMS_KEY, JSON.stringify([...ids]));
-}
+export type { LockedItemData } from "@/hooks/use-lock-items";
 
 export type SellResult = {
   inventoryId: string;
@@ -42,19 +27,27 @@ type UseShopResult = {
   selling: boolean;
   sellResults: SellResult[];
   lockedItemIds: Set<number>;
+  lockedItems: LockedItemData[];
   selectedItemIds: Set<string>;
   fetchShopData: () => Promise<void>;
-  toggleLock: (itemId: number) => void;
+  toggleLock: (itemId: number, itemData?: LockedItemData) => void;
   toggleSelect: (characterInventoryId: string) => void;
   selectAll: () => void;
   deselectAll: () => void;
   sellSelected: () => Promise<void>;
   sellAll: () => Promise<void>;
   clearSellResults: () => void;
+  clearAllLocks: () => void;
 };
 
 export function useShop(): UseShopResult {
   const { isAuthenticated, token } = useAuth();
+  const {
+    lockedItemIds,
+    lockedItems,
+    toggleLock: baseLock,
+    clearAllLocks,
+  } = useLockItems();
 
   const [inventory, setInventory] = useState<DCGameInventoryItem[]>([]);
   const [drubbleBalance, setDrubbleBalance] = useState<number | null>(null);
@@ -63,15 +56,9 @@ export function useShop(): UseShopResult {
   const [error, setError] = useState<string | null>(null);
   const [selling, setSelling] = useState(false);
   const [sellResults, setSellResults] = useState<SellResult[]>([]);
-  const [lockedItemIds, setLockedItemIds] = useState<Set<number>>(new Set());
   const [selectedItemIds, setSelectedItemIds] = useState<Set<string>>(
     new Set(),
   );
-
-  // Load locked items from localStorage on mount
-  useEffect(() => {
-    setLockedItemIds(getLockedItemIds());
-  }, []);
 
   const fetchShopData = useCallback(async () => {
     if (!isAuthenticated || !token) {
@@ -100,9 +87,7 @@ export function useShop(): UseShopResult {
         rawBalance === undefined ? null : Number.parseFloat(rawBalance) || 0,
       );
 
-      const currentLocation = state.state;
-
-      const locationError = await moveToShop(token, currentLocation);
+      const locationError = await moveToShop(token, state.state);
       if (locationError) {
         setLocationWarning(locationError);
         return;
@@ -119,34 +104,23 @@ export function useShop(): UseShopResult {
     void fetchShopData();
   }, [fetchShopData]);
 
+  // Wraps baseLock to also deselect inventory entries when an item gets locked
   const toggleLock = useCallback(
-    (itemId: number) => {
-      const wasLocked = lockedItemIds.has(itemId);
-      setLockedItemIds((prev) => {
-        const next = new Set(prev);
-        if (next.has(itemId)) {
-          next.delete(itemId);
-        } else {
-          next.add(itemId);
-        }
-        saveLockedItemIds(next);
-        return next;
-      });
-      // Deselect all inventory entries for this itemId when locking
-      if (!wasLocked) {
+    (itemId: number, itemData?: LockedItemData) => {
+      const isCurrentlyLocked = lockedItemIds.has(itemId);
+      baseLock(itemId, itemData);
+      if (!isCurrentlyLocked) {
         setSelectedItemIds((prev) => {
           const idsToRemove = inventory
             .filter((i) => i.itemId === itemId)
             .map((i) => i.id);
           const next = new Set(prev);
-          for (const id of idsToRemove) {
-            next.delete(id);
-          }
+          for (const id of idsToRemove) next.delete(id);
           return next;
         });
       }
     },
-    [lockedItemIds, inventory],
+    [lockedItemIds, inventory, baseLock],
   );
 
   const toggleSelect = useCallback(
@@ -206,7 +180,6 @@ export function useShop(): UseShopResult {
       setSellResults(results);
       setSelling(false);
 
-      // Refresh state to get updated inventory and balance
       await fetchShopData();
       setSelectedItemIds(new Set());
     },
@@ -238,6 +211,7 @@ export function useShop(): UseShopResult {
     selling,
     sellResults,
     lockedItemIds,
+    lockedItems,
     selectedItemIds,
     fetchShopData,
     toggleLock,
@@ -247,5 +221,6 @@ export function useShop(): UseShopResult {
     sellSelected,
     sellAll,
     clearSellResults,
+    clearAllLocks,
   };
 }

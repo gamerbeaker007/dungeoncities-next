@@ -1,3 +1,4 @@
+import type { LockedItemData } from "@/hooks/use-lock-items";
 import type { ForgeRecipePlayerInfo, ForgeRequirement } from "@/types/forge";
 import {
   Box,
@@ -17,6 +18,8 @@ type ForgeRecipeCardProps = {
   costCurrency: string;
   requirements: ForgeRequirement[];
   playerInfo?: ForgeRecipePlayerInfo;
+  lockedItemIds: Set<number>;
+  onToggleLock: (itemId: number, itemData: LockedItemData) => void;
 };
 
 export function ForgeRecipeCard({
@@ -27,6 +30,8 @@ export function ForgeRecipeCard({
   costCurrency,
   requirements,
   playerInfo,
+  lockedItemIds,
+  onToggleLock,
 }: ForgeRecipeCardProps) {
   return (
     <Card
@@ -94,6 +99,8 @@ export function ForgeRecipeCard({
                 requirement={requirement}
                 ownedData={playerInfo?.ownedData[index]}
                 isMatchedTerm={requirement.matched ?? false}
+                lockedItemIds={lockedItemIds}
+                onToggleLock={onToggleLock}
               />
             ))}
           </Stack>

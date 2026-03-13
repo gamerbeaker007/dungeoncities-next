@@ -2,6 +2,7 @@
 
 import { ForgeRecipeCard } from "@/components/forge-search/forge-recipe-card";
 import { ForgeSearchForm } from "@/components/forge-search/forge-search-form";
+import { useLockItems } from "@/hooks/use-lock-items";
 import { useMarket } from "@/hooks/use-market";
 import { searchForgeRecipes } from "@/lib/forge-items";
 import type { ForgeRecipe } from "@/types/forge";
@@ -16,6 +17,7 @@ type ForgeResourceSearchProps = {
 export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
   const [query, setQuery] = useState("");
   const { itemQuantitiesByItemId, locationWarning } = useMarket();
+  const { lockedItemIds, toggleLock } = useLockItems();
 
   const filteredRecipes = useMemo(() => searchForgeRecipes(query), [query]);
 
@@ -102,6 +104,8 @@ export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
                 costCurrency={recipe.costCurrency}
                 requirements={recipe.requirements}
                 playerInfo={recipe.playerInfo}
+                lockedItemIds={lockedItemIds}
+                onToggleLock={toggleLock}
               />
             </Box>
           ))}
