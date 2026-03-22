@@ -23,6 +23,8 @@ export type ForgeRecipePlayerInfo = {
   ownedData: ForgeOwnedPlayerData[];
 };
 
+export type ForgeCity = "brighthollow" | "druantia";
+
 export type ForgeRecipe = {
   recipeId: number;
   recipeName: string;
@@ -31,6 +33,7 @@ export type ForgeRecipe = {
   cost: number;
   costCurrency: string;
   requirements: ForgeRequirement[];
+  city: ForgeCity;
   playerInfo?: ForgeRecipePlayerInfo;
 };
 

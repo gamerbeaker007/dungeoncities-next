@@ -15,6 +15,17 @@ export type TravelCostRow = {
   cost: number;
 };
 
+export type CityFloorsRow = {
+  cityId: number;
+  floors: number;
+};
+
+export type AltarLocationRow = {
+  cityId: number;
+  floor: number;
+  description: string;
+};
+
 export const STAMINA_COSTS: StaminaCostRow[] = [
   { action: "START_BATTLE", cost: 2 },
   { action: "USE_SKILL", cost: 0 },
@@ -57,7 +68,7 @@ export const CITY_NAMES: Record<number, string> = {
   2: "Brighthollow",
   3: "Caelum",
   4: "Druantia",
-  5: "Eria",
+  5: "Elaria",
 };
 
 export const TRAVEL_COSTS: TravelCostRow[] = [
@@ -71,4 +82,47 @@ export const TRAVEL_COSTS: TravelCostRow[] = [
   { fromCity: 3, toCity: 4, cost: 2000 },
   { fromCity: 3, toCity: 5, cost: 2000 },
   { fromCity: 4, toCity: 5, cost: 2000 },
+];
+
+export const CITY_FLOORS: CityFloorsRow[] = [
+  { cityId: 1, floors: 20 },
+  { cityId: 2, floors: 21 },
+  { cityId: 3, floors: 5 },
+  { cityId: 4, floors: 20 },
+  { cityId: 5, floors: 20 },
+];
+
+export const KNOWN_ALTAR_LOCATIONS: AltarLocationRow[] = [
+  {
+    cityId: 1,
+    floor: 1,
+    description: "Ascend to D class Blessed Health Core (unconfirmed)",
+  },
+  { cityId: 1, floor: 3, description: "Ascend to D class Blessed Attack Core" },
+  {
+    cityId: 1,
+    floor: 7,
+    description: "Ascend to D class Blessed Defense Penetration Core",
+  },
+  {
+    cityId: 1,
+    floor: 9,
+    description: "Ascend to D class Blessed Critical Core",
+  },
+  {
+    cityId: 1,
+    floor: 15,
+    description: "Ascend to D class Blessed Reduced Counter Core",
+  },
+  {
+    cityId: 1,
+    floor: 17,
+    description: "Ascend to D class Blessed Dodge Counter Core",
+  },
+  {
+    cityId: 1,
+    floor: 19,
+    description: "Ascend to C class Blessed Health Core (unconfirmed)",
+  },
+  { cityId: 2, floor: 1, description: "Ascend to C class Blessed Attack Core" },
 ];

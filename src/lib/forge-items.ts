@@ -1,5 +1,7 @@
+import forgeBrighthollowData from "@/data/forge_brighthollow.json";
 import forgeDruantiaData from "@/data/forge_druantia.json";
 import type {
+  ForgeCity,
   ForgeRecipe,
   ForgeRecipeSearchResult,
   ForgeRequirement,
@@ -42,7 +44,7 @@ function normalizeRequirementName(value: string | null | undefined) {
   return normalized.length ? normalized : "Unknown";
 }
 
-function mapRecipe(raw: ForgeRecipeRaw): ForgeRecipe {
+function mapRecipe(raw: ForgeRecipeRaw, city: ForgeCity): ForgeRecipe {
   const recipeName =
     (raw.recipe?.name ?? "Unknown Recipe").trim() || "Unknown Recipe";
   const recipeId = raw.recipe?.id ?? -1;
@@ -72,15 +74,24 @@ function mapRecipe(raw: ForgeRecipeRaw): ForgeRecipe {
     cost,
     costCurrency,
     requirements,
+    city,
   };
 }
 
-const recipesRaw =
+const druantiaRecipesRaw =
   ((forgeDruantiaData as forgeItems)?.data?.recipes as
     | ForgeRecipeRaw[]
     | undefined) ?? [];
 
-const allForgeRecipes = recipesRaw.map(mapRecipe);
+const brighthollowRecipesRaw =
+  ((forgeBrighthollowData as forgeItems)?.data?.recipes as
+    | ForgeRecipeRaw[]
+    | undefined) ?? [];
+
+const allForgeRecipes = [
+  ...brighthollowRecipesRaw.map((r) => mapRecipe(r, "brighthollow")),
+  ...druantiaRecipesRaw.map((r) => mapRecipe(r, "druantia")),
+];
 
 export function getForgeRecipes() {
   return allForgeRecipes;

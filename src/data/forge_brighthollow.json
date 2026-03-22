@@ -1,0 +1,1611 @@
+{
+  "data": {
+    "recipes": [
+      {
+        "recipe": {
+          "id": 1832,
+          "name": "Sunlit Grotto Key of Brighthollow",
+          "description": "Key to unlock the second floor of Brighthollow Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839715/Dungeon/items/Keys/brighthollowKeyOfSunlitGrotto.jpg",
+          "baseCost": 100,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Novice",
+          "experience": 1,
+          "cityIds": [2],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 100,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "ebfc3548-26bd-4a27-bbe6-683e544d7164",
+            "itemId": 1610,
+            "quantity": 2,
+            "item": {
+              "name": "Cinderbloom",
+              "description": "A flower that grows in ashy soil.",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1734810083/Dungeon/items/Plants/cinderbloom.jpg"
+            }
+          },
+          {
+            "id": "09ac49da-f565-44da-aee3-18f8d7a5e9f7",
+            "itemId": 1710,
+            "quantity": 2,
+            "item": {
+              "name": "Cragstone",
+              "description": "Jagged stone with sharp edges, often found near cliffs.",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1734810038/Dungeon/items/Rocks/cragstone.jpg"
+            }
+          },
+          {
+            "id": "8b75e374-01f2-4885-a113-6642fc2e05ed",
+            "itemId": 1510,
+            "quantity": 1,
+            "item": {
+              "name": "Venom Gland",
+              "description": "Dropped by Giant Centipede",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258177/Dungeon/items/Monster%20Drop/venomGland.jpg"
+            }
+          },
+          {
+            "id": "e28241fa-0012-483f-90ae-3cb4806bfed6",
+            "itemId": 1852,
+            "quantity": 1,
+            "item": {
+              "name": "Sunlit Grotto Essence",
+              "description": "Essential material that is required to craft the second floor key of Brighthollow Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839443/Dungeon/items/Essence/sunlitGrottoEssence.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1833,
+          "name": "Radiant Dew Key of Brighthollow",
+          "description": "Key to unlock the third floor of Brighthollow Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839718/Dungeon/items/Keys/brighthollowKeyOfRadiantDew.jpg",
+          "baseCost": 200,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Novice",
+          "experience": 1,
+          "cityIds": [2],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 200,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "1f68c8e4-357c-4dad-813a-d296228530c6",
+            "itemId": 1611,
+            "quantity": 2,
+            "item": {
+              "name": "Dustpetal",
+              "description": "A delicate flower covered in fine dust.",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1734810087/Dungeon/items/Plants/dustpetal.jpg"
+            }
+          },
+          {
+            "id": "b18079f6-a1cd-4a26-ac23-4be719618c5a",
+            "itemId": 1711,
+            "quantity": 2,
+            "item": {
+              "name": "Voidpebble",
+              "description": "A smooth, dark pebble that absorbs light.",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1734810054/Dungeon/items/Rocks/voidPebble.jpg"
+            }
+          },
+          {
+            "id": "ca2052e2-63fd-47cc-bd16-34e6dc055b79",
+            "itemId": 1511,
+            "quantity": 1,
+            "item": {
+              "name": "Proboscis",
+              "description": "Dropped by Stirge",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258177/Dungeon/items/Monster%20Drop/proboscis.jpg"
+            }
+          },
+          {
+            "id": "b5117de9-7d54-4055-90c6-8fcdae716980",
+            "itemId": 1853,
+            "quantity": 1,
+            "item": {
+              "name": "Radiant Dew Essence",
+              "description": "Essential material that is required to craft the third floor key of Brighthollow Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839444/Dungeon/items/Essence/radiantDewEssence.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1834,
+          "name": "Crystalized Horizon Key of Brighthollow",
+          "description": "Key to unlock the fourth floor of Brighthollow Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839719/Dungeon/items/Keys/brighthollowKeyOfCrystalizedHorizon.jpg",
+          "baseCost": 300,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Novice",
+          "experience": 1,
+          "cityIds": [2],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 300,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "86713087-2de3-4b0d-9a91-a9ab3a7a8afe",
+            "itemId": 1612,
+            "quantity": 2,
+            "item": {
+              "name": "Bloodgrass",
+              "description": "Red-tinted grass often found near battle sites.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1734810079/Dungeon/items/Plants/bloodgrass.jpg"
+            }
+          },
+          {
+            "id": "a828e18a-c0d6-4fb1-885a-4d17e8e35cd1",
+            "itemId": 1712,
+            "quantity": 2,
+            "item": {
+              "name": "Duskore",
+              "description": "Metallic ore with a dusky sheen, found deep underground.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1734810042/Dungeon/items/Rocks/duskore.jpg"
+            }
+          },
+          {
+            "id": "a25abdc5-41bb-4100-b252-fedb98e967d0",
+            "itemId": 1512,
+            "quantity": 1,
+            "item": {
+              "name": "Orc Tusks",
+              "description": "Dropped by Orc",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258177/Dungeon/items/Monster%20Drop/orcTusks.jpg"
+            }
+          },
+          {
+            "id": "9ec4a5af-6e6f-4fa3-8bcb-b48efe639ac4",
+            "itemId": 1854,
+            "quantity": 1,
+            "item": {
+              "name": "Crystalized Horizon Essence",
+              "description": "Essential material that is required to craft the fourth floor key of Brighthollow Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839446/Dungeon/items/Essence/crystalizedHorizonEssence.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1835,
+          "name": "Verdant Echo Key of Brighthollow",
+          "description": "Key to unlock the fifth floor of Brighthollow Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839721/Dungeon/items/Keys/brighthollowKeyOfVerdantEcho.jpg",
+          "baseCost": 400,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Novice",
+          "experience": 1,
+          "cityIds": [2],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 400,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "42a5dc34-bd76-49ed-91fa-1405676f7081",
+            "itemId": 1613,
+            "quantity": 2,
+            "item": {
+              "name": "Witch's Hair",
+              "description": "Long, stringy plant used in potions.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1734810099/Dungeon/items/Plants/witchHair.jpg"
+            }
+          },
+          {
+            "id": "978bb94d-012d-4a69-b67d-51a2fafbc364",
+            "itemId": 1713,
+            "quantity": 2,
+            "item": {
+              "name": "Gritstone",
+              "description": "Coarse, rough stone with a gritty surface.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1734810049/Dungeon/items/Rocks/gritstone.jpg"
+            }
+          },
+          {
+            "id": "bf947450-93f4-4552-ac34-d43cea8ad194",
+            "itemId": 1513,
+            "quantity": 1,
+            "item": {
+              "name": "Hobgoblin Teeth",
+              "description": "Dropped by Hobgoblin",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258176/Dungeon/items/Monster%20Drop/hobgoblinTeeth.jpg"
+            }
+          },
+          {
+            "id": "44b90f63-2eca-473b-9d61-cbac258a8ee6",
+            "itemId": 1855,
+            "quantity": 1,
+            "item": {
+              "name": "Verdant Echo Essence",
+              "description": "Essential material that is required to craft the fifth floor key of Brighthollow Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839447/Dungeon/items/Essence/verdantEchoEssence.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1836,
+          "name": "Lunar Prism Key of Brighthollow",
+          "description": "Key to unlock the sixth floor of Brighthollow Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839738/Dungeon/items/Keys/brighthollowKeyOfLunarPrism.jpg",
+          "baseCost": 500,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Novice",
+          "experience": 1,
+          "cityIds": [2],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 500,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "74cfe739-94bc-420e-9330-a2b4417d3eee",
+            "itemId": 1614,
+            "quantity": 2,
+            "item": {
+              "name": "Gloomshroom",
+              "description": "Mushrooms that thrive in dark environments.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516453/Dungeon/items/Plants/gloomshroom.jpg"
+            }
+          },
+          {
+            "id": "bc75d1b3-9eaa-458c-8766-d3113385b1c8",
+            "itemId": 1714,
+            "quantity": 2,
+            "item": {
+              "name": "Glowshale",
+              "description": "Shale that glows faintly in the dark.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394471/Dungeon/items/Rocks/glowshale.jpg"
+            }
+          },
+          {
+            "id": "caec8101-02b2-4b1f-8dfc-7b8ab5e921e7",
+            "itemId": 1514,
+            "quantity": 1,
+            "item": {
+              "name": "Gnoll Claws",
+              "description": "Dropped by Gnoll",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258176/Dungeon/items/Monster%20Drop/gnollClaws.jpg"
+            }
+          },
+          {
+            "id": "14c600ba-c19b-47b3-ad4c-f5ed76f494be",
+            "itemId": 1856,
+            "quantity": 1,
+            "item": {
+              "name": "Lunar Prism Essence",
+              "description": "Essential material that is required to craft the sixth floor key of Brighthollow Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839448/Dungeon/items/Essence/lunarPrismEssence.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1837,
+          "name": "Aurora Reach Key of Brighthollow",
+          "description": "Key to unlock the seventh floor of Brighthollow Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839703/Dungeon/items/Keys/brighthollowKeyOfAuroraReach.jpg",
+          "baseCost": 600,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Novice",
+          "experience": 1,
+          "cityIds": [2],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 600,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "97595f4d-b7fd-4a0b-8d4a-72c7683cc760",
+            "itemId": 1615,
+            "quantity": 2,
+            "item": {
+              "name": "Spindlethorn",
+              "description": "A thorny plant with a twisting growth pattern.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516453/Dungeon/items/Plants/spindlethorn.jpg"
+            }
+          },
+          {
+            "id": "138f5fb5-130f-406b-84ae-ef5679555673",
+            "itemId": 1715,
+            "quantity": 2,
+            "item": {
+              "name": "Sablequartz",
+              "description": "Quartz with a dark, shimmering appearance.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394451/Dungeon/items/Rocks/sablequartz.jpg"
+            }
+          },
+          {
+            "id": "283c933a-09e7-4e3f-b65e-f5bef1d14faa",
+            "itemId": 1515,
+            "quantity": 1,
+            "item": {
+              "name": "Wolf Fur",
+              "description": "Dropped by Wolf",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258176/Dungeon/items/Monster%20Drop/wolfFur.jpg"
+            }
+          },
+          {
+            "id": "d126f182-738b-416a-a317-e313a89f249d",
+            "itemId": 1857,
+            "quantity": 1,
+            "item": {
+              "name": "Aurora Reach Essence",
+              "description": "Essential material that is required to craft the seventh floor key of Brighthollow Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839450/Dungeon/items/Essence/auroraReachEssence.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1838,
+          "name": "Emberfall Vault Key of Brighthollow",
+          "description": "Key to unlock the eighth floor of Brighthollow Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839703/Dungeon/items/Keys/brighthollowKeyOfEmberfallVault.jpg",
+          "baseCost": 700,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Novice",
+          "experience": 1,
+          "cityIds": [2],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 700,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "d260b9bb-4b80-454e-a928-94313caf9410",
+            "itemId": 1616,
+            "quantity": 2,
+            "item": {
+              "name": "Whisperleaf",
+              "description": "Leaves that rustle even without wind.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516440/Dungeon/items/Plants/whisperleaf.jpg"
+            }
+          },
+          {
+            "id": "217bc5e6-1908-419c-99d8-4203769215b3",
+            "itemId": 1716,
+            "quantity": 2,
+            "item": {
+              "name": "Duskrystal",
+              "description": "Crystals with a dusky, shadowy appearance.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394451/Dungeon/items/Rocks/duskrystal.jpg"
+            }
+          },
+          {
+            "id": "7227812f-d9b8-45af-ab87-eca888f86091",
+            "itemId": 1516,
+            "quantity": 1,
+            "item": {
+              "name": "Shadow Essence",
+              "description": "Dropped by Shadow",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258176/Dungeon/items/Monster%20Drop/shadowEssence.jpg"
+            }
+          },
+          {
+            "id": "d2eca6f4-804e-4047-a54b-a7be326e0d43",
+            "itemId": 1858,
+            "quantity": 1,
+            "item": {
+              "name": "Emberfall Vault Essence",
+              "description": "Essential material that is required to craft the eighth floor key of Brighthollow Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839451/Dungeon/items/Essence/emberfallVaultEssence.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1839,
+          "name": "Starlit Abyss Key of Brighthollow",
+          "description": "Key to unlock the ninth floor of Brighthollow Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839706/Dungeon/items/Keys/brighthollowKeyOfStarlitAbyss.jpg",
+          "baseCost": 800,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Novice",
+          "experience": 1,
+          "cityIds": [2],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 800,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "37997931-7c22-45e9-a0a0-ecf6316ab203",
+            "itemId": 1617,
+            "quantity": 2,
+            "item": {
+              "name": "Silverleaf Plant",
+              "description": "A plant with silvery leaves, often used in healing.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516427/Dungeon/items/Plants/silverleaf.jpg"
+            }
+          },
+          {
+            "id": "4be438a5-37e6-4e97-93da-c3cd777b2f33",
+            "itemId": 1717,
+            "quantity": 2,
+            "item": {
+              "name": "Emberstone",
+              "description": "Stone that glows with an internal ember-like light.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394451/Dungeon/items/Rocks/emberstone.jpg"
+            }
+          },
+          {
+            "id": "6c70abe4-7bd2-434a-b83c-c18d6147c6d4",
+            "itemId": 1517,
+            "quantity": 1,
+            "item": {
+              "name": "Ritual Dagger",
+              "description": "Dropped by Cultist",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258176/Dungeon/items/Monster%20Drop/ritualDagger.jpg"
+            }
+          },
+          {
+            "id": "d2f6b55c-f139-4dba-a066-b002b9b554d2",
+            "itemId": 1859,
+            "quantity": 1,
+            "item": {
+              "name": "Starlit Abyss Essence",
+              "description": "Essential material that is required to craft the ninth floor key of Brighthollow Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839452/Dungeon/items/Essence/starlitAbyssEssence.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1840,
+          "name": "Azure Shimmer Key of Brighthollow",
+          "description": "Key to unlock the tenth floor of Brighthollow Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839707/Dungeon/items/Keys/brighthollowKeyOfAzureShimmer.jpg",
+          "baseCost": 900,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Novice",
+          "experience": 1,
+          "cityIds": [2],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 900,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "a39cec82-2d6d-4ad9-9f78-6eb2b6f3bb2a",
+            "itemId": 1618,
+            "quantity": 2,
+            "item": {
+              "name": "Gnarlwood",
+              "description": "Twisted, gnarled trees found in ancient forests.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516427/Dungeon/items/Plants/gnarlwood.jpg"
+            }
+          },
+          {
+            "id": "2fb3e5c7-7091-488a-8f3a-632460399bc2",
+            "itemId": 1718,
+            "quantity": 2,
+            "item": {
+              "name": "Frostore",
+              "description": "Ore that exudes a chilling frost.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394450/Dungeon/items/Rocks/frostore.jpg"
+            }
+          },
+          {
+            "id": "d187ee02-b7b2-47c7-94af-b7bd5170018e",
+            "itemId": 1518,
+            "quantity": 1,
+            "item": {
+              "name": "Spider Silk",
+              "description": "Dropped by Giant Spider",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258175/Dungeon/items/Monster%20Drop/spiderSilk.jpg"
+            }
+          },
+          {
+            "id": "425095f2-5f25-40b9-a03a-b6046f3d8384",
+            "itemId": 1860,
+            "quantity": 1,
+            "item": {
+              "name": "Azure Shimmer Essence",
+              "description": "Essential material that is required to craft the tenth floor key of Brighthollow Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839454/Dungeon/items/Essence/azureShimmerEssence.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1841,
+          "name": "Golden Root Key of Brighthollow",
+          "description": "Key to unlock the eleventh floor of Brighthollow Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839710/Dungeon/items/Keys/brighthollowKeyOfGoldenRoot.jpg",
+          "baseCost": 1000,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Novice",
+          "experience": 1,
+          "cityIds": [2],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 1000,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "9d8de736-786a-4907-a3ed-76a275b02f15",
+            "itemId": 1619,
+            "quantity": 2,
+            "item": {
+              "name": "Drakeweed",
+              "description": "A tough weed often found near dragon lairs.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516426/Dungeon/items/Plants/drakeweed.jpg"
+            }
+          },
+          {
+            "id": "0435e134-9432-42f7-9c87-92376e9d09d9",
+            "itemId": 1719,
+            "quantity": 2,
+            "item": {
+              "name": "Sparkstone",
+              "description": "Stone that sparks when struck with metal.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394450/Dungeon/items/Rocks/sparkstone.jpg"
+            }
+          },
+          {
+            "id": "6ba2fcd8-053a-493f-84ab-a124e30319ca",
+            "itemId": 1519,
+            "quantity": 1,
+            "item": {
+              "name": "Warg Pelt",
+              "description": "Dropped by Warg",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258175/Dungeon/items/Monster%20Drop/wargPelt.jpg"
+            }
+          },
+          {
+            "id": "b1342ad9-42c8-456c-944f-3f6f6ccf0c7b",
+            "itemId": 1861,
+            "quantity": 1,
+            "item": {
+              "name": "Golden Root Essence",
+              "description": "Essential material that is required to craft the eleventh floor key of Brighthollow Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839455/Dungeon/items/Essence/goldenRootEssence.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1842,
+          "name": "Twilight Grove Key of Brighthollow",
+          "description": "Key to unlock the twelfth floor of Brighthollow Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839711/Dungeon/items/Keys/brighthollowKeyOfTwilightGrove.jpg",
+          "baseCost": 1100,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Novice",
+          "experience": 1,
+          "cityIds": [2],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 1100,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "56495423-d850-4056-9f1d-76c2fc5a6dd5",
+            "itemId": 1620,
+            "quantity": 3,
+            "item": {
+              "name": "Goblin's Crown",
+              "description": "A small plant with crown-shaped flowers.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516426/Dungeon/items/Plants/goblinsCrown.jpg"
+            }
+          },
+          {
+            "id": "39460ce4-9490-47a2-8316-433b227b1249",
+            "itemId": 1720,
+            "quantity": 3,
+            "item": {
+              "name": "Windshale",
+              "description": "Shale that swirls with wind patterns.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394450/Dungeon/items/Rocks/windshale.jpg"
+            }
+          },
+          {
+            "id": "028bb4f5-6cc9-48b2-9142-b8a66edafa0d",
+            "itemId": 1520,
+            "quantity": 1,
+            "item": {
+              "name": "Bugbear Fur",
+              "description": "Dropped by Bugbear",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258174/Dungeon/items/Monster%20Drop/bugbearFur.jpg"
+            }
+          },
+          {
+            "id": "2345739f-2877-40de-b23d-a14a12194309",
+            "itemId": 1862,
+            "quantity": 1,
+            "item": {
+              "name": "Twilight Grove Essence",
+              "description": "Essential material that is required to craft the twefth floor key of Brighthollow Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839435/Dungeon/items/Essence/twilightGroveEssence.jpg"
+            }
+          }
+        ],
+        "consecutiveFailures": 1
+      },
+      {
+        "recipe": {
+          "id": 1843,
+          "name": "Frostspire Summit Key of Brighthollow",
+          "description": "Key to unlock the thirteenth floor of Brighthollow Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839714/Dungeon/items/Keys/brighthollowKeyOfFrostspireSummit.jpg",
+          "baseCost": 1200,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Novice",
+          "experience": 1,
+          "cityIds": [2],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 1200,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "88692f1e-4467-4d30-bd3c-a49e8bed0097",
+            "itemId": 1621,
+            "quantity": 3,
+            "item": {
+              "name": "Ghost Orchid",
+              "description": "A pale, ethereal orchid that glows faintly.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516426/Dungeon/items/Plants/ghostOrchid.jpg"
+            }
+          },
+          {
+            "id": "7b3ccb64-5024-40f2-953d-237844cb2ab7",
+            "itemId": 1721,
+            "quantity": 3,
+            "item": {
+              "name": "Shadowflint",
+              "description": "Flint with a shadowy, dark coloration.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394450/Dungeon/items/Rocks/shadowflint.jpg"
+            }
+          },
+          {
+            "id": "3131d94f-b065-4863-842e-11920ed2399e",
+            "itemId": 1521,
+            "quantity": 1,
+            "item": {
+              "name": "Ghoul Talons",
+              "description": "Dropped by Ghoul",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258174/Dungeon/items/Monster%20Drop/ghoulTalons.jpg"
+            }
+          },
+          {
+            "id": "5e5c0335-209a-4920-8834-77533ed2d57a",
+            "itemId": 1863,
+            "quantity": 1,
+            "item": {
+              "name": "Frostspire Summit Essence",
+              "description": "Essential material that is required to craft the thirteenth floor key of Brighthollow Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839435/Dungeon/items/Essence/frostspireSummitEssence.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1844,
+          "name": "Glimmering Cavern Key of Brighthollow",
+          "description": "Key to unlock the fourteenth floor of Brighthollow Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839722/Dungeon/items/Keys/brighthollowKeyOfGlimmeringCavern.jpg",
+          "baseCost": 1300,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Novice",
+          "experience": 1,
+          "cityIds": [2],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 1300,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "ad26cb51-4bad-435f-8576-7da0c3f2b85a",
+            "itemId": 1612,
+            "quantity": 3,
+            "item": {
+              "name": "Bloodgrass",
+              "description": "Red-tinted grass often found near battle sites.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1734810079/Dungeon/items/Plants/bloodgrass.jpg"
+            }
+          },
+          {
+            "id": "5e9d084d-8e16-40f1-bb7d-8033101c63e4",
+            "itemId": 1712,
+            "quantity": 3,
+            "item": {
+              "name": "Duskore",
+              "description": "Metallic ore with a dusky sheen, found deep underground.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1734810042/Dungeon/items/Rocks/duskore.jpg"
+            }
+          },
+          {
+            "id": "39f7af03-541c-4cdb-b921-604ce3c203a3",
+            "itemId": 1512,
+            "quantity": 1,
+            "item": {
+              "name": "Orc Tusks",
+              "description": "Dropped by Orc",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258177/Dungeon/items/Monster%20Drop/orcTusks.jpg"
+            }
+          },
+          {
+            "id": "74d07c8c-fa5b-4160-af92-43ef34427fa0",
+            "itemId": 1864,
+            "quantity": 1,
+            "item": {
+              "name": "Glimmering Cavern Essence",
+              "description": "Essential material that is required to craft the fourteenth floor key of Brighthollow Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839436/Dungeon/items/Essence/glimmeringCavernEssence.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1845,
+          "name": "Thornshade Depths Key of Brighthollow",
+          "description": "Key to unlock the fifteenth floor of Brighthollow Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839726/Dungeon/items/Keys/brighthollowKeyOfThornshadeDepths.jpg",
+          "baseCost": 1400,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Novice",
+          "experience": 1,
+          "cityIds": [2],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 1400,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "567df657-fdf7-40bc-8da5-026821559f5a",
+            "itemId": 1613,
+            "quantity": 3,
+            "item": {
+              "name": "Witch's Hair",
+              "description": "Long, stringy plant used in potions.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1734810099/Dungeon/items/Plants/witchHair.jpg"
+            }
+          },
+          {
+            "id": "960fa71c-b178-47df-920d-5ba47ab1038c",
+            "itemId": 1713,
+            "quantity": 3,
+            "item": {
+              "name": "Gritstone",
+              "description": "Coarse, rough stone with a gritty surface.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1734810049/Dungeon/items/Rocks/gritstone.jpg"
+            }
+          },
+          {
+            "id": "bc242046-bbe6-4d4e-9453-a5b187ed87ee",
+            "itemId": 1513,
+            "quantity": 1,
+            "item": {
+              "name": "Hobgoblin Teeth",
+              "description": "Dropped by Hobgoblin",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258176/Dungeon/items/Monster%20Drop/hobgoblinTeeth.jpg"
+            }
+          },
+          {
+            "id": "bf594259-cb51-4742-9e55-410b41bcd907",
+            "itemId": 1865,
+            "quantity": 1,
+            "item": {
+              "name": "Thornshade Depths Essence",
+              "description": "Essential material that is required to craft the fifteenth floor key of Brighthollow Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839436/Dungeon/items/Essence/thornshadeDepthsEssence.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1846,
+          "name": "Chimeric Flame Key of Brighthollow",
+          "description": "Key to unlock the sixteenth floor of Brighthollow Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839725/Dungeon/items/Keys/brighthollowKeyOfChimericFlame.jpg",
+          "baseCost": 1500,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Novice",
+          "experience": 1,
+          "cityIds": [2],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 1500,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "36f23e4e-14ec-4e45-95e9-2fd40e336097",
+            "itemId": 1614,
+            "quantity": 3,
+            "item": {
+              "name": "Gloomshroom",
+              "description": "Mushrooms that thrive in dark environments.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516453/Dungeon/items/Plants/gloomshroom.jpg"
+            }
+          },
+          {
+            "id": "1531254d-aac5-4214-b4c8-2be846715806",
+            "itemId": 1714,
+            "quantity": 3,
+            "item": {
+              "name": "Glowshale",
+              "description": "Shale that glows faintly in the dark.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394471/Dungeon/items/Rocks/glowshale.jpg"
+            }
+          },
+          {
+            "id": "b2772c26-6026-42cc-bce3-da321a3b1cba",
+            "itemId": 1514,
+            "quantity": 1,
+            "item": {
+              "name": "Gnoll Claws",
+              "description": "Dropped by Gnoll",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258176/Dungeon/items/Monster%20Drop/gnollClaws.jpg"
+            }
+          },
+          {
+            "id": "ff20f3b4-de23-4e1c-a046-a8912792597f",
+            "itemId": 1866,
+            "quantity": 1,
+            "item": {
+              "name": "Chimeric Flame Essence",
+              "description": "Essential material that is required to craft the sixteenth floor key of Brighthollow Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839436/Dungeon/items/Essence/chimericFlameEssence.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1847,
+          "name": "Tempest Hollow Key of Brighthollow",
+          "description": "Key to unlock the seventeenth floor of Brighthollow Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839737/Dungeon/items/Keys/brighthollowKeyOfTempestHollow.jpg",
+          "baseCost": 1600,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Novice",
+          "experience": 1,
+          "cityIds": [2],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 1600,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "fee57ee4-f9a8-4937-92b3-6dbd2896901d",
+            "itemId": 1615,
+            "quantity": 3,
+            "item": {
+              "name": "Spindlethorn",
+              "description": "A thorny plant with a twisting growth pattern.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516453/Dungeon/items/Plants/spindlethorn.jpg"
+            }
+          },
+          {
+            "id": "cd7dfb33-6c61-4037-bdbe-1ef60b2cda0d",
+            "itemId": 1715,
+            "quantity": 3,
+            "item": {
+              "name": "Sablequartz",
+              "description": "Quartz with a dark, shimmering appearance.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394451/Dungeon/items/Rocks/sablequartz.jpg"
+            }
+          },
+          {
+            "id": "73fa18b5-1bb0-4c6d-814c-83ef739088bf",
+            "itemId": 1515,
+            "quantity": 1,
+            "item": {
+              "name": "Wolf Fur",
+              "description": "Dropped by Wolf",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258176/Dungeon/items/Monster%20Drop/wolfFur.jpg"
+            }
+          },
+          {
+            "id": "bd263f62-5e7a-4a9b-9be1-e20aa92e926f",
+            "itemId": 1867,
+            "quantity": 1,
+            "item": {
+              "name": "Tempest Hollow Essence",
+              "description": "Essential material that is required to craft the seventeenth floor key of Brighthollow Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839437/Dungeon/items/Essence/tempestHollowEssence.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1848,
+          "name": "Shadowed Beacon Key of Brighthollow",
+          "description": "Key to unlock the eighteenth floor of Brighthollow Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839729/Dungeon/items/Keys/brighthollowKeyOfShadowedBeacon.jpg",
+          "baseCost": 1700,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Novice",
+          "experience": 1,
+          "cityIds": [2],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 1700,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "9f7bba2f-d34e-4e96-8423-780dfa9069ee",
+            "itemId": 1616,
+            "quantity": 3,
+            "item": {
+              "name": "Whisperleaf",
+              "description": "Leaves that rustle even without wind.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516440/Dungeon/items/Plants/whisperleaf.jpg"
+            }
+          },
+          {
+            "id": "42f6052a-b010-4b5c-9760-8c6a89d22647",
+            "itemId": 1716,
+            "quantity": 3,
+            "item": {
+              "name": "Duskrystal",
+              "description": "Crystals with a dusky, shadowy appearance.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394451/Dungeon/items/Rocks/duskrystal.jpg"
+            }
+          },
+          {
+            "id": "9ded9dd9-6a84-4489-85ef-74119a226d3a",
+            "itemId": 1516,
+            "quantity": 1,
+            "item": {
+              "name": "Shadow Essence",
+              "description": "Dropped by Shadow",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258176/Dungeon/items/Monster%20Drop/shadowEssence.jpg"
+            }
+          },
+          {
+            "id": "01e28eeb-20a4-4893-ac37-979788833bbe",
+            "itemId": 1868,
+            "quantity": 1,
+            "item": {
+              "name": "Shadowed Beacon Essence",
+              "description": "Essential material that is required to craft the eighteenth floor key of Brighthollow Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839439/Dungeon/items/Essence/shadowedBeaconEssence.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1849,
+          "name": "Obscura Aegis Key of Brighthollow",
+          "description": "Key to unlock the nineteeth floor of Brighthollow Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839734/Dungeon/items/Keys/brighthollowKeyOfObscuraAegis.jpg",
+          "baseCost": 1800,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Novice",
+          "experience": 1,
+          "cityIds": [2],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 1800,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "a1c91c32-9b79-4a50-8b0e-8f434ec1b1bf",
+            "itemId": 1617,
+            "quantity": 3,
+            "item": {
+              "name": "Silverleaf Plant",
+              "description": "A plant with silvery leaves, often used in healing.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516427/Dungeon/items/Plants/silverleaf.jpg"
+            }
+          },
+          {
+            "id": "7f0eeac2-de62-45d2-be82-edd5071a536d",
+            "itemId": 1717,
+            "quantity": 3,
+            "item": {
+              "name": "Emberstone",
+              "description": "Stone that glows with an internal ember-like light.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394451/Dungeon/items/Rocks/emberstone.jpg"
+            }
+          },
+          {
+            "id": "4ed54e9d-d446-4a75-aa02-f5c0082c445b",
+            "itemId": 1517,
+            "quantity": 1,
+            "item": {
+              "name": "Ritual Dagger",
+              "description": "Dropped by Cultist",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258176/Dungeon/items/Monster%20Drop/ritualDagger.jpg"
+            }
+          },
+          {
+            "id": "2074104d-eeb1-41a8-acfc-28493f8e107f",
+            "itemId": 1869,
+            "quantity": 1,
+            "item": {
+              "name": "Obscura Aegis Essence",
+              "description": "Essential material that is required to craft the nineteeth floor key of Brighthollow Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839440/Dungeon/items/Essence/obscuraAegisEssence.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1850,
+          "name": "Ethereal Bastion Key of Brighthollow",
+          "description": "Key to unlock the twentieth floor of Brighthollow Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839730/Dungeon/items/Keys/brighthollowKeyOfEtherealBastion.jpg",
+          "baseCost": 1900,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Novice",
+          "experience": 1,
+          "cityIds": [2],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 1900,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "d0980e22-e330-418e-b029-b1299f5fb7a1",
+            "itemId": 1618,
+            "quantity": 3,
+            "item": {
+              "name": "Gnarlwood",
+              "description": "Twisted, gnarled trees found in ancient forests.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516427/Dungeon/items/Plants/gnarlwood.jpg"
+            }
+          },
+          {
+            "id": "f3a08a7e-244e-4ef1-8345-6a5d58af5d0e",
+            "itemId": 1718,
+            "quantity": 3,
+            "item": {
+              "name": "Frostore",
+              "description": "Ore that exudes a chilling frost.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394450/Dungeon/items/Rocks/frostore.jpg"
+            }
+          },
+          {
+            "id": "5b88e49b-534d-4844-9bb4-81ed96ee716c",
+            "itemId": 1518,
+            "quantity": 1,
+            "item": {
+              "name": "Spider Silk",
+              "description": "Dropped by Giant Spider",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258175/Dungeon/items/Monster%20Drop/spiderSilk.jpg"
+            }
+          },
+          {
+            "id": "9cf17101-e43d-42f0-b9e6-89895a0eaca4",
+            "itemId": 1870,
+            "quantity": 1,
+            "item": {
+              "name": "Ethereal Bastion Essence",
+              "description": "Essential material that is required to craft the twentieth floor key of Brighthollow Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839441/Dungeon/items/Essence/etherealBastionEssence.jpg"
+            }
+          }
+        ]
+      },
+      {
+        "recipe": {
+          "id": 1851,
+          "name": "Dawnspire Nexus Key of Brighthollow",
+          "description": "Key to unlock the twenty-first floor of Brighthollow Dungeon",
+          "class": "F",
+          "image": null,
+          "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839733/Dungeon/items/Keys/brighthollowKeyOfDawnspireNexus.jpg",
+          "baseCost": 2000,
+          "costCurrency": "DRUBBLE",
+          "requiredLevel": 1,
+          "successRate": 20,
+          "category": "Dungeon Key",
+          "difficulty": "Novice",
+          "experience": 1,
+          "cityIds": [2],
+          "baseSuccessRate": 20,
+          "enhancedSuccessRate": 20,
+          "successRateModifier": 0,
+          "discountedCost": 2000,
+          "costDiscount": 0,
+          "forgeDiscount": 0,
+          "craftingCostReduction": 0,
+          "effects": {
+            "craftingSuccessRate": 0,
+            "forgeCostReduction": 0,
+            "craftingExperienceBoost": 0
+          }
+        },
+        "requirements": [
+          {
+            "id": "398f74c5-a85c-423a-bc1b-3f890f5f30b2",
+            "itemId": 1619,
+            "quantity": 3,
+            "item": {
+              "name": "Drakeweed",
+              "description": "A tough weed often found near dragon lairs.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748516426/Dungeon/items/Plants/drakeweed.jpg"
+            }
+          },
+          {
+            "id": "bf6e548a-1eb3-4852-a315-8e33fa7d023a",
+            "itemId": 1719,
+            "quantity": 3,
+            "item": {
+              "name": "Sparkstone",
+              "description": "Stone that sparks when struck with metal.",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1749394450/Dungeon/items/Rocks/sparkstone.jpg"
+            }
+          },
+          {
+            "id": "81622633-1000-4083-93c5-c802adbce942",
+            "itemId": 1519,
+            "quantity": 1,
+            "item": {
+              "name": "Warg Pelt",
+              "description": "Dropped by Warg",
+              "class": "E",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1748258175/Dungeon/items/Monster%20Drop/wargPelt.jpg"
+            }
+          },
+          {
+            "id": "6515d804-2e82-4bfb-9ce2-234a3462795c",
+            "itemId": 1871,
+            "quantity": 1,
+            "item": {
+              "name": "Dawnspire Nexus Essence",
+              "description": "Essential material that is required to craft the twenty-first floor key of Brighthollow Dungeon",
+              "class": "F",
+              "image": null,
+              "imageUrl": "https://res.cloudinary.com/dwcu4lsen/image/upload/v1754839442/Dungeon/items/Essence/dawnspireNexusEssence.jpg"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "total": 20,
+  "totalPages": null,
+  "hasMore": false,
+  "success": true
+}

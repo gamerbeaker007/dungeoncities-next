@@ -5,8 +5,17 @@ import { ForgeSearchForm } from "@/components/forge-search/forge-search-form";
 import { useLockItems } from "@/hooks/use-lock-items";
 import { useMarket } from "@/hooks/use-market";
 import { searchForgeRecipes } from "@/lib/forge-items";
-import type { ForgeRecipe } from "@/types/forge";
-import { Alert, Box, Stack, Typography } from "@mui/material";
+import type { ForgeCity, ForgeRecipe } from "@/types/forge";
+import {
+  Alert,
+  Box,
+  FormControlLabel,
+  Stack,
+  Switch,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from "@mui/material";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
@@ -16,6 +25,8 @@ type ForgeResourceSearchProps = {
 
 export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
   const [query, setQuery] = useState("");
+  const [cityFilter, setCityFilter] = useState<"all" | ForgeCity>("all");
+  const [hideCrafted, setHideCrafted] = useState(false);
   const { itemQuantitiesByItemId, locationWarning } = useMarket();
   const { lockedItemIds, toggleLock } = useLockItems();
 
@@ -53,11 +64,22 @@ export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
     });
   }, [filteredRecipes, itemQuantitiesByItemId]);
 
+  const displayedRecipes = useMemo(() => {
+    let result = enrichedRecipes;
+    if (cityFilter !== "all") {
+      result = result.filter((r) => r.city === cityFilter);
+    }
+    if (hideCrafted) {
+      result = result.filter((r) => !r.playerInfo?.isCrafted);
+    }
+    return result;
+  }, [enrichedRecipes, cityFilter, hideCrafted]);
+
   return (
     <Stack spacing={3}>
       <Box>
         <Typography variant="h4" component="h1" gutterBottom>
-          Forge Resource Finder (Druantia)
+          Forge Resource Finder
         </Typography>
         <Typography variant="body1" color="text.secondary">
           Search a resource to see which forge recipes use it, the other
@@ -72,13 +94,45 @@ export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
 
       <ForgeSearchForm query={query} onSubmit={setQuery} />
 
+      <Stack
+        direction={{ xs: "column", sm: "row" }}
+        spacing={2}
+        alignItems={{ sm: "center" }}
+        flexWrap="wrap"
+      >
+        <ToggleButtonGroup
+          value={cityFilter}
+          exclusive
+          onChange={(_e, val: "all" | ForgeCity | null) => {
+            if (val !== null) setCityFilter(val);
+          }}
+          size="small"
+          aria-label="city filter"
+        >
+          <ToggleButton value="all">All</ToggleButton>
+          <ToggleButton value="brighthollow">Brighthollow</ToggleButton>
+          <ToggleButton value="druantia">Druantia</ToggleButton>
+        </ToggleButtonGroup>
+
+        <FormControlLabel
+          control={
+            <Switch
+              checked={hideCrafted}
+              onChange={(e) => setHideCrafted(e.target.checked)}
+              size="small"
+            />
+          }
+          label="Hide crafted"
+        />
+      </Stack>
+
       {locationWarning && <Alert severity="warning">{locationWarning}</Alert>}
 
       <Typography variant="body2" color="text.secondary">
-        Showing {filteredRecipes.length} of {recipes.length} recipe(s)
+        Showing {displayedRecipes.length} of {recipes.length} recipe(s)
       </Typography>
 
-      {enrichedRecipes.length === 0 ? (
+      {displayedRecipes.length === 0 ? (
         <Typography variant="body1">No recipes found.</Typography>
       ) : (
         <Box
@@ -89,7 +143,7 @@ export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
             alignItems: "stretch",
           }}
         >
-          {enrichedRecipes.map((recipe) => (
+          {displayedRecipes.map((recipe) => (
             <Box
               key={`${recipe.recipeId}-${recipe.recipeName}`}
               sx={{
