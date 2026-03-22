@@ -151,7 +151,7 @@ export default function FaqPage() {
               sx={{ mb: 1.5, whiteSpace: "pre-line" }}
             >
               {`Buy an E class core from the exclusive shop for DCXT (1 DCXT = 200 DR).
-              DR must be on Hive-Engine).
+              DR must be on Hive-Engine.
               Then ascend it to a higher class at an Altar.
               Encounter chance: 3%–6% per floor.
               `}

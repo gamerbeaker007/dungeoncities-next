@@ -96,9 +96,18 @@ export const KNOWN_ALTAR_LOCATIONS: AltarLocationRow[] = [
   {
     cityId: 1,
     floor: 1,
-    description: "Ascend to D class Blessed Health Core (unconfirmed)",
+    description: "Ascend to D class Blessed Health Core",
   },
-  { cityId: 1, floor: 3, description: "Ascend to D class Blessed Attack Core" },
+  {
+    cityId: 1,
+    floor: 3,
+    description: "Ascend to D class Blessed Attack Core",
+  },
+  {
+    cityId: 1,
+    floor: 5,
+    description: "Ascend to D class Blessed Defense Core",
+  },
   {
     cityId: 1,
     floor: 7,
@@ -108,6 +117,16 @@ export const KNOWN_ALTAR_LOCATIONS: AltarLocationRow[] = [
     cityId: 1,
     floor: 9,
     description: "Ascend to D class Blessed Critical Core",
+  },
+  {
+    cityId: 1,
+    floor: 11,
+    description: "Ascend to D class Blessed Damage Neutralisation Core",
+  },
+  {
+    cityId: 1,
+    floor: 13,
+    description: "Ascend to D class Blessed Stun Core",
   },
   {
     cityId: 1,
@@ -122,7 +141,51 @@ export const KNOWN_ALTAR_LOCATIONS: AltarLocationRow[] = [
   {
     cityId: 1,
     floor: 19,
-    description: "Ascend to C class Blessed Health Core (unconfirmed)",
+    description: "Ascend to C class Blessed Health Core",
   },
-  { cityId: 2, floor: 1, description: "Ascend to C class Blessed Attack Core" },
+  {
+    cityId: 2,
+    floor: 1,
+    description: "Ascend to C class Blessed Attack Core",
+  },
+    {
+    cityId: 2,
+    floor: 3,
+    description: "Ascend to C class Blessed Defense Core"
+  },
+
+    {
+    cityId: 2,
+    floor: 5,
+    description: "Ascend to C class Blessed Defense Penetration Core"
+  },
+
+    {
+    cityId: 2,
+    floor: 7,
+    description: "Ascend to C class Blessed Critical Core"
+  },
+
+    {
+    cityId: 2,
+    floor: 9,
+    description: "Ascend to C class Blessed Damage Neutralisation Core"
+  },
+  {
+    cityId: 2,
+    floor: 11,
+    description: "Ascend to C class Blessed Stun Core",
+  },
+  {
+    cityId: 3,
+    floor: 2,
+    description: "Ascend to B class Blessed Defense Penetration Core",
+  },
+  {
+    cityId: 4,
+    floor: 13,
+    description: "Ascend to B(?) class Blessed Defense Core (unconfirmed)",
+  },
+
+
 ];
