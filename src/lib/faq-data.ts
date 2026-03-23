@@ -148,28 +148,28 @@ export const KNOWN_ALTAR_LOCATIONS: AltarLocationRow[] = [
     floor: 1,
     description: "Ascend to C class Blessed Attack Core",
   },
-    {
+  {
     cityId: 2,
     floor: 3,
-    description: "Ascend to C class Blessed Defense Core"
+    description: "Ascend to C class Blessed Defense Core",
   },
 
-    {
+  {
     cityId: 2,
     floor: 5,
-    description: "Ascend to C class Blessed Defense Penetration Core"
+    description: "Ascend to C class Blessed Defense Penetration Core",
   },
 
-    {
+  {
     cityId: 2,
     floor: 7,
-    description: "Ascend to C class Blessed Critical Core"
+    description: "Ascend to C class Blessed Critical Core",
   },
 
-    {
+  {
     cityId: 2,
     floor: 9,
-    description: "Ascend to C class Blessed Damage Neutralisation Core"
+    description: "Ascend to C class Blessed Damage Neutralisation Core",
   },
   {
     cityId: 2,
@@ -183,9 +183,17 @@ export const KNOWN_ALTAR_LOCATIONS: AltarLocationRow[] = [
   },
   {
     cityId: 4,
-    floor: 13,
-    description: "Ascend to B(?) class Blessed Defense Core (unconfirmed)",
+    floor: 7,
+    description: "Ascend to B class Blessed Dodge Counter Core",
   },
-
-
+  {
+    cityId: 4,
+    floor: 9,
+    description: "Ascend to B class Blessed Health Core",
+  },
+  {
+    cityId: 4,
+    floor: 13,
+    description: "Ascend to B class Blessed Defense Core",
+  },
 ];
