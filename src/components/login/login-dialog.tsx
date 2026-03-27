@@ -93,7 +93,7 @@ export function LoginDialog({ open, onClose }: LoginDialogProps) {
             <TextField
               label="Hive Username"
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setUsername(e.target.value.toLowerCase())}
               disabled={isLoading || !isKeychainInstalled}
               fullWidth
               autoFocus

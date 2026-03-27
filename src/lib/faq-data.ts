@@ -182,6 +182,11 @@ export const KNOWN_ALTAR_LOCATIONS: AltarLocationRow[] = [
     description: "Ascend to B class Blessed Defense Penetration Core",
   },
   {
+    cityId: 3,
+    floor: 4,
+    description: "Ascend to B class Blessed Critical Core",
+  },
+  {
     cityId: 4,
     floor: 7,
     description: "Ascend to B class Blessed Dodge Counter Core",
@@ -195,5 +200,15 @@ export const KNOWN_ALTAR_LOCATIONS: AltarLocationRow[] = [
     cityId: 4,
     floor: 13,
     description: "Ascend to B class Blessed Defense Core",
+  },
+  {
+    cityId: 4,
+    floor: 15,
+    description: "Ascend to B class Blessed Defense Penetration Core",
+  },
+  {
+    cityId: 4,
+    floor: 17,
+    description: "Ascend to A class Blessed Critical Core",
   },
 ];
