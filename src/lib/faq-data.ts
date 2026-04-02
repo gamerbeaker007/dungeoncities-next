@@ -216,4 +216,9 @@ export const KNOWN_ALTAR_LOCATIONS: AltarLocationRow[] = [
     floor: 19,
     description: "Ascend to A class Blessed Damage Neutralisation Core",
   },
+  {
+    cityId: 5,
+    floor: 1,
+    description: "Ascend to A class Blessed Stun Core",
+  },
 ];
