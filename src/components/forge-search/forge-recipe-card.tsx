@@ -16,6 +16,7 @@ type ForgeRecipeCardProps = {
   recipeImageUrl: string | null;
   cost: number;
   costCurrency: string;
+  category: string;
   requirements: ForgeRequirement[];
   playerInfo?: ForgeRecipePlayerInfo;
   lockedItemIds: Set<number>;
@@ -28,6 +29,7 @@ export function ForgeRecipeCard({
   recipeImageUrl,
   cost,
   costCurrency,
+  category,
   requirements,
   playerInfo,
   lockedItemIds,
@@ -64,6 +66,15 @@ export function ForgeRecipeCard({
       <CardContent>
         <Stack spacing={0.5}>
           <Typography variant="h6">{recipeName}</Typography>
+          {category ? (
+            <Typography
+              variant="caption"
+              color="primary.main"
+              sx={{ fontWeight: 600 }}
+            >
+              {category}
+            </Typography>
+          ) : null}
           <Typography variant="caption" color="text.secondary">
             {description}
           </Typography>

@@ -1,5 +1,6 @@
 import forgeBrighthollowData from "@/data/forge_brighthollow.json";
 import forgeDruantiaData from "@/data/forge_druantia.json";
+import forgeElariaLowerCityData from "@/data/forge_elaria_lower_city.json";
 import type {
   ForgeCity,
   ForgeRecipe,
@@ -17,6 +18,7 @@ type ForgeRecipeRaw = {
     discountedCost?: number | null;
     baseCost?: number | null;
     costCurrency?: string | null;
+    category?: string | null;
   };
   requirements?: Array<{
     itemId?: number | null;
@@ -60,21 +62,24 @@ function mapRecipe(raw: ForgeRecipeRaw, city: ForgeCity): ForgeRecipe {
         itemId,
         name,
         quantity: requirement.quantity ?? 0,
-        imageUrl: requirement.item?.imageUrl ?? null,
+        imageUrl: requirement.item?.imageUrl?.trim() || null,
         searchHref: buildResourceSearchHref(itemId, name),
       };
     },
   );
 
+  const category = (raw.recipe?.category ?? "").trim();
+
   return {
     recipeId,
     recipeName,
     description: raw.recipe?.description?.trim() ?? "",
-    recipeImageUrl: raw.recipe?.imageUrl ?? null,
+    recipeImageUrl: raw.recipe?.imageUrl?.trim() || null,
     cost,
     costCurrency,
     requirements,
     city,
+    category,
   };
 }
 
@@ -88,9 +93,15 @@ const brighthollowRecipesRaw =
     | ForgeRecipeRaw[]
     | undefined) ?? [];
 
+const elariaLowerCityRecipesRaw =
+  ((forgeElariaLowerCityData as forgeItems)?.data?.recipes as
+    | ForgeRecipeRaw[]
+    | undefined) ?? [];
+
 const allForgeRecipes = [
   ...brighthollowRecipesRaw.map((r) => mapRecipe(r, "brighthollow")),
   ...druantiaRecipesRaw.map((r) => mapRecipe(r, "druantia")),
+  ...elariaLowerCityRecipesRaw.map((r) => mapRecipe(r, "elaria_lower_city")),
 ];
 
 export function getForgeRecipes() {

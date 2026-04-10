@@ -35,27 +35,42 @@ export function ForgeItem({
     <Stack direction="row" spacing={1} alignItems="center">
       <Tooltip
         title={
-          <Box
-            component="img"
-            src={requirement.imageUrl ?? ""}
-            alt={requirement.name}
-            sx={{ width: 120, height: 120, objectFit: "cover" }}
-          />
+          requirement.imageUrl ? (
+            <Box
+              component="img"
+              src={requirement.imageUrl}
+              alt={requirement.name}
+              sx={{ width: 120, height: 120, objectFit: "cover" }}
+            />
+          ) : (
+            requirement.name
+          )
         }
         placement="right"
       >
-        <Box
-          component="img"
-          src={requirement.imageUrl ?? ""}
-          alt={requirement.name}
-          sx={{
-            width: 28,
-            height: 28,
-            objectFit: "cover",
-            borderRadius: 0.5,
-            cursor: "pointer",
-          }}
-        />
+        {requirement.imageUrl ? (
+          <Box
+            component="img"
+            src={requirement.imageUrl}
+            alt={requirement.name}
+            sx={{
+              width: 28,
+              height: 28,
+              objectFit: "cover",
+              borderRadius: 0.5,
+              cursor: "pointer",
+            }}
+          />
+        ) : (
+          <Box
+            sx={{
+              width: 28,
+              height: 28,
+              borderRadius: 0.5,
+              bgcolor: "action.disabledBackground",
+            }}
+          />
+        )}
       </Tooltip>
 
       <Box sx={{ flexGrow: 1 }}>

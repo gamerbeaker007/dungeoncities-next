@@ -9,7 +9,11 @@ import type { ForgeCity, ForgeRecipe } from "@/types/forge";
 import {
   Alert,
   Box,
+  FormControl,
   FormControlLabel,
+  InputLabel,
+  MenuItem,
+  Select,
   Stack,
   Switch,
   ToggleButton,
@@ -26,7 +30,8 @@ type ForgeResourceSearchProps = {
 export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
   const [query, setQuery] = useState("");
   const [cityFilter, setCityFilter] = useState<"all" | ForgeCity>("all");
-  const [hideCrafted, setHideCrafted] = useState(false);
+  const [hideCrafted, setHideCrafted] = useState(true);
+  const [categoryFilter, setCategoryFilter] = useState<string>("all");
   const { itemQuantitiesByItemId, locationWarning } = useMarket();
   const { lockedItemIds, toggleLock } = useLockItems();
 
@@ -72,8 +77,24 @@ export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
     if (hideCrafted) {
       result = result.filter((r) => !r.playerInfo?.isCrafted);
     }
+    if (categoryFilter !== "all") {
+      result = result.filter(
+        (r) => r.category.toLowerCase() === categoryFilter.toLowerCase(),
+      );
+    }
     return result;
-  }, [enrichedRecipes, cityFilter, hideCrafted]);
+  }, [enrichedRecipes, cityFilter, hideCrafted, categoryFilter]);
+
+  const availableCategories = useMemo(() => {
+    let base = enrichedRecipes;
+    if (cityFilter !== "all") {
+      base = base.filter((r) => r.city === cityFilter);
+    }
+    const cats = Array.from(
+      new Set(base.map((r) => r.category).filter(Boolean)),
+    ).sort();
+    return cats;
+  }, [enrichedRecipes, cityFilter]);
 
   return (
     <Stack spacing={3}>
@@ -112,6 +133,9 @@ export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
           <ToggleButton value="all">All</ToggleButton>
           <ToggleButton value="brighthollow">Brighthollow</ToggleButton>
           <ToggleButton value="druantia">Druantia</ToggleButton>
+          <ToggleButton value="elaria_lower_city">
+            Elaria Lower City
+          </ToggleButton>
         </ToggleButtonGroup>
 
         <FormControlLabel
@@ -125,6 +149,31 @@ export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
           label="Hide crafted"
         />
       </Stack>
+
+      {availableCategories.length > 1 && (
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={2}
+          alignItems={{ sm: "center" }}
+        >
+          <FormControl size="small" sx={{ minWidth: 180 }}>
+            <InputLabel id="category-filter-label">Category</InputLabel>
+            <Select
+              labelId="category-filter-label"
+              value={categoryFilter}
+              label="Category"
+              onChange={(e) => setCategoryFilter(e.target.value)}
+            >
+              <MenuItem value="all">All categories</MenuItem>
+              {availableCategories.map((cat) => (
+                <MenuItem key={cat} value={cat}>
+                  {cat}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Stack>
+      )}
 
       {locationWarning && <Alert severity="warning">{locationWarning}</Alert>}
 
@@ -156,6 +205,7 @@ export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
                 recipeImageUrl={recipe.recipeImageUrl}
                 cost={recipe.cost}
                 costCurrency={recipe.costCurrency}
+                category={recipe.category}
                 requirements={recipe.requirements}
                 playerInfo={recipe.playerInfo}
                 lockedItemIds={lockedItemIds}
