@@ -66,7 +66,10 @@ export function TopNav() {
           {/* ── Desktop nav (sm+) ────────────────────────────────────── */}
           <Box sx={{ display: { xs: "none", sm: "flex" }, gap: 0.5 }}>
             {navItems.map((item) => {
-              const isActive = pathname === item.href;
+              const isActive =
+                item.href === "/"
+                  ? pathname === "/"
+                  : pathname.startsWith(item.href);
               const Icon = item.icon;
               return (
                 <Button
@@ -147,7 +150,10 @@ export function TopNav() {
             transformOrigin={{ vertical: "top", horizontal: "right" }}
           >
             {navItems.map((item, idx) => {
-              const isActive = pathname === item.href;
+              const isActive =
+                item.href === "/"
+                  ? pathname === "/"
+                  : pathname.startsWith(item.href);
               const Icon = item.icon;
               return [
                 idx > 0 && <Divider key={`d-${item.href}`} />,

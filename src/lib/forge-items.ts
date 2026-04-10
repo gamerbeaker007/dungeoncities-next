@@ -98,28 +98,59 @@ const elariaLowerCityRecipesRaw =
     | ForgeRecipeRaw[]
     | undefined) ?? [];
 
+const brighthollowRecipes = brighthollowRecipesRaw.map((r) =>
+  mapRecipe(r, "brighthollow"),
+);
+const druantiaRecipes = druantiaRecipesRaw.map((r) => mapRecipe(r, "druantia"));
+const elariaLowerCityRecipes = elariaLowerCityRecipesRaw.map((r) =>
+  mapRecipe(r, "elaria_lower_city"),
+);
+
 const allForgeRecipes = [
-  ...brighthollowRecipesRaw.map((r) => mapRecipe(r, "brighthollow")),
-  ...druantiaRecipesRaw.map((r) => mapRecipe(r, "druantia")),
-  ...elariaLowerCityRecipesRaw.map((r) => mapRecipe(r, "elaria_lower_city")),
+  ...brighthollowRecipes,
+  ...druantiaRecipes,
+  ...elariaLowerCityRecipes,
 ];
 
 export function getForgeRecipes() {
   return allForgeRecipes;
 }
 
-export function searchForgeRecipes(query: string): ForgeRecipeSearchResult[] {
+export function getBrighthollowRecipes() {
+  return brighthollowRecipes;
+}
+
+export function getDruantiaRecipes() {
+  return druantiaRecipes;
+}
+
+export function getElariaLowerCityRecipes() {
+  return elariaLowerCityRecipes;
+}
+
+export function getElariaLowerCityKeyRecipes() {
+  return elariaLowerCityRecipes.filter((r) => r.category === "Dungeon Key");
+}
+
+export function getElariaLowerCityItemRecipes() {
+  return elariaLowerCityRecipes.filter((r) => r.category !== "Dungeon Key");
+}
+
+export function searchForgeRecipes(
+  query: string,
+  recipes: ForgeRecipe[] = allForgeRecipes,
+): ForgeRecipeSearchResult[] {
   const normalized = query.trim().toLowerCase();
 
   if (!normalized) {
-    return allForgeRecipes;
+    return recipes;
   }
 
   // Check if query is a number (for ID search)
   const queryAsNumber = Number(normalized);
   const isIdSearch = Number.isInteger(queryAsNumber) && queryAsNumber > 0;
 
-  return allForgeRecipes
+  return recipes
     .map((recipe) => {
       // Check if any requirement matches
       const hasMatchingRequirement = recipe.requirements.some((requirement) => {

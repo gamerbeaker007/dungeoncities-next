@@ -5,7 +5,7 @@ import { ForgeSearchForm } from "@/components/forge-search/forge-search-form";
 import { useLockItems } from "@/hooks/use-lock-items";
 import { useMarket } from "@/hooks/use-market";
 import { searchForgeRecipes } from "@/lib/forge-items";
-import type { ForgeCity, ForgeRecipe } from "@/types/forge";
+import type { ForgeRecipe } from "@/types/forge";
 import {
   Alert,
   Box,
@@ -16,8 +16,6 @@ import {
   Select,
   Stack,
   Switch,
-  ToggleButton,
-  ToggleButtonGroup,
   Typography,
 } from "@mui/material";
 import Link from "next/link";
@@ -25,17 +23,29 @@ import { useMemo, useState } from "react";
 
 type ForgeResourceSearchProps = {
   recipes: ForgeRecipe[];
+  title?: string;
+  description?: string;
+  backHref?: string;
+  backLabel?: string;
 };
 
-export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
+export function ForgeResourceSearch({
+  recipes,
+  title = "Forge Resource Finder",
+  description = "Search a resource to see which forge recipes use it, the other required items, and crafting cost.",
+  backHref = "/forge",
+  backLabel = "Back to Forge",
+}: ForgeResourceSearchProps) {
   const [query, setQuery] = useState("");
-  const [cityFilter, setCityFilter] = useState<"all" | ForgeCity>("all");
   const [hideCrafted, setHideCrafted] = useState(true);
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
   const { itemQuantitiesByItemId, locationWarning } = useMarket();
   const { lockedItemIds, toggleLock } = useLockItems();
 
-  const filteredRecipes = useMemo(() => searchForgeRecipes(query), [query]);
+  const filteredRecipes = useMemo(
+    () => searchForgeRecipes(query, recipes),
+    [query, recipes],
+  );
 
   const enrichedRecipes: ForgeRecipe[] = useMemo(() => {
     return filteredRecipes.map((recipe) => {
@@ -71,9 +81,6 @@ export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
 
   const displayedRecipes = useMemo(() => {
     let result = enrichedRecipes;
-    if (cityFilter !== "all") {
-      result = result.filter((r) => r.city === cityFilter);
-    }
     if (hideCrafted) {
       result = result.filter((r) => !r.playerInfo?.isCrafted);
     }
@@ -83,32 +90,27 @@ export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
       );
     }
     return result;
-  }, [enrichedRecipes, cityFilter, hideCrafted, categoryFilter]);
+  }, [enrichedRecipes, hideCrafted, categoryFilter]);
 
   const availableCategories = useMemo(() => {
-    let base = enrichedRecipes;
-    if (cityFilter !== "all") {
-      base = base.filter((r) => r.city === cityFilter);
-    }
     const cats = Array.from(
-      new Set(base.map((r) => r.category).filter(Boolean)),
+      new Set(enrichedRecipes.map((r) => r.category).filter(Boolean)),
     ).sort();
     return cats;
-  }, [enrichedRecipes, cityFilter]);
+  }, [enrichedRecipes]);
 
   return (
     <Stack spacing={3}>
       <Box>
         <Typography variant="h4" component="h1" gutterBottom>
-          Forge Resource Finder
+          {title}
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          Search a resource to see which forge recipes use it, the other
-          required items, and crafting cost.
+          {description}
         </Typography>
         <Typography variant="body2" sx={{ mt: 1.5 }}>
-          <Link suppressHydrationWarning href="/">
-            Back to Monster Resource Finder
+          <Link suppressHydrationWarning href={backHref}>
+            {backLabel}
           </Link>
         </Typography>
       </Box>
@@ -121,23 +123,6 @@ export function ForgeResourceSearch({ recipes }: ForgeResourceSearchProps) {
         alignItems={{ sm: "center" }}
         flexWrap="wrap"
       >
-        <ToggleButtonGroup
-          value={cityFilter}
-          exclusive
-          onChange={(_e, val: "all" | ForgeCity | null) => {
-            if (val !== null) setCityFilter(val);
-          }}
-          size="small"
-          aria-label="city filter"
-        >
-          <ToggleButton value="all">All</ToggleButton>
-          <ToggleButton value="brighthollow">Brighthollow</ToggleButton>
-          <ToggleButton value="druantia">Druantia</ToggleButton>
-          <ToggleButton value="elaria_lower_city">
-            Elaria Lower City
-          </ToggleButton>
-        </ToggleButtonGroup>
-
         <FormControlLabel
           control={
             <Switch

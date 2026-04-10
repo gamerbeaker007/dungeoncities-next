@@ -48,6 +48,43 @@ type UseMarketResult = {
 };
 
 // ---------------------------------------------------------------------------
+// Player item cache
+// ---------------------------------------------------------------------------
+
+const PLAYER_CACHE_TTL = 8 * 60 * 60 * 1000; // 8 hours
+
+type PlayerItemsCache = {
+  inventory: DCGameInventoryItem[];
+  listed: DCMarketListing[];
+  expired: DCMarketListing[];
+  drubbleBalance: number | null;
+  ts: number;
+};
+
+function loadPlayerCache(username: string): PlayerItemsCache | null {
+  try {
+    const raw = localStorage.getItem(`dc_player_${username}`);
+    if (!raw) return null;
+    const cached = JSON.parse(raw) as PlayerItemsCache;
+    if (Date.now() - cached.ts > PLAYER_CACHE_TTL) return null;
+    return cached;
+  } catch {
+    return null;
+  }
+}
+
+function savePlayerCache(username: string, data: Omit<PlayerItemsCache, "ts">) {
+  try {
+    localStorage.setItem(
+      `dc_player_${username}`,
+      JSON.stringify({ ...data, ts: Date.now() }),
+    );
+  } catch {
+    // Ignore storage errors (e.g. private browsing quota exceeded)
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
@@ -66,7 +103,7 @@ function toItemQuantityMap<T extends { itemId: number; quantity: number }>(
 // ---------------------------------------------------------------------------
 
 export function useMarket(): UseMarketResult {
-  const { isAuthenticated, token } = useAuth();
+  const { isAuthenticated, token, username } = useAuth();
 
   // ── Player state ──────────────────────────────────────────────────────────
   const [inventory, setInventory] = useState<DCGameInventoryItem[]>([]);
@@ -117,15 +154,16 @@ export function useMarket(): UseMarketResult {
       if (!state) throw new Error("Failed to load game state");
 
       // Inventory is always available regardless of location.
-      setInventory(state.requiredData?.inventory ?? []);
+      const freshInventory = state.requiredData?.inventory ?? [];
+      setInventory(freshInventory);
 
       const drWallet = state.requiredData?.wallets?.find(
         (w) => w.currencyType === "DRUBBLE",
       );
       const rawBalance = drWallet?.balance;
-      setDrubbleBalance(
-        rawBalance === undefined ? null : Number.parseFloat(rawBalance) || null,
-      );
+      const freshBalance =
+        rawBalance === undefined ? null : Number.parseFloat(rawBalance) || null;
+      setDrubbleBalance(freshBalance);
 
       const currentLocation = state.state;
       const locationError = await moveToMarketplace(token, currentLocation);
@@ -134,6 +172,15 @@ export function useMarket(): UseMarketResult {
         setLocationWarning(
           "Your listed and expired items are not shown because you cannot move to the marketplace from your current location.",
         );
+        // Cache what we have (no listed/expired when blocked by location)
+        if (username) {
+          savePlayerCache(username, {
+            inventory: freshInventory,
+            listed: [],
+            expired: [],
+            drubbleBalance: freshBalance,
+          });
+        }
         return;
       }
 
@@ -155,15 +202,27 @@ export function useMarket(): UseMarketResult {
         result = await fetchListings();
       }
 
-      setListed(result.listed?.listings ?? []);
-      setExpired(result.expired?.listings ?? []);
+      const freshListed = result.listed?.listings ?? [];
+      const freshExpired = result.expired?.listings ?? [];
+      setListed(freshListed);
+      setExpired(freshExpired);
+
+      // Persist to cache so the next page load is instant
+      if (username) {
+        savePlayerCache(username, {
+          inventory: freshInventory,
+          listed: freshListed,
+          expired: freshExpired,
+          drubbleBalance: freshBalance,
+        });
+      }
     } catch (error) {
       console.error("[useMarket] fetchPlayerItems failed", error);
       setPlayerError("Failed to load player market data");
     } finally {
       setPlayerLoading(false);
     }
-  }, [isAuthenticated, token]);
+  }, [isAuthenticated, token, username]);
 
   // ── fetchPage (internal) ──────────────────────────────────────────────────
   const fetchPage = useCallback(
@@ -222,10 +281,23 @@ export function useMarket(): UseMarketResult {
     );
   }, [fetchPage]);
 
-  // Auto-load player items on mount / auth change
+  // Auto-load player items on mount / auth change.
+  // Uses cached data if fresh so the page renders instantly without an API call.
   useEffect(() => {
-    void fetchPlayerItems();
-  }, [fetchPlayerItems]);
+    if (!isAuthenticated || !username) {
+      void fetchPlayerItems();
+      return;
+    }
+    const cached = loadPlayerCache(username);
+    if (cached) {
+      setInventory(cached.inventory);
+      setListed(cached.listed);
+      setExpired(cached.expired);
+      setDrubbleBalance(cached.drubbleBalance);
+    } else {
+      void fetchPlayerItems();
+    }
+  }, [fetchPlayerItems, isAuthenticated, username]);
 
   const itemQuantitiesByItemId = useMemo(() => {
     const inventoryByItemId = toItemQuantityMap(inventory);
