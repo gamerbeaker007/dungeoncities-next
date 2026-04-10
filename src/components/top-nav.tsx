@@ -1,5 +1,6 @@
 "use client";
 
+import { useAuth } from "@/providers/auth-provider";
 import BuildIcon from "@mui/icons-material/Build";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import LoginIcon from "@mui/icons-material/Login";
@@ -27,7 +28,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { useAuth } from "@/providers/auth-provider";
 import { LoginDialog } from "./login/login-dialog";
 
 const navItems = [
