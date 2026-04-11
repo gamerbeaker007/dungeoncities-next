@@ -27,6 +27,7 @@ function MarketBrowserContent() {
     listingsError: error,
     searchListings,
     loadMore,
+    refreshAfterPurchase,
   } = useMarket();
   const searchParams = useSearchParams();
   const initialSearch = searchParams.get("search") ?? "";
@@ -46,7 +47,11 @@ function MarketBrowserContent() {
 
   const handleBuy = async (listingId: string, qty: number) => {
     if (!token) return { success: false, message: "Not authenticated." };
-    return await purchaseItemAction(token, listingId, qty);
+    const result = await purchaseItemAction(token, listingId, qty);
+    if (result?.success) {
+      void refreshAfterPurchase();
+    }
+    return result;
   };
 
   // ── unauthenticated gate ────────────────────────────────────────────────────

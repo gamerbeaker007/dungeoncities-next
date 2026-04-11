@@ -45,6 +45,7 @@ type UseMarketResult = {
   listingsError: string | null;
   searchListings: (params: DCGetMarketplaceListingsParams) => Promise<void>;
   loadMore: () => void;
+  refreshAfterPurchase: () => Promise<void>;
 };
 
 // ---------------------------------------------------------------------------
@@ -111,7 +112,7 @@ export function useMarket(): UseMarketResult {
   const [expired, setExpired] = useState<DCMarketListing[]>([]);
   const [drubbleBalance, setDrubbleBalance] = useState<number | null>(null);
   const [locationWarning, setLocationWarning] = useState<string | null>(null);
-  const [playerLoading, setPlayerLoading] = useState(false);
+  const [playerLoading, setPlayerLoading] = useState(true);
   const [playerError, setPlayerError] = useState<string | null>(null);
 
   // ── Listings state ────────────────────────────────────────────────────────
@@ -141,6 +142,7 @@ export function useMarket(): UseMarketResult {
       setExpired([]);
       setPlayerError(null);
       setLocationWarning(null);
+      setPlayerLoading(false);
       return;
     }
 
@@ -267,7 +269,38 @@ export function useMarket(): UseMarketResult {
     },
     [fetchPage],
   );
-
+  // ── refreshAfterPurchase ─────────────────────────────────────────────────
+  // Called after a successful buy: refreshes the DR balance from the API
+  // and re-runs the current search from page 0 to reflect stock changes.
+  const refreshAfterPurchase = useCallback(async () => {
+    if (!token) return;
+    // Refresh DR balance in parallel with listing refresh
+    const [state] = await Promise.all([
+      getGameStateAction(token),
+      fetchPage({ ...paramsRef.current, limit: LIMIT, offset: 0 }),
+    ]);
+    offsetRef.current = 0;
+    if (state) {
+      const drWallet = state.requiredData?.wallets?.find(
+        (w) => w.currencyType === "DRUBBLE",
+      );
+      const rawBalance = drWallet?.balance;
+      const freshBalance =
+        rawBalance === undefined
+          ? null
+          : Number.parseFloat(rawBalance) || null;
+      setDrubbleBalance(freshBalance);
+      // Update cache with fresh balance
+      if (username) {
+        savePlayerCache(username, {
+          inventory,
+          listed,
+          expired,
+          drubbleBalance: freshBalance,
+        });
+      }
+    }
+  }, [token, fetchPage, username, inventory, listed, expired]);
   // ── loadMore ──────────────────────────────────────────────────────────────
   // Loads the next page. Re-entrancy-safe via isFetchingRef.
   const loadMore = useCallback(() => {
@@ -290,13 +323,16 @@ export function useMarket(): UseMarketResult {
     }
     const cached = loadPlayerCache(username);
     if (cached) {
+      // Pre-populate from cache for instant display, but always call
+      // fetchPlayerItems to ensure the player's location is updated
+      // (move to IN_MARKETPLACE). Skipping this causes "Failed to load
+      // marketplace listings" when the player was in a different location.
       setInventory(cached.inventory);
       setListed(cached.listed);
       setExpired(cached.expired);
       setDrubbleBalance(cached.drubbleBalance);
-    } else {
-      void fetchPlayerItems();
     }
+    void fetchPlayerItems();
   }, [fetchPlayerItems, isAuthenticated, username]);
 
   const itemQuantitiesByItemId = useMemo(() => {
@@ -342,5 +378,6 @@ export function useMarket(): UseMarketResult {
     listingsError,
     searchListings,
     loadMore,
+    refreshAfterPurchase,
   };
 }
