@@ -80,7 +80,10 @@ export function BuyDialog({
     setBuying(true);
     setResult(null);
     const res = await onBuy(String(listing.listingId), qty);
-    const resolved = res ?? { success: false, message: "No response from server." };
+    const resolved = res ?? {
+      success: false,
+      message: "No response from server.",
+    };
     setResult(resolved);
     setBuying(false);
     if (resolved.success) {

@@ -286,9 +286,7 @@ export function useMarket(): UseMarketResult {
       );
       const rawBalance = drWallet?.balance;
       const freshBalance =
-        rawBalance === undefined
-          ? null
-          : Number.parseFloat(rawBalance) || null;
+        rawBalance === undefined ? null : Number.parseFloat(rawBalance) || null;
       setDrubbleBalance(freshBalance);
       // Update cache with fresh balance
       if (username) {
