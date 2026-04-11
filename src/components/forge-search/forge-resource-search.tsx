@@ -9,6 +9,7 @@ import type { ForgeRecipe } from "@/types/forge";
 import {
   Alert,
   Box,
+  CircularProgress,
   FormControl,
   FormControlLabel,
   InputLabel,
@@ -19,7 +20,8 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useMemo, useState } from "react";
 
 type ForgeResourceSearchProps = {
   recipes: ForgeRecipe[];
@@ -29,22 +31,38 @@ type ForgeResourceSearchProps = {
   backLabel?: string;
 };
 
-export function ForgeResourceSearch({
+// ---------------------------------------------------------------------------
+// Inner component — uses useSearchParams, must be inside Suspense
+// ---------------------------------------------------------------------------
+function ForgeResourceSearchContent({
   recipes,
   title = "Forge Resource Finder",
   description = "Search a resource to see which forge recipes use it, the other required items, and crafting cost.",
   backHref = "/forge",
   backLabel = "Back to Forge",
 }: ForgeResourceSearchProps) {
-  const [query, setQuery] = useState("");
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const urlQuery = searchParams.get("q") ?? "";
+  const urlCategory = searchParams.get("category") ?? "all";
+
   const [hideCrafted, setHideCrafted] = useState(true);
-  const [categoryFilter, setCategoryFilter] = useState<string>("all");
   const { itemQuantitiesByItemId, locationWarning } = useMarket();
   const { lockedItemIds, toggleLock } = useLockItems();
 
+  const updateUrl = (nextQuery: string, nextCategory: string) => {
+    const params = new URLSearchParams();
+    if (nextQuery.trim()) params.set("q", nextQuery.trim());
+    if (nextCategory !== "all") params.set("category", nextCategory);
+    const qs = params.toString();
+    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+  };
+
   const filteredRecipes = useMemo(
-    () => searchForgeRecipes(query, recipes),
-    [query, recipes],
+    () => searchForgeRecipes(urlQuery, recipes),
+    [urlQuery, recipes],
   );
 
   const enrichedRecipes: ForgeRecipe[] = useMemo(() => {
@@ -84,13 +102,13 @@ export function ForgeResourceSearch({
     if (hideCrafted) {
       result = result.filter((r) => !r.playerInfo?.isCrafted);
     }
-    if (categoryFilter !== "all") {
+    if (urlCategory !== "all") {
       result = result.filter(
-        (r) => r.category.toLowerCase() === categoryFilter.toLowerCase(),
+        (r) => r.category.toLowerCase() === urlCategory.toLowerCase(),
       );
     }
     return result;
-  }, [enrichedRecipes, hideCrafted, categoryFilter]);
+  }, [enrichedRecipes, hideCrafted, urlCategory]);
 
   const availableCategories = useMemo(() => {
     const cats = Array.from(
@@ -115,7 +133,10 @@ export function ForgeResourceSearch({
         </Typography>
       </Box>
 
-      <ForgeSearchForm query={query} onSubmit={setQuery} />
+      <ForgeSearchForm
+        query={urlQuery}
+        onSubmit={(q) => updateUrl(q, urlCategory)}
+      />
 
       <Stack
         direction={{ xs: "column", sm: "row" }}
@@ -145,9 +166,9 @@ export function ForgeResourceSearch({
             <InputLabel id="category-filter-label">Category</InputLabel>
             <Select
               labelId="category-filter-label"
-              value={categoryFilter}
+              value={urlCategory}
               label="Category"
-              onChange={(e) => setCategoryFilter(e.target.value)}
+              onChange={(e) => updateUrl(urlQuery, e.target.value)}
             >
               <MenuItem value="all">All categories</MenuItem>
               {availableCategories.map((cat) => (
@@ -201,5 +222,22 @@ export function ForgeResourceSearch({
         </Box>
       )}
     </Stack>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Public export — wraps inner component in Suspense (required for useSearchParams)
+// ---------------------------------------------------------------------------
+export function ForgeResourceSearch(props: ForgeResourceSearchProps) {
+  return (
+    <Suspense
+      fallback={
+        <Box sx={{ display: "flex", justifyContent: "center", py: 8 }}>
+          <CircularProgress />
+        </Box>
+      }
+    >
+      <ForgeResourceSearchContent {...props} />
+    </Suspense>
   );
 }
