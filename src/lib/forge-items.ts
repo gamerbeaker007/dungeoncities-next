@@ -1,6 +1,7 @@
 import forgeBrighthollowData from "@/data/forge_brighthollow.json";
 import forgeDruantiaData from "@/data/forge_druantia.json";
 import forgeElariaLowerCityData from "@/data/forge_elaria_lower_city.json";
+import forgeElariaUpperCityData from "@/data/forge_elaria_upper_city.json";
 import type {
   ForgeCity,
   ForgeRecipe,
@@ -98,6 +99,11 @@ const elariaLowerCityRecipesRaw =
     | ForgeRecipeRaw[]
     | undefined) ?? [];
 
+const elariaUpperCityRecipesRaw =
+  ((forgeElariaUpperCityData as forgeItems)?.data?.recipes as
+    | ForgeRecipeRaw[]
+    | undefined) ?? [];
+
 const brighthollowRecipes = brighthollowRecipesRaw.map((r) =>
   mapRecipe(r, "brighthollow"),
 );
@@ -106,10 +112,15 @@ const elariaLowerCityRecipes = elariaLowerCityRecipesRaw.map((r) =>
   mapRecipe(r, "elaria_lower_city"),
 );
 
+const elariaUpperCityRecipes = elariaUpperCityRecipesRaw.map((r) =>
+  mapRecipe(r, "elaria_upper_city"),
+);
+
 const allForgeRecipes = [
   ...brighthollowRecipes,
   ...druantiaRecipes,
   ...elariaLowerCityRecipes,
+  ...elariaUpperCityRecipes,
 ];
 
 export function getForgeRecipes() {
@@ -134,6 +145,18 @@ export function getElariaLowerCityKeyRecipes() {
 
 export function getElariaLowerCityItemRecipes() {
   return elariaLowerCityRecipes.filter((r) => r.category !== "Dungeon Key");
+}
+
+export function getElariaUpperCityRecipes() {
+  return elariaUpperCityRecipes;
+}
+
+export function getElariaUpperCityKeyRecipes() {
+  return elariaUpperCityRecipes.filter((r) => r.category === "Dungeon Key");
+}
+
+export function getElariaUpperCityItemRecipes() {
+  return elariaUpperCityRecipes.filter((r) => r.category !== "Dungeon Key");
 }
 
 export function searchForgeRecipes(

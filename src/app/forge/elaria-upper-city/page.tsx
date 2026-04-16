@@ -1,7 +1,6 @@
 import {
-  getBrighthollowRecipes,
-  getDruantiaRecipes,
-  getElariaLowerCityRecipes,
+  getElariaUpperCityItemRecipes,
+  getElariaUpperCityKeyRecipes,
   getElariaUpperCityRecipes,
 } from "@/lib/forge-items";
 import {
@@ -18,50 +17,47 @@ import Link from "next/link";
 export const dynamic = "force-static";
 
 export const metadata: Metadata = {
-  title: "Forge Search",
-  description: "Search forge recipes and required resources in Dungeon Cities.",
+  title: "Elaria Upper City Forge",
+  description:
+    "Browse and search Elaria Upper City forge recipes in Dungeon Cities.",
 };
 
-const cities = [
-  {
-    key: "brighthollow",
-    label: "Brighthollow",
-    href: "/forge/brighthollow",
-    description: "Dungeon key recipes for Brighthollow.",
-    count: getBrighthollowRecipes().length,
-  },
-  {
-    key: "druantia",
-    label: "Druantia",
-    href: "/forge/druantia",
-    description: "Dungeon key recipes for Druantia.",
-    count: getDruantiaRecipes().length,
-  },
-  {
-    key: "elaria",
-    label: "Elaria Lower City",
-    href: "/forge/elaria-lower-city",
-    description: "Keys, weapons, armour, accessories and more.",
-    count: getElariaLowerCityRecipes().length,
-  },
-  {
-    key: "elaria-upper",
-    label: "Elaria Upper City",
-    href: "/forge/elaria-upper-city",
-    description: "Keys, weapons, armour, accessories and more.",
-    count: getElariaUpperCityRecipes().length,
-  },
-];
+export default function ElariaUpperCityForgePage() {
+  const totalRecipes = getElariaUpperCityRecipes().length;
+  const keyCount = getElariaUpperCityKeyRecipes().length;
+  const itemCount = getElariaUpperCityItemRecipes().length;
 
-export default function ForgePage() {
+  const sections = [
+    {
+      key: "keys",
+      label: "Dungeon Keys",
+      href: "/forge/elaria-upper-city/keys",
+      description: "Dungeon key recipes for Elaria Upper City.",
+      count: keyCount,
+    },
+    {
+      key: "items",
+      label: "Items & Equipment",
+      href: "/forge/elaria-upper-city/items",
+      description:
+        "Weapons, armour, shields, accessories and other equipment recipes.",
+      count: itemCount,
+    },
+  ];
+
   return (
     <Stack spacing={3}>
       <Box>
         <Typography variant="h4" component="h1" gutterBottom>
-          Forge Search
+          Elaria Upper City Forge
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          Select a city to browse its forge recipes.
+          {totalRecipes} recipes across keys and equipment. Browse by category:
+        </Typography>
+        <Typography variant="body2" sx={{ mt: 1.5 }}>
+          <Link suppressHydrationWarning href="/forge">
+            ← All cities
+          </Link>
         </Typography>
       </Box>
 
@@ -72,31 +68,31 @@ export default function ForgePage() {
           gap: 2,
         }}
       >
-        {cities.map((city) => (
+        {sections.map((section) => (
           <Card
-            key={city.key}
+            key={section.key}
             variant="outlined"
             sx={{ minWidth: { xs: "100%", sm: 260 }, flex: "1 1 260px" }}
           >
             <CardContent>
               <Typography variant="h6" gutterBottom>
-                {city.label}
+                {section.label}
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                {city.description}
+                {section.description}
               </Typography>
               <Typography variant="caption" color="text.secondary">
-                {city.count} recipes
+                {section.count} recipes
               </Typography>
             </CardContent>
             <Box sx={{ px: 2, pb: 2 }}>
               <Link
                 suppressHydrationWarning
-                href={city.href}
+                href={section.href}
                 style={{ textDecoration: "none" }}
               >
                 <Button variant="contained" size="small" fullWidth>
-                  Browse {city.label}
+                  Browse {section.label}
                 </Button>
               </Link>
             </Box>

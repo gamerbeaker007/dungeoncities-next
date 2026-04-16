@@ -23,7 +23,11 @@ export type ForgeRecipePlayerInfo = {
   ownedData: ForgeOwnedPlayerData[];
 };
 
-export type ForgeCity = "brighthollow" | "druantia" | "elaria_lower_city";
+export type ForgeCity =
+  | "brighthollow"
+  | "druantia"
+  | "elaria_lower_city"
+  | "elaria_upper_city";
 
 export type ForgeRecipe = {
   recipeId: number;
