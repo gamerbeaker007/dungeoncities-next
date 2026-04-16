@@ -103,6 +103,32 @@ export default function ForgePage() {
           </Card>
         ))}
       </Box>
+
+      <Box>
+        <Typography variant="h6" gutterBottom>
+          Equipment Sets
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          View all equipment sets with full stat breakdowns and totals, grouped
+          by class.
+        </Typography>
+        <Link href="/forge/sets" style={{ textDecoration: "none" }}>
+          <Button variant="outlined">Browse Equipment Sets</Button>
+        </Link>
+      </Box>
+
+      <Box>
+        <Typography variant="h6" gutterBottom>
+          Crafting Path
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          See the full step-by-step crafting chain to reach any S-Class set —
+          which items to forge first and in which city.
+        </Typography>
+        <Link href="/forge/crafting-path" style={{ textDecoration: "none" }}>
+          <Button variant="outlined">View Crafting Paths</Button>
+        </Link>
+      </Box>
     </Stack>
   );
 }
