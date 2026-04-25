@@ -6,6 +6,7 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
+import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
 import SearchIcon from "@mui/icons-material/Search";
 import StoreIcon from "@mui/icons-material/Store";
 import StorefrontIcon from "@mui/icons-material/Storefront";
@@ -36,6 +37,7 @@ const navItems = [
   { href: "/undiscovered", label: "Undiscovered", icon: VisibilityOffIcon },
   { href: "/market", label: "Marketplace", icon: StorefrontIcon },
   { href: "/shop", label: "Shop", icon: StoreIcon },
+  { href: "/wishlist", label: "Wishlist", icon: PlaylistAddCheckIcon },
   { href: "/faq", label: "FAQ", icon: HelpOutlineIcon },
 ];
 
