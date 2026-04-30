@@ -6,6 +6,12 @@ import {
   DCPurchaseItemResponse,
 } from "@/types/dc/marketplace";
 import { DCSellItemParams, DCSellItemResponse } from "@/types/dc/shop";
+import {
+  DCChestDrop,
+  DCCollectChestDropsResponse,
+  DCInventoryStatusResponse,
+  DCOpenChestResponse,
+} from "@/types/dc/chest";
 import { DCDexResponse, DCMonsterDetailResponse } from "@/types/dc/monster-dex";
 import {
   DCGameLocation,
@@ -94,6 +100,22 @@ type DCApiPayload =
   | {
       action: "SELL_ITEM";
       params: DCSellItemParams;
+    }
+  | {
+      action: "GET_INVENTORY_STATUS";
+      params: { items?: Array<{ itemId: number; quantity: number }> };
+    }
+  | {
+      action: "OPEN_CHEST";
+      params: {
+        itemId: number;
+        characterInventoryId: string;
+        quantity: number;
+      };
+    }
+  | {
+      action: "COLLECT_CHEST_DROPS";
+      params: { selectedIds: number[] };
     };
 
 export type DCApiRequestOptions = {
@@ -350,4 +372,35 @@ export async function getAllMarketListingsData(
     hasMore: false,
     slotUsage,
   };
+}
+
+export function getInventoryStatusData(
+  options: DCApiRequestOptions,
+  items?: Array<{ itemId: number; quantity: number }>,
+): Promise<DCInventoryStatusResponse> {
+  return postDcApiAction<DCInventoryStatusResponse>(options, {
+    action: "GET_INVENTORY_STATUS",
+    params: items ? { items } : {},
+  });
+}
+
+export function openChestData(
+  options: DCApiRequestOptions,
+  itemId: number,
+  characterInventoryId: string,
+): Promise<DCOpenChestResponse> {
+  return postDcApiAction<DCOpenChestResponse>(options, {
+    action: "OPEN_CHEST",
+    params: { itemId, characterInventoryId, quantity: 1 },
+  });
+}
+
+export function collectChestDropsData(
+  options: DCApiRequestOptions,
+  drops: DCChestDrop[],
+): Promise<DCCollectChestDropsResponse> {
+  return postDcApiAction<DCCollectChestDropsResponse>(options, {
+    action: "COLLECT_CHEST_DROPS",
+    params: { selectedIds: drops.map((d) => d.itemId) },
+  });
 }

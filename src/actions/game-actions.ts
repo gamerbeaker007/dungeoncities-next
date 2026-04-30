@@ -8,6 +8,9 @@ import {
   purchaseItemData,
   sellItemData,
   updateLocationData,
+  getInventoryStatusData,
+  openChestData,
+  collectChestDropsData,
 } from "@/lib/dc-api";
 import {
   DCGetMarketplaceListingsParams,
@@ -15,6 +18,12 @@ import {
   DCPurchaseItemResponse,
 } from "@/types/dc/marketplace";
 import { DCSellItemParams, DCSellItemResponse } from "@/types/dc/shop";
+import {
+  DCChestDrop,
+  DCCollectChestDropsResponse,
+  DCInventoryStatusResponse,
+  DCOpenChestResponse,
+} from "@/types/dc/chest";
 import {
   DCGameLocation,
   DCGameStateResponse,
@@ -156,6 +165,50 @@ export async function sellItemAction(
     return await sellItemData({ token }, params);
   } catch (error) {
     console.error("sellItemAction failed", { params, error });
+    return null;
+  }
+}
+
+export async function getInventoryStatusAction(
+  token: string,
+  items?: Array<{ itemId: number; quantity: number }>,
+): Promise<DCInventoryStatusResponse | null> {
+  if (!token) return null;
+  try {
+    return await getInventoryStatusData({ token }, items);
+  } catch (error) {
+    console.error("getInventoryStatusAction failed", error);
+    return null;
+  }
+}
+
+export async function openChestAction(
+  token: string,
+  itemId: number,
+  characterInventoryId: string,
+): Promise<DCOpenChestResponse | null> {
+  if (!token) return null;
+  try {
+    return await openChestData({ token }, itemId, characterInventoryId);
+  } catch (error) {
+    console.error("openChestAction failed", {
+      itemId,
+      characterInventoryId,
+      error,
+    });
+    return null;
+  }
+}
+
+export async function collectChestDropsAction(
+  token: string,
+  drops: DCChestDrop[],
+): Promise<DCCollectChestDropsResponse | null> {
+  if (!token) return null;
+  try {
+    return await collectChestDropsData({ token }, drops);
+  } catch (error) {
+    console.error("collectChestDropsAction failed", error);
     return null;
   }
 }
