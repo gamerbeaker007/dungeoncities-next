@@ -1,22 +1,22 @@
 "use client";
 
+import { updateLocationAction } from "@/actions/game-actions";
 import { ChestOpenerDialog } from "@/components/chest/chest-opener";
 import {
   useShop,
   type LockedItemData,
   type SellResult,
 } from "@/hooks/use-shop";
-import { updateLocationAction } from "@/actions/game-actions";
 import { useAuth } from "@/providers/auth-provider";
 import type { DCGameInventoryItem } from "@/types/dc/state";
+import AllInboxIcon from "@mui/icons-material/AllInbox";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import LockIcon from "@mui/icons-material/Lock";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import AllInboxIcon from "@mui/icons-material/AllInbox";
-import SellIcon from "@mui/icons-material/Sell";
 import SelectAllIcon from "@mui/icons-material/SelectAll";
+import SellIcon from "@mui/icons-material/Sell";
 import StoreIcon from "@mui/icons-material/Store";
 import {
   Alert,
