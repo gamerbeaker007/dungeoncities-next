@@ -39,24 +39,30 @@ function deriveItemNameFromImageUrl(
 
 function mapDropsFromDetail(detail: DCMonsterDetail): ItemDrop[] {
   const drops = Array.isArray(detail.drops) ? detail.drops : [];
-  return drops.map((drop) => {
-    const apiItemName = drop.item?.name ?? "???";
-    const hasPlaceholderName = apiItemName.trim() === "???";
-    const derivedItemName = deriveItemNameFromImageUrl(drop.item?.imageUrl);
-    return {
-      itemId: drop.itemId,
-      itemName: apiItemName,
-      derivedItemName,
-      itemNameWarning: hasPlaceholderName,
-      itemClass: drop.item?.class ?? "Unknown",
-      itemImageUrl: drop.item?.imageUrl ?? "",
-      dropChance: toNumber(drop.dropChance),
-      minQuantity: toNumber(drop.minQuantity),
-      maxQuantity: toNumber(drop.maxQuantity),
-      bossDrop: Boolean(drop.bossDrop),
-      unlocked: Boolean(drop.unlocked),
-    };
-  });
+  return drops
+    .filter((drop) => {
+      // item is known but has no drop chance — skip entirely
+      if (drop.item != null && toNumber(drop.dropChance) <= 0) return false;
+      return true;
+    })
+    .map((drop) => {
+      const apiItemName = drop.item?.name ?? "???";
+      const hasPlaceholderName = apiItemName.trim() === "???";
+      const derivedItemName = deriveItemNameFromImageUrl(drop.item?.imageUrl);
+      return {
+        itemId: drop.itemId,
+        itemName: apiItemName,
+        derivedItemName,
+        itemNameWarning: hasPlaceholderName,
+        itemClass: drop.item?.class ?? "Unknown",
+        itemImageUrl: drop.item?.imageUrl ?? "",
+        dropChance: toNumber(drop.dropChance),
+        minQuantity: toNumber(drop.minQuantity),
+        maxQuantity: toNumber(drop.maxQuantity),
+        bossDrop: Boolean(drop.bossDrop),
+        unlocked: Boolean(drop.unlocked),
+      };
+    });
 }
 
 function mapToMonsterRecord(detail: DCMonsterDetail): MonsterRecord {
